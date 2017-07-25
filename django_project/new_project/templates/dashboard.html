@@ -1,0 +1,644 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "css/w3.css" %}">
+      <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'new_project/style.css' %}" />
+    <title>Provider Dashboard</title>
+</head>
+
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <a href="#"> <button class="w3-bar-item w3-left">Dashboard</button> </a>
+</div>
+
+
+
+
+<!-- !PAGE CONTENT! -->
+<div class="bgimg-2 w3-main " style="margin-top:43px;">  
+
+  <!-- Header -->
+  <header class="w3-container" style="padding-top:22px">
+    <h2 class="w3-text-white"><b><i class="fa fa-dashboard"></i> My Dashboard</b></h2>
+       <a href="#" class="w3-bar-item w3-button w3-white"><i class="fa fa-envelope"></i></a>
+      <a href="#" class="w3-bar-item w3-button w3-white"><i class="fa fa-user"></i></a>
+      <a href="#provedit" class="w3-bar-item w3-button w3-white"><i class="fa fa-cog"></i></a>
+       <input type="text" id="provsearch" onkeyup="myFunction()" placeholder="Search..." class="pull-right w3-block w3-round-xxlarge">
+      
+  </header>
+
+  <div class="w3-row-padding  ">
+    <div class="w3-quarter">
+      <div class="w3-container w3-red w3-padding-16">
+        <div class="w3-left"><i class="fa fa-comment w3-xxlarge"></i></div>
+        <div class="w3-right"> <a href="#orders" ><h3>Orders</h3></a> <!--Query db for Number of Total Orders--> </div>
+        <div class="w3-clear"></div>         
+     <div>   <a href="#orders" ><h3>Orders</h3> </div>
+      </div>
+    </div>
+      
+    <div class="w3-quarter">
+      <div class="w3-container w3-blue w3-padding-16">
+        <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+        <div class="w3-right"></div>
+        <div class="w3-clear"></div>
+     <div>   <a href="#editservice">   <h3>Manage Services</h3> </a> </div>
+      </div>
+    </div>
+      
+      
+    <div class="w3-quarter">
+      <div class="w3-container w3-teal w3-padding-16">
+        <div class="w3-left"><i class="fa fa-share-alt w3-xxlarge"></i></div>
+        <div class="w3-clear"></div>
+        <a href="#provedit" ><h3>Manage Profile</h3></a>
+      </div>
+    </div>
+      
+      
+    <div class="w3-quarter">
+      <div class="w3-container w3-orange w3-text-white w3-padding-16">
+        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>        
+        <div class="w3-clear"></div>
+        <a href="#reports">    <h3>Reports </h3></a>
+      </div>
+    </div>
+      
+      
+      <div class="w3-quarter">
+      <div class="w3-container w3-indigo w3-padding-16">
+        <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+        <div class="w3-right">  <h3>99</h3> </div>
+        <div class="w3-clear"></div>
+    <a href="#revenue"    <h3>Revenue</h3></a>
+      </div>
+    </div>
+      
+      
+    <div class="w3-quarter">
+      <div class="w3-container w3-grey w3-padding-16 ">
+        <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
+        <div class="w3-right"><a href="" > <h3>Registered Service</h3></a></div>
+        <div class="w3-clear"></div>
+        </div>
+    </div>
+      
+      
+    <div class="w3-quarter">
+      <div class="w3-container w3-blue-gray w3-text-white w3-padding-16 ">
+        <div class="w3-left"><i class="fa fa-users w3-xxlarge"></i></div>
+        <div class="w3-right">
+            <h3>50</h3> <!-- Number of services registered by the signed in service provider-->
+        </div>
+        <div class="w3-clear"></div>
+        <a href="#prestest"   >   <h4>Prescriptions | Test Requests| Quotes</h4></a> <!--Includes Test Requests-->
+      </div>
+    </div>
+      
+      
+      <div class="w3-quarter">
+      <div class="w3-container w3-dark-grey w3-text-white w3-padding-16">
+        <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+        <div class="w3-right">
+          <h3>50</h3>
+        </div>
+        <div class="w3-clear"></div>
+        <a href="#treated">     <h4>Treated Orders</h4></a>
+      </div>
+    </div>
+  </div>
+
+  
+    </div>
+  
+<!--Orders-->
+ 
+    <div class="w3-panel  w3-topbar w3-bottombar w3-border-amber "id="orders">
+     <h3 class="w3-center w3-text-black" > Customer Orders </h3>
+        
+         <div class="w3-card-4 w3-deep-orange w3-padding-32 w3-round-large w3-section" id="korder1">
+    <span onclick="this.parentElement.style.display='none'" 
+    class="w3-button w3-white w3-small w3-right">×</span>
+  
+    <span class="w3-large">First Name</span><br>
+    <span class="w3-large"> Surname</span><br>
+    <span>Service</span>
+    <p>Date of Birth</p>
+   <p> Healthier ID </p>
+    <p><b>Service Information:</b> London is the most populous city in the United Kingdom,
+  with a metropolitan area of over 9 million inhabitants</p>
+    <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
+    <p>Preferred Date </p>
+ <p>   Preferred Time </p>
+ 
+  </div>
+ 
+   <div class="w3-card-4 w3-green w3-padding-32 w3-round-large w3-section"id="korder2">
+    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-white w3-small w3-right">×</span>
+ <h3 class="w3-center w3-text-black"> Service</h3>
+    <span class="w3-large">First Name</span><br>
+    <span class="w3-large"> Surname</span><br>
+    <span>Service</span>
+    <p>Date of Birth</p>
+   <p> Healthier ID </p>
+    <p><b>Service Information:</b> London is the most populous city in the United Kingdom,
+  with a metropolitan area of over 9 million inhabitants</p>
+    <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
+    <p>Preferred Date </p>
+ <p>   Preferred Time </p>
+ 
+  </div>
+        
+         <div class="w3-card-4 w3-grey w3-padding w3-round-large w3-section"id="korder3">
+    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-white w3-small w3-right">×</span>
+    <div class="w3-row ">
+         <h3 class="w3-center w3-text-black"> Service</h3>
+      <div class="w3-col s6">
+          <p>Service</p>
+          <p>First Name</p>
+         <p> Surname</p>     
+         <p>Date of Birth</p>
+         <p> Healthier ID </p>
+    </div>
+        <div class="w3-col s6">
+           
+           <p><b>Service Information:</b> London is the most populous city in the United Kingdom,
+  with a metropolitan area of over 9 million inhabitants</p>
+           <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
+           <p>Preferred Date </p>
+           <p>   Preferred Time </p>
+            <button class="w3-button w3-light-grey w3-block w3-padding w3-round-xxlarge">Confirm Customer Order</button> 
+ </div>
+  </div>
+</div>
+
+
+              <!-- Provider Edit -->
+<div class="w3-content w3-margin-top w3-panel  w3-topbar w3-bottombar w3-border-amber "id="provedit" style="max-width:1400px;">
+      
+    <div class="w3-row w3-grey  w3-card-4  w3-padding w3-round-large w3-section">
+         <h3 class="w3-center w3-text-black"><i class="fa fa-envelope w3-margin-right w3-xxlarge w3-text-teal"></i> Provider Profile</h3>
+      <div class="w3-col s6 w3-padding">
+      
+          <img src="hthumbnail.png"  alt="Avatar" style="width:100%;min-height:200px;max-height:400px">
+          
+          <p id="provideraddress"><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>Address</p>
+          <p id="providercity"><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>City</p>
+          <p id="providercountry"><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-teal"></i>Country</p>
+          </div>
+        <div class="w3-col s6 w3-padding ">
+          <p id="provideremail"><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>you@healthier.com</p>
+          <p id="providerphone"><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>081777910**</p>
+          <p id="providerpassword"><i class="fa fa-eye fa-fw w3-margin-right w3-large w3-text-teal"></i>passw**d</p>
+          <button class="w3-button w3-black w3-block w3-padding w3-round-xxlarge">Save Profile</button><br>
+          <button class="w3-button w3-blue-gray w3-block w3-padding w3-round-xxlarge">Edit Profile</button>
+          <hr>
+<p><b>Register Account Details</b></p>
+   </div>
+    </div>
+           
+</div>
+              
+              
+  
+  <!-- Update Services -->
+  
+      <div class="w3-panel  w3-topbar w3-bottombar w3-border-amber "id="editservice" style="padding:40px 16px">
+    
+    <div class="w3-card-4 w3-orange w3-padding-32 w3-round-large w3-section">
+      
+        
+         <h3 class="w3-center w3-text-black"><i class="fa fa-pencil w3-margin-right w3-xxlarge w3-text-teal"></i> Update Service Information</h3>
+ <form class="w3-container  w3-card-4 w3-blue-gray w3-text-light-gray ">
+ 
+    
+ <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Choose Service To Update</option><!--Choose Service-->
+  </select> 
+     
+     <p>
+  
+  <input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Service "></p>
+     <!--Service is auto filled with chosen service-->
+     <p>
+  
+  <input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Service SubGroup"></p>
+     <!--Service Group is auto-filled with chosen service-->
+  <p>
+  
+  <input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Service Details"></p>
+ 
+  <p>
+ 
+  <input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Days Available"></p>
+  <p>
+
+  <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Time Available"></p>
+  
+  
+  <hr>
+   <p> <input class="w3-input w3-border w3-round-large" name="cost" type="text" placeholder="Cost"></p>
+   <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Choose Cost Denomination</option><!--Choose Cost Denomination-->
+  </select> 
+  <hr>
+          <button class="w3-button w3-block w3-light-grey w3-ripple w3-padding w3-round-xxlarge">Update Service</button>
+          
+          <hr>
+          
+          <p><input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Auto-Generated Unique Service ID"></p>
+<!--Service ID is auto-generated with the updated service-->
+</form>
+ 
+  
+ 
+  </div>
+</div>
+       
+  
+  
+<!-- Send Reports" -->
+
+ 
+        
+        
+        <!-- Page Container -->
+<div class="w3-content w3-margin-top" >
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+  
+  
+        <div class="w3-container w3-blue-gray w3-topbar w3-bottombar w3-border-amber" style="padding:40px 16px" id="reports">
+    
+         <form action="/action_page.php" class="w3-container w3-card-4 w3-orange w3-text-light-gray w3-margin">
+        
+         <h3 class="w3-center w3-text-black"><i class="fa fa-users w3-margin-right w3-xxlarge w3-text-teal"></i> Send Report To Users</h3>
+   <div class="w3-container w3-card-2 w3-blue-gray w3-margin-bottom" style="padding:30px 16px" id="consultnotes">
+        
+  <p>Click on the button to view User ID.</p>
+  
+  
+  <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Choose Users with Healthier User ID</option><!--Choose Service-->
+    <option value="1">User 1</option>
+    <option value="2">User 2</option>
+     <option value="3">User 3</option>
+   
+  </select> 
+<hr>
+  <div class="w3-row w3-section">
+  
+    <div class="w3-rest">
+      <input class="w3-input w3-border w3-round-large" name="first" type="text" placeholder="First Name">
+    </div>
+</div>
+  <div class="w3-row w3-section">
+
+    <div class="w3-rest">
+      <input class="w3-input w3-border w3-round-large" name="last" type="text" placeholder="Last Name">
+    </div>
+</div>
+
+<div class="w3-row w3-section">
+ 
+    <div class="w3-rest">
+      <input class="w3-input w3-border w3-round-large" name="email" type="text" placeholder="Email">
+    </div>
+</div>
+
+<div class="w3-row w3-section">
+ 
+    <div class="w3-rest">
+      <input class="w3-input w3-border w3-round-large" name="pwd" type="text" placeholder="Phone Number">
+    </div>
+</div>
+  <hr>
+  <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Choose Report Type!!</option><!--Choose Report Type to send-->
+    <option value="#consultnotes">Consultation Notes</option>
+    <option value="#labreports">Measured Laboratory Reports</option>
+     <option value="#vaccreports">Vaccine Report</option>
+    <option value="#microreports">Microbiology Report</option>
+    <option value="#othereports">Other Reports</option>
+  </select> 
+  </div>
+         
+         
+   <div class="w3-container w3-card-2 w3-blue-gray w3-margin-bottom" style="padding:30px 16px" id="usereport">
+  
+ 
+   <div class="w3-card-4 w3-padding-16 w3-round-large w3-section w3-orange" id="othereports"> 
+       <h4 class="w3-center w3-text-black" > Other Reports </h4>
+        <p><input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Order ID "></p>
+     <!--Order ID is generated on attending to the customer order after confirming payment status -->
+     
+    <p><input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Service"></p>
+    <!--Service is autofilled from the customer order after confirming payment status -->
+    <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Report Date</option><!--Date-->
+  </select> 
+    <hr>
+     <input class="w3-input w3-border" name="first" type="text" placeholder="Paste Report">    
+<button class="w3-button w3-block w3-section w3-light-grey w3-ripple w3-padding">Upload Report File</button>
+
+<button class="w3-button w3-block w3-section w3-light-grey w3-ripple w3-padding w3-round-xxlarge">Send Report</button>
+</div>
+
+<div class="w3-card-4 w3-padding-16 w3-round-large w3-section w3-orange" id="vaccreports"> 
+       <h4 class="w3-center w3-text-black" > Vaccine Report </h4>
+   
+       <p><input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Order ID "></p>
+     <!--Order ID is generated on attending to the customer order after confirming payment status -->
+     
+    <p><input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Vaccine"></p>
+     <!--Service is autofilled from the customer order after confirming payment status -->
+ <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Vaccination Date</option><!--Choose Service-->
+  </select> 
+     
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Batch number"></p>
+  <p><input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Expiry Date"></p>
+  
+  
+  <hr>
+   <p> <input class="w3-input w3-border w3-round-large" name="cost" type="text" placeholder="VacinatorName"></p>
+   <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Next Appointment Date</option><!--Choose Cost Denomination-->
+  </select> 
+  <hr>
+ 
+          <button class="w3-button w3-block w3-light-grey w3-ripple w3-padding w3-round-xxlarge">Send To User</button>
+  
+</div>
+
+
+
+<div class="w3-card-4 w3-padding-16 w3-round-large w3-section w3-orange" id="consultnotes"> 
+       <h4 class="w3-center w3-text-black" > Consultation Notes </h4>
+     
+ 
+  <p><input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Order ID "></p>
+     <!--Service is auto filled with chosen service-->
+     
+ <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Date</option><!--Choose Service-->
+  </select> 
+        
+  <p> <input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Presenting Complaints"></p>
+ 
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Examination Findings"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Treatment Plan"></p>
+  
+  
+  <hr>
+
+   <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Next Appointment Date</option><!--Choose Cost Denomination-->
+  </select> 
+  <hr>
+          <button class="w3-button w3-block w3-light-grey w3-ripple w3-padding w3-round-xxlarge">Send To User</button>
+</div>
+
+
+       
+       
+       <div class="w3-card-4 w3-padding-16 w3-round-large w3-section w3-orange" id="labreports"> 
+       <h4 class="w3-center w3-text-black" > Measured Laboratory Tests </h4>
+ 
+  <p><input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Order ID "></p>
+     <!--Service is auto filled with chosen service-->
+    
+ <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Test Date</option><!--Choose Service-->
+  </select> 
+     <hr>
+      <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Choose Service</option><!--Choose Service-->
+  </select>
+     
+        
+     <!--Service Group is auto-filled with chosen service-->
+     
+  <table class="w3-table w3-bordered w3-border" id="labTable">
+<thead>
+<tr class="w3-orange">
+  <th>Test Date</th>
+  <th>Service</th>
+  <th>Value</th>
+  <th>Lower Range</th>
+  <th>Upper Range</th>
+</tr>
+</thead>
+<tr>
+  <th>21/7/17</th>
+  <td>Creatinie</td>
+  <td>40</td>
+  <th>2</th>
+  <th>30</th>
+</tr>
+<tr>
+  <th>17/7/17</th>
+  <td>Urea</td>
+  <td>250</td>
+  <th>110</th>
+  <th>250</th>
+</tr>
+<tr>
+  <th>25/5/17</th>
+  <td>Cholesterol</td>
+  <td>110</td>
+  <th>100</th>
+  <th>165</th>
+</tr>
+</table>
+     
+
+  
+ 
+          <button class="w3-button w3-block w3-light-grey w3-ripple w3-padding w3-round-xxlarge">Send To User</button>
+</div>
+
+
+<div class="w3-card-4 w3-padding-16 w3-round-large w3-section w3-orange" id="microreports"> 
+       <h4 class="w3-center w3-text-black" > Microbiology Report </h4>
+   
+     <p><input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Order ID "></p>
+ <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Specimen Collection Date</option><!--Choose Service-->
+  </select> 
+     <hr>
+      <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Specimen Collection Time</option><!--Choose Service-->
+  </select>
+    
+   
+  <p><input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Specimen Type"></p>
+ 
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Test Result"></p>
+
+  
+  <hr>
+          <button class="w3-button w3-block w3-light-grey w3-ripple w3-padding w3-round-xxlarge">Send To User</button>
+</div>
+
+
+</div>
+<script>
+function myFunction() {
+    var x = document.getElementById("Demo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else { 
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+</script>
+         </form> 
+    </div>
+    
+</div>
+  </div>
+
+
+<!-- Prescription/ Test Requests" -->
+
+    <div class="w3-container w3-card-2 w3-margin-bottom" style="padding:60px 16px" id="prestest">
+ 
+  <div class="w3-row-padding">
+    
+         <form action="/action_page.php" class="w3-container w3-card-4 w3-orange w3-text-light-gray w3-margin">
+
+         <h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Prescriptions, Quotes & Test Requests</h3>
+          
+         
+         <div class="w3-row w3-section">
+ 
+    <div class="w3-rest">
+      <input class="w3-input w3-border w3-round-large" name="email" type="text" placeholder=" Search Healthier User ID" w3-round-large>
+    </div>
+</div>
+         
+     <div class="w3-row w3-section">
+ 
+    <div class="w3-rest">
+      <input class="w3-input w3-border w3-round-large" name="first" type="text" placeholder="First Name" w3-round-large>
+    </div>
+</div>
+
+<div class="w3-row w3-section">
+  
+    <div class="w3-rest">
+      <input class="w3-input w3-border w3-round-large" name="last" type="text" placeholder="Last Name" w3-round-large>
+    </div>
+</div>
+         
+         <div class="w3-row w3-section">
+ 
+    <div class="w3-rest">
+      <input class="w3-input w3-border w3-round-large" name="pwd" type="text" placeholder="Phone Number">
+    </div>
+</div>
+
+    <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Prescriptions, Quotes & Test Requests </option><!--Choose Service-->
+    <option value="1">Prescription</option>
+    <option value="2">Test Request</option>
+    <option value="3">Medical Assistance Quote Request</option>
+  </select>      
+         
+<hr>
+
+<div class="w3-container w3-card-2 w3-blue-gray w3-margin-bottom" style="padding:30px 16px" id="optionuser">
+<div class="w3-row-padding">
+    <h4>Prescription</h4>
+  <div class="w3-third">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="DrugName, Dosage, Duration"> <!--Python Dictionary?List?Tuple-->
+  </div>
+  <div class="w3-third">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="DrugName, Dosage, Duration">
+  </div>
+  <div class="w3-third">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="DrugName, Dosage, Duration">
+  </div>
+</div>
+    </div>
+         
+<button class="w3-button w3-block w3-section w3-blue-gray w3-ripple w3-padding w3-round-xxlarge">Send to User</button>
+
+
+<div class="w3-container w3-card-2 w3-blue-gray w3-margin-bottom" style="padding:30px 16px" id="optionuser">
+<div class="w3-row-padding">
+    <h4>Test Request</h4>
+  <div class="w3-quarter">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="Indication"> <!--Python Dictionary?List?Tuple-->
+  </div>
+  <div class="w3-quarter">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="Test1">
+  </div>
+  <div class="w3-quarter">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="Test2">
+  </div>
+     <div class="w3-quarter">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="Test3">
+  </div>
+</div>
+    </div>
+         
+<button class="w3-button w3-block w3-section w3-blue-gray w3-ripple w3-padding w3-round-xxlarge">Send to User</button>
+
+<div class="w3-container w3-card-2 w3-blue-gray w3-margin-bottom" style="padding:30px 16px" id="optionuser">
+<div class="w3-row-padding">
+    <h4>Medical Assistance/Ambulance Quote</h4>
+  <div class="w3-half">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="Option1, Cost"> <!--Python Dictionary?List?Tuple-->
+  </div>
+  <div class="w3-half">
+    <input class="w3-input w3-border w3-round-large" type="text" placeholder="Option2, Cost">
+  </div>
+  
+</div>
+    </div>
+         
+<button class="w3-button w3-block w3-section w3-blue-gray w3-ripple w3-padding w3-round-xxlarge">Send to User</button>
+         </form> 
+
+
+Test Request: Indication, Test1, Test2, Test3, Test4
+Medical Assistance Quote for xxx: NGN4,000
+
+
+    </div>
+   
+
+
+
+    </div>
+ 
+
+
+      
+        
+        
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-16 w3-light-grey">
+    <h4>FOOTER</h4>
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+  </footer>
+
+  <!-- End page content -->
+</div>
+
+
+
+</body>
+</html>

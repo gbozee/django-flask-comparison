@@ -1,0 +1,26 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "css/w3.css" %}">
+      <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+         <link rel="stylesheet" href="{% static "css/wfmi-style.css" %}">
+            <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
+            
+            <p>
+<a href="{% url 'admin:index' %}">Healthier</a>
+</p>
+{% block content %}{% endblock content %}
+
+{% if user.is_authenticated %}
+    Hello, {{ user.username }}.
+    <a href="{% url 'users:logout' %}">log out</a>
+    {% else %}
+    <a href="{% url 'users:register' %}">register</a> -
+    <a href="{% url 'users:login' %}">log in</a>
+    {% endif %}
