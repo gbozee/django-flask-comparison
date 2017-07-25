@@ -1,0 +1,243 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+    <link rel="stylesheet" href="{% static "css/w3.css" %}">
+      <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+      <link rel="stylesheet" href="{% static "css/wfmi-style.css" %}">
+            <link rel="stylesheet" href="{% static "css/font-awesome.min.css" %}">
+
+    <title>myHealthier</title>
+    </head>
+
+    <body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-blue-gray w3-card-2" id="myNavbar">
+    <a href="#index" class="w3-bar-item w3-button w3-wide">HEALTHIER</a>
+    <!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small">
+     
+      <a href="#mydata" class="w3-bar-item w3-button"><i class="fa fa-user"></i> DATA</a>
+      <a href="#trends" class="w3-bar-item w3-button"><i class="fa fa-th"></i>TRENDS</a>
+      <a href="#reports" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>REPORTS</a>
+       <a href="#vaccrep" class="w3-bar-item w3-button"><i class="fa fa-globe"></i>VACCINES</a>
+        <a href="#request" class="w3-bar-item w3-button"><i class="fa fa-bars"></i>REQUESTS</a>
+         <a href="#consultnotes" class="w3-bar-item w3-button"><i class="fa fa-cog"></i>CONSULTS</a>
+
+      
+       
+       
+    </div>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+  
+  <a href="#mydata" onclick="w3_close()" class="w3-bar-item w3-button">DATA</a>
+  <a href="#trends" onclick="w3_close()" class="w3-bar-item w3-button">TRENDS</a>
+  <a href="#reports" onclick="w3_close()" class="w3-bar-item w3-button">REPORTS</a>
+    <a href="#vaccrep" onclick="w3_close()" class="w3-bar-item w3-button">VACCINES</a>
+     <a href="#requests" onclick="w3_close()" class="w3-bar-item w3-button">REQUESTS</a>
+      <a href="#consultnotes" onclick="w3_close()" class="w3-bar-item w3-button">CONSULTS</a>
+   
+
+</nav>
+
+
+<!-- Header with full-height image -->
+<header class="bgimg-1 w3-display-container w3-margin  w3-hover-opacity " id="healthierhome" id="bgimg-1" style="background-image: url('{% static "images/python1.png"%}');>
+  <div class=" w3-text-black w3-center w3-padding-large w3-margin" style="padding:48px">
+    <hr> <h3 class="w3-xxlarge w3-hide-large w3-hide-medium w3-center w3-padding-large ">Your Personal Health Manager</h3><br><br>
+     
+     <span class="w3-jumbo w3-hide-small">Take Charge of Your Health</span><br>
+   
+    <span class="w3-xlarge w3-margin-top">Be In Charge Of Your Health Information!! </span>
+    <br><br
+     <div class = "w3-card-2 w3-padding-large">
+        <p><span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-block w3-xlarge" type="text" > Olufemi Aina</span></p>
+       <p> <button class="w3-button w3-block w3-btn w3-white w3-border w3-border-orange w3-large w3-padding w3-round-xxlarge" ><i i class="fa fa-plus  w3-text-blue-gray"></i>Add Another Account</button> </p>
+       <p> <button class="w3-button w3-block w3-btn w3-white w3-border w3-border-red w3-large w3-padding w3-round-xxlarge" ><i i class="fa fa-minus  w3-text-red"></i>Logout</button> </p>
+      </div>
+    </div> 
+  
+</header>
+
+<!-- Page Container -->
+<div class=" w3-content w3-margin-top" style="max-width:1400px;">
+
+  <!-- The Grid -->
+  <div class="w3-row-padding">
+  
+    
+<!-- Left Column -->
+  <div class="w3-third">
+     
+     <div class = "w3-card-2 w3-padding">
+<h3 class="w3-center w3-text-black"> Complete Registration</h3>
+<p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Date of Birth"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Phone Number"></p>
+  <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Gender</option><!--Choose Service-->
+    <option value="1">Male</option>
+     <option value="2">Female</option> <!--current drugs accept multiple values in one input-like a list, tuple etc-->
+  </select>
+     <button class="w3-button w3-block w3-blue-gray w3-ripple w3-padding w3-round-xxlarge "> Save</button>
+     <hr>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Auto-Generate Healthier ID"></p>
+    </div>
+     <div class="bgimg-2 w3-container w3-pale-blue w3-topbar w3-bottombar w3-border-sand w3-round-large w3-section" style="padding:60px 16px" id="bgimg-2" style="background-image: url('{% static "images/python2.png"%}');>
+     
+     <h3 class="w3-center w3-text-white"><i class="fa fa-users w3-margin-right w3-xxlarge w3-text-teal"></i> Personal Health Data</h3>
+     <div class="w3-display-container" id="perhd">
+    <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Save Your Personal Health Data</option><!--Choose Service-->
+    <option value="1">Systolic Blood Pressure</option>
+    <option value="2">Diastolic Blood Pressure</option>
+     <option value="3">Random Blood Sugar</option>
+    <option value="4">Fasting Blood Sugar</option>
+    <option value="5">Weight (kg)</option>
+    <option value="6">Cholesterol</option>
+     <option value="7">Current Drugs</option> <!--current drugs accept multiple values in one input-like a list, tuple etc-->
+   
+    </select>  
+    <p> <input class="w3-input w3-round" type="text" placeholder="Value">
+     </p>
+     <hr>
+    <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Date</option><!--Choose date data was measured-->
+    </select>  
+     <hr>
+     <button class="w3-button w3-block w3-blue-gray w3-ripple w3-padding w3-round-xxlarge "> Save</button>
+      </div>  
+</div>  
+
+        
+        
+<div class="bgimg-3 w3-container w3-card-2 w3-pale-blue w3-margin-bottom w3-round-large w3-section" style="padding:30px 16px" id="requests" id="bgimg-3" style="background-image: url('{% static "images/python3.png"%}');>
+
+<h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Downloads,Requests</h3>
+<p class="pull-left w3-text-white"><i class="fa fa-calendar w3-margin-right w3-large w3-text-white"></i> Search Date</p>
+<br>
+
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Request Type; Test, Prescription, Quotes"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="value, test request, prescription"></p>
+<p><b>Send To:</b></p>
+<select class="w3-select" name="option" w3-round-large>
+    <option value="1" disabled selected> Service Providers</option><!--Choose date data was measured-->
+  </select> 
+<hr>
+<a href="#prescriptions" class="w3-bar-item w3-button w3-round-xxlarge w3-block w3-blue-gray">View File Reports</a>
+
+</div>
+  </div>     
+<!-- End Left Column -->
+    
+    
+
+ <!-- Right Column -->
+    <div class="w3-twothird">
+
+<div class="w3-container w3-card-2 w3-pale-blue w3-margin-bottom w3-round-large w3-section" style="padding:30px 16px" id="trends">
+
+<h3 class="w3-center w3-text-black"><i class="fa fa-th w3-margin-right w3-xxlarge w3-text-teal"></i> myHealth Trends</h3>
+
+ <select class="w3-select" name="option" w3-round-large>
+    <option value="" disabled selected>Track Your Health Trends</option><!--Choose Service-->
+    <option value="1">Systolic Blood Pressure</option>
+    <option value="2">Diastolic Blood Pressure</option>
+     <option value="3">Random Blood Sugar</option>
+    <option value="4">Fasting Blood Sugar</option>
+    <option value="5">Weight (kg)</option>
+    <option value="6">Cholesterol</option>
+     <option value="7">Current Drugs</option>
+   
+  </select> 
+ <div> Graph function for any selected parameter</div>
+<!-- Measurement Line Graph by Date for each Data Point -->
+ <button class="w3-button w3-blue-gray w3-block w3-padding w3-round-xxlarge">View Health Trends</button>
+   </div> 
+
+<!--Medical Services Reports-->
+
+<div class=" bgimg-2 w3-container w3-card-2 w3-pale-blue w3-margin-bottom w3-round-large w3-section" style="padding:30px 16px" id="reports" id="bgimg-2" style="background-image: url('{% static "images/python2.png"%}');>
+
+<h3 class="w3-center w3-text-black"><i class="fa fa-envelope   w3-margin-right w3-xxlarge w3-text-teal"></i> Reports</h3>
+<p class="pull-left w3-text-black"><i class="fa fa-calendar w3-margin-right w3-large w3-text-black"></i> Search Date</p>
+
+<p> <input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Report Type;Microbiology, measured test, other reports"></p>
+ 
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Result"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Other Comments"></p>
+</div>
+
+<div class="w3-container w3-card-2 w3-pale-blue w3-margin-bottom w3-round-large w3-section" style="padding:30px 16px" id="vaccrep">
+
+<h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Vaccine Reports</h3>
+<p class="pull-left w3-text-black"><i class="fa fa-calendar w3-margin-right w3-large "></i> Search Date</p>
+     
+      <p> <input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Vaccine Type"></p>
+ 
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Batch Number"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Expiry date, Vaccinator"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Next Appointment"></p>
+</div>
+
+
+
+
+<div class=" bgimg-3 w3-container w3-card-2 w3-pale-blue w3-margin-bottom w3-round-large w3-section" style="padding:30px 16px" id="consultnotes" id="bgimg-3" style="background-image: url('{% static "images/python3.png"%}');>
+
+<h3 class="w3-center w3-text-black"><i class="fa fa-eye w3-margin-right w3-xxlarge w3-text-teal"></i> Consultation Notes</h3>
+<p class="pull-left w3-text-white"><i class="fa fa-calendar w3-margin-right w3-large w3-text-white"></i> Search Date</p>
+  
+   
+     <option href="consults" class="w3-bar-item w3-button">Medical Consultation Notes </option>
+    <p> <input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Presenting Complaints"></p>
+ 
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Examination Findings"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Treatment Plan"></p>
+   <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Next Appointment"></p>
+ 
+</div>
+
+
+
+   
+</div>
+
+ 
+  </div>
+  </div>
+<script>
+// Toggle between showing and hiding the sidebar when clicking the menu icon
+var mySidebar = document.getElementById("mySidebar");
+
+function w3_open() {
+    if (mySidebar.style.display === 'block') {
+        mySidebar.style.display = 'none';
+    } else {
+        mySidebar.style.display = 'block';
+    }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+    mySidebar.style.display = "none";
+}
+</script>
+</body>
+</html>
