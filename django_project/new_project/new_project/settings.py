@@ -128,3 +128,4 @@ STATICFILES_DIRS = [
 
 # My settings
 LOGIN_URL = '/users/login/'
+INTERNAL_IPS  = ['127.0.0.1',]
