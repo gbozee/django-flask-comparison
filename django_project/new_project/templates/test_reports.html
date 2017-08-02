@@ -1,0 +1,61 @@
+{% extends "myhealthier.html" %}
+{% load staticfiles %}
+          {% block content %}
+<!--Medical Services Reports-->
+
+<div class=" w3-container w3-card-2 w3-pale-blue w3-margin-bottom w3-round-large w3-section w3-padding-64" id="bgimg-2" style="background-image: url('{% static "new_project/python2.png"%}');>
+    <div class=" w3-card-4  w3-white w3-margin w3-padding w3-round-large w3-section" >
+<h3 class="w3-center w3-text-white"><i class="fa fa-envelope   w3-margin-right w3-xxlarge w3-text-teal"></i> Reports | Vaccines </h3>
+<p class="pull-left w3-text-white"><i class="fa fa-calendar w3-margin-right w3-large w3-text-black"></i> Search Date</p>
+
+<p> <input class="w3-input w3-border w3-round-large" name="details" type="text" placeholder="Report Type; Vaccines, Microbiology, Other Reports"></p>
+ 
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Result"></p>
+   <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Batch Number"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Expiry date, Vaccinator"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Next Appointment"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Other Comments"></p>
+</div>
+
+<div class="w3-container w3-card-2 w3-pale-blue w3-margin-bottom w3-round-large w3-section" style="padding:30px 16px" id="vaccrep">
+
+<h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Measured Test Report</h3>
+<p class="pull-left w3-text-black"><i class="fa fa-calendar w3-margin-right w3-large "></i> Search Date</p>
+     
+
+ <table class="w3-table w3-bordered w3-border" id="labTable">
+<thead>
+<tr class="w3-orange">
+  <th>Test Date</th>
+  <th>Service</th>
+  <th>Value</th>
+  <th>Lower Range</th>
+  <th>Upper Range</th>
+</tr>
+</thead>
+<tr>
+  <th>21/7/17</th>
+  <td>Creatinie</td>
+  <td>40</td>
+  <th>2</th>
+  <th>30</th>
+</tr>
+<tr>
+  <th>17/7/17</th>
+  <td>Urea</td>
+  <td>250</td>
+  <th>110</th>
+  <th>250</th>
+</tr>
+<tr>
+  <th>25/5/17</th>
+  <td>Cholesterol</td>
+  <td>110</td>
+  <th>100</th>
+  <th>165</th>
+</tr>
+</table>
+ 
+</div>
+</div>
+ {% endblock content %}

@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 def login_view(request):
-    return render(request,'users/login.html')
+    return render(request,'login.html')
 
              
 

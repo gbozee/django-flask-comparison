@@ -1,0 +1,36 @@
+{% extends "myhealthier.html" %}
+{% load staticfiles %}
+          {% block content %}
+    <form method="post" action="">
+     {% csrf_token %}
+
+     <div class="w3-container w3-card-2 w3-margin w3-round-large  w3-padding-48 w3-border-amber"  id="bgimg-3" style ="background-image: url('{% static "new_project/python3.png"%}');>
+<div class ="w3-card-2 w3-pale-blue w3-margin w3-round-large ">
+<h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Downloads,Requests</h3>
+
+<div class = "w3-margin w3-padding w3-white">
+<p class="pull-left"><i class="fa fa-calendar w3-margin-right w3-large "></i> Search Date</p>
+<br>
+
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Request Type; Test, Prescription, Quotes"></p>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="value, test request, prescription"></p>
+
+  <p><b>Send Request/Prescription To:</b></p>
+      <select class="w3-select" name="option" w3-round-large>
+    <option value="1" disabled selected> Service Providers</option><!--Choose date data was measured-->
+      </select>
+  <hr>
+<a href="#prescriptions" class="w3-bar-item w3-button w3-round-xxlarge w3-block w3-blue-gray">View Attached Reports</a>
+
+<hr>
+
+  <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Quote By Medical Assistance/Ambulance Provider"></p>
+ <button class="w3-button w3-block w3-black w3-round-xxlarge">+ Checkout Cart</button>
+
+
+
+</div>
+</div>
+</div>
+</form>
+           {% endblock content %}

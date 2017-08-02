@@ -1,0 +1,93 @@
+{% extends "index.html" %}
+{% load staticfiles add_attr %}
+          {% block content %}
+
+          {% load staticfiles %}
+
+
+<!--Medical Transportation-->
+
+ <div class="w3-display-container  w3-topbar w3-bottombar w3-border-amber" id="bgimg-2" style="background-image: url('{% static "new_project/python2.png"%}')";>
+
+    <div class="w3-card-4 w3-padding-64 w3-round-large w3-white w3-margin">
+           <h3 class="w3-center w3-text-black" > Ambulance & Medical Assistance </h3>
+    <input class="w3-input w3-border w3-margin-bottom w3-round" type="text" placeholder="Pick-Up Address" name="locationadd" required>
+    <input class="w3-input w3-border w3-margin-bottom w3-round" type="text" placeholder="Pick-Up City" name="locationcity" required>
+
+      <input class="w3-input w3-border w3-margin-bottom w3-round" type="text" placeholder="Destination City" name="destinationcity" required>
+     <input class="w3-input w3-border w3-margin-bottom w3-round" type="text" placeholder="Destination Address" name="destinadd" required>
+
+      <select class="w3-select" name="option">
+    <option value="" disabled selected>Country</option><!--List Providers by Country chosen-->
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </select>
+
+     <hr>
+    <div class="w3-row-padding">
+  <div class="w3-half">
+   <select class="w3-select" name="option">
+    <option value="" disabled selected>Choose Date</option><!--Choose Transfer date-->
+    <option value="1">Option 1</option>
+
+  </select>
+  </div>
+  <div class="w3-half">
+
+   <select class="w3-select" name="option">
+    <option value="" disabled selected>Preferred Pick Up Time</option><!--Choose Transfer date-->
+    <option value="1">Option 1</option>
+
+  </select>
+  </div>
+<hr>
+      <a href="#ambulist" >    <button class="w3-button  w3-block w3-orange w3-ripple w3-padding w3-round-xxlarge">View Service Providers</button></a>
+
+    </div>
+
+</div>
+    </div>
+
+<!--Medical Assistance Service List-->
+
+    <div class="w3-panel  w3-topbar w3-bottombar w3-border-amber "id="ambulist" style="padding:40px 16px">
+    <h3 class="w3-center w3-text-black" > Medical Assistance Service Providers </h3>
+        <input type="text" id="servsearch" onkeyup="myFunction()" placeholder="Search By Location" class="pull-right w3-block w3-round-large">
+        <br>
+    <div class="bgimg-1 w3-card-4 w3-padding-16 w3-padding-32 w3-round-large w3-section w3-yellow" id="bgimg-1" style="background-image: url('{% static "new_project/python1.png"%}')";>
+    <span onclick="this.parentElement.style.display='none'"
+    class="w3-button w3-white w3-small w3-right">×</span>
+    <img src="hthumbnail.png" class="w3-left w3-round w3-margin-right" style="width:50px">
+    <span class="w3-large"> Service</span><br>
+    <span>Organization</span>
+    <p><b>Service Information:</b> London is the most populous city in the United Kingdom,
+  with a metropolitan area of over 9 million inhabitants</p>
+    <div class="w3-margin-bottom">  <p placeholder="City">City.</p>
+             <p placeholder="Country">Country.</p> </div>
+    <button class="w3-button w3-block w3-dark-grey w3-round-xxlarge">+ Request Quote</button>
+
+
+    </div>
+
+
+
+  <div class="bgimg-2 w3-card-4 w3-padding-16 w3-padding-32 w3-round-large w3-section w3-yellow" id="bgimg-2" style="background-image: url('{% static "new_project/python2.jpg"%}')";>
+    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-white w3-small w3-right">×</span>
+      <img src="hthumbnail.png" class="w3-left w3-round w3-margin-right" style="width:50px">
+       <div class="w3-display-topmiddle"> <span class="w3-large">Organization</span>
+       </div>
+        <div w3-display-left>   <p><b>Service Information:</b> London is the most populous city</p>
+       </div>
+          <div>  <p><>Service<> Available on <>Days Available<>between <>Time Available<>at <>Address<>City<><>Country.</p>
+          </div><br>
+            <button class="w3-button w3-block w3-black w3-round-xxlarge">+ Request Quote</button>
+
+     </div>
+
+  </div>
+
+
+
+
+{% endblock content %}

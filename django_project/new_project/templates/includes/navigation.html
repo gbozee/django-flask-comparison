@@ -1,0 +1,29 @@
+
+<div class="w3-top">
+  <div class="w3-bar w3-blue-gray w3-card-2" id="myNavbar">
+    <a href="{% url "home" %}" class="w3-bar-item w3-button w3-wide">HEALTHIER</a>
+    <!-- Right-sided navbar links -->
+    <div class="w3-right w3-hide-small">
+
+      <a href="{% url "login" %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> LOGIN</a>
+      <a href="{% url "proregister" %}" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i> SERVICE PROVIDERS</a>
+       <a href="{% url "about" %}" class="w3-bar-item w3-button"><i class="fa fa-check-square-o"></i>ABOUT HEALTHIER</a>
+      <a href="{% url "cart" %}" class="w3-bar-item w3-button"><i class="fa fa-shopping-cart"></i> CART</a>
+    </div>
+    <!-- Hide right-floated links on small screens and replace them with a menu icon -->
+
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium" onclick="w3_open()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+</div>
+
+<!-- Sidebar on small screens when clicking the menu icon -->
+<nav class="w3-sidebar w3-bar-block w3-black w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
+
+  <a href="{% url "login" %}" onclick="w3_close()" class="w3-bar-item w3-button">LOGIN</a>
+  <a href="{% url "proregister" %}" onclick="w3_close()" class="w3-bar-item w3-button">SERVICE PROVIDERS</a>
+  <a href="{% url "about" %}" onclick="w3_close()" class="w3-bar-item w3-button">ABOUT HEALTHIER</a>
+  <a href="{% url "cart" %}" onclick="w3_close()" class="w3-bar-item w3-button">CART</a>
+</nav>

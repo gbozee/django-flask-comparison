@@ -1,0 +1,154 @@
+{% extends "index.html" %}
+{% load staticfiles add_attr %}
+          {% block content %}
+
+          {% load staticfiles %}
+
+
+
+
+
+<!-- Drugs -->
+
+
+  <div class="bgimg-3 w3-container  w3-margin-left w3-topbar w3-bottombar w3-border-amber w3-border-blue-gray">
+
+            <div class="w3-row-padding w3-center" style="margin-top:100px" id="drugs">
+              <h3 class="w3-center">Drugs and Medications</h3>
+                <div class="w3-col s4 ">
+                    <a href="#antibiotics" ><i class="fa fa-heartbeat" style="font-size:36px;color:gray"></i></a>
+                <p>Antibiotics</p></div>
+                 <div class="w3-col s4"><a href="#antihtn" ><i class="fa fa-heartbeat" style="font-size:36px;color:orange"></i></a> <p>Anti-Hypertensives</p>
+                         </div>
+                <div class="w3-col s4">
+        <a href="#heart" ><i class="fa fa-heartbeat" style="font-size:36px;color:red"></i></a>
+        <p>The Heart Tracker</p>
+        </div>
+        </div>
+
+                 <div class="w3-row-padding" style="margin-top:30px">
+
+      <div class="w3-col s4">  <a href="#hchecks" ><i class="fa fa-check-square-o" style="font-size:36px;color:orange"></i></a> <p>Health Checks</p>
+        </div>
+
+       <div class="w3-col s4"> <a href="#clinics" ><i class="fa fa-hospital-o" style="font-size:36px;color:orange"></i></a> <p>Clinics</p>
+     </div>
+
+                  <div class="w3-col s4">  <a href="#diagnostics"><i class="fa fa-user-md" style="font-size:36px;color:orange"></i></a> <p>Diagnostics</p></div>
+                 </div>
+
+
+
+        <div class="w3-row-padding" style="margin-top:30px">
+
+     <div class="w3-col s4">
+        <a href="#procedures"><i class="fa fa-h-square" style="font-size:36px;color:orange"></i></a> <p>Procedures</p></div>
+
+    <div class="w3-col s4">    <a href="#drugs"><i class="fa fa-stethoscope" style="font-size:36px;"></i></a> <p>Drugs</p></div>
+
+     <div class="w3-col s4"> <a href="#talk" ><i class="fa fa-user-md" style="font-size:36px;color:gray"></i></a> <p>Talk To A Doctor</p></div>
+        </div>
+
+
+        <div class="w3-row-padding" style="margin-top:30px">
+            <div class="w3-col s4">
+            <a href="#foreign"><i class="fa fa-medkit" style="font-size:36px;color:gray"></i></a> <p>Foreign Medical Treatment</p></div>
+
+<div class="w3-col s4">
+        <a href="#ambulance"><i class="fa fa-ambulance" style="font-size:36px;color:gray"></i></a> <p>Ambulance Services</p></div>
+           <div class="w3-col s4">  <a href="#insurance"><i class="fa fa-stethoscope" style="font-size:36px;"></i></a> <p>Health Insurance</p></div>
+       </div>
+
+        <div class="w3-row-padding" style="margin-top:30px">
+
+         <div class="w3-col s4">        <a href="#concierge"><i class="fa fa-stethoscope" style="font-size:36px;color:gray"></i></a> <p>Medical Concierge Services</p></div>
+
+     <div class="w3-col s4">   <a href="#weight"><i class="fa fa-user-md" style="font-size:36px;color:gray"></i></a> <p>Weight Management</p></div>
+
+         <div class="w3-col s4">   <a href="#promo"><i class="fa fa-user-md" style="font-size:36px; color:orange"></i></a> <p>Promoted Services</p></div>
+       </div>
+
+  </div>
+
+
+<!--Vaccines-->
+
+ <div class="w3-container  w3-topbar w3-bottombar w3-border-amber">
+<div class="w3-row-padding text-center" id="vaccines" style="margin-top:60px">
+
+             <h3 class="w3-center"> Vaccines </h3> <!--Clicking a particular vaccine produces a list of providers, cost and details from the Service table in the DB-->
+
+            <div class="w3-row" style="margin-top:44px">
+                <div class="w3-col s4"><a href="#" ><i class="fa fa-heartbeat" style="font-size:44px;color:red"></i></a>
+                    <p>Typhoid Fever</p>
+                </div>
+                <div class="w3-col s4">
+                    <a href="#" ><i class="fa fa-heartbeat" style="font-size:44px;color:red"></i></a>
+                <p>Cervical Cancer</p></div>
+                <div class="w3-col s4">
+        <a href="#" ><i class="fa fa-heartbeat" style="font-size:44px;color:red"></i></a>
+        <p>Hepatitis A</p>
+        </div>
+        </div>
+
+                 <div class="w3-row" style="margin-top:44px">
+
+      <div class="w3-col s4">  <a href="#" ><i class="fa fa-check-square-o" style="font-size:44px;"></i></a>
+          <p>Hepatitis B</p>
+        </div>
+                     <div class="w3-col s4"><a href="#" ><i class="fa fa-check-square-o" style="font-size:44px;"></i></a>
+                         <p>Mumps,Measles,Rubella (MMR)</p>
+                         </div>
+       <div class="w3-col s4"> <a href="#" ><i class="fa fa-hospital-o" style="font-size:44px;"></i></a> <p>Diptheria,Tetanus,Pertusis,IPV</p>
+     </div>   </div>
+
+        <div class="w3-row" style="margin-top:44px">
+    <div class="w3-col s4">        <a href="#"><i class="fa fa-stethoscope" style="font-size:44px;"></i></a> <p>Diptheria,Tetanus,IPV</p></div>
+    <div class="w3-col s4">    <a href="#"><i class="fa fa-stethoscope" style="font-size:44px;"></i></a> <p>Rabies</p></div>
+      <div class="w3-col s4">  <a href="#"><i class="fa fa-stethoscope" style="font-size:44px;"></i></a> <p>Influenza</p></div>
+        </div>
+
+
+        <div class="w3-row" style="margin-top:44px">
+            <div class="w3-col s4">
+            <a href="#"><i class="fa fa-medkit" style="font-size:44px;"></i></a> <p>Pneumococcal</p></div>
+            <div class="w3-col s4">
+        <a href="#"><i class="fa fa-h-square" style="font-size:44px;"></i></a> <p>MMR+Chicken Pox</p></div>
+
+<div class="w3-col s4">
+        <a href="#"><i class="fa fa-ambulance" style="font-size:44px;color:white"></i></a> <p>Measles</p></div>
+       </div>
+
+        <div class="w3-row" style="margin-top:44px">
+
+          <div class="w3-col s4">  <a href="#"><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>Meningococcal (A,C,W,V)</p></div>
+          <div class="w3-col s4"> <a href="#" ><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>Haemophilus Influenza Type B</p></div>
+     <div class="w3-col s4">   <a href="#"><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>HIB+DPT+Hepatitis B</p></div>
+
+
+<div class="w3-col s4">
+        <a href="#"><i class="fa fa-ambulance" style="font-size:44px;color:white"></i></a> <p>Measles</p></div>
+       </div>
+
+        <div class="w3-row" style="margin-top:44px">
+
+          <div class="w3-col s4">  <a href="#"><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>Meningococcal (A,C,W,V)</p></div>
+          <div class="w3-col s4"> <a href="#" ><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>Haemophilus Influenza Type B</p></div>
+     <div class="w3-col s4">   <a href="#"><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>HIB+DPT+Hepatitis B</p></div>
+
+        </div>
+
+                  <div class="w3-row" style="margin-top:44px">
+
+          <div class="w3-col s4">  <a href="#"><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>DTaP+IPV</p></div>
+          <div class="w3-col s4"> <a href="#" ><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>HIB+DTap+IPV</p></div>
+     <div class="w3-col s4">   <a href="#"><i class="fa fa-user-md" style="font-size:44px;"></i></a> <p>Rotavirus</p></div>
+
+        </div>
+
+
+  </div>
+
+
+
+{% endblock content %}

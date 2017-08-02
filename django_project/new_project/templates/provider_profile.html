@@ -1,0 +1,38 @@
+{% extends "dashboard.html" %}
+{% load staticfiles  %}
+          {% block content %}
+
+
+ <form method="post" action="{% url "provider_profile" %}">
+     {% csrf_token %}
+
+
+
+              <!-- Provider Edit -->
+<div class="w3-content w3-margin-top w3-panel  w3-topbar w3-bottombar w3-border-amber " id="bgimg-2" style="background-image: url('{% static "new_project/python2.png"%}');>
+
+    <div class="w3-container  w3-card-4 w3-round-large w3-section ">
+         <h3 class="w3-center w3-text-black"><i class="fa fa-envelope w3-margin-right w3-xxlarge w3-text-teal"></i> Provider Profile</h3>
+      
+         <div class="w3-padding w3-margin w3-light-grey">
+          <img src="hthumbnail.png"  alt="Provider Logo" style="width:30%;min-height:50px;max-height:300px">
+ <span <i class="fa fa-home w3-margin-right w3-large w3-text-teal"></i>
+           <input class="w3-input w3-border w3-round-large" name="cost" type="text" placeholder="Address"></span>
+          <p id="providercity"><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>City</p>
+          <p id="providercountry"><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-teal"></i>Country</p>
+          <p id="provideremail"><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>you@healthier.com</p>
+          <p id="providerphone"><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>081777910**</p>
+          <p id="providerpassword"><i class="fa fa-eye fa-fw w3-margin-right w3-large w3-text-teal"></i>passw**d</p>
+          <button class="w3-button w3-black w3-block w3-padding w3-round-xxlarge">Save Profile</button><br>
+          <button class="w3-button w3-blue-gray w3-block w3-padding w3-round-xxlarge">Edit Profile</button>
+          <hr>
+<p><b>Register Account Details</b></p>
+   </div>
+    </div>
+
+</div>
+
+
+
+</form>
+   {% endblock content %}
