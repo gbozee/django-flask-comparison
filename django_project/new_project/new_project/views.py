@@ -111,7 +111,7 @@ class LoginForm(AuthenticationForm):
     remember_me = forms.BooleanField(required=False)
 
 def login_view(request):
-    form = LoginForm()
+    form = AuthenticationForm()
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
         if form.is_valid():
@@ -160,7 +160,6 @@ def register_view(request):
             user = form.save()
             auth_login(request,user)
             return redirect('home')
-        import pdb; pdb.set_trace()
     return render(request,'register.html',{'reg_form':form})
     messages.info(request, "Account successfully created")
 

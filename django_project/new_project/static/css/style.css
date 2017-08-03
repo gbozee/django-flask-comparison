@@ -40,6 +40,36 @@ body, html {
     min-height: 100%;
 }
 
+.bgimg-6 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python6.jpeg");
+    min-height: 100%;
+}
+
+
+.bgimg-7 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python7.jpeg");
+    min-height: 100%;
+}
+
+
+.bgimg-8 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python8.jpeg");
+    min-height: 100%;
+}
+
+.bgimg-9 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python9.jpeg");
+    min-height: 100%;
+}
+
 .loginbg-1 {
     background-position: center;
     background-size: cover;

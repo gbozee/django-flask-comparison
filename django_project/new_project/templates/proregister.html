@@ -23,9 +23,13 @@
                {{provreg_form.password1|add_attributes:"class:w3-input w3-border w3-margin-bottom w3-round,placeholder:Password"}}
         <!-- <p><input class="w3-input w3-border w3-round-large" type="text" placeholder="Confirm Password" required name="CPassword"></p> -->
                {{provreg_form.password2|add_attributes:"class:w3-input w3-border w3-margin-bottom w3-round,placeholder:Confirm Password"}}
-          <button class="w3-button w3-btn w3-black w3-block w3-round-xxlarge" type="submit"><i class="fa fa-paper-plane"></i> CREATE ACCOUNT</button>  <!--Receive email link to download Healthier Dashboard Application-->
+         <div class="w3-bar w3-padding">
+         <button class="w3-button w3-btn w3-black w3-block w3-padding w3-round-xxlarge" type="submit"><i class="fa fa-paper-plane"></i> CREATE ACCOUNT</button>  <!--Receive email link to download Healthier Dashboard Application-->
+        <p> <a href= "{% url "prologin" %}" class="w3-button w3-btn w3-deep-orange w3-block w3-padding w3-round-xxlarge">LOGIN </a></p>
 
-         <p class="w3-center ">By continuing, you accept the Terms of Use and Privacy Policy</p>
+
+         </div>
+        <p class="w3-center ">By continuing, you accept the Terms of Use and Privacy Policy</p>
 
 
 

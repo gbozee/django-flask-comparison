@@ -1,47 +1,42 @@
-# from django.db import models
+from django.db import models
+from django.contrib.auth.models import User
 
 
-
-class User(models.Model):
+class UserProfile(models.Model):
+    user= models.OneToOneField(User, related_name='user_profile')
     """A customer interested in health services using Healthier"""
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    text = models.CharField(max_length=200)
-    email = models.EmailField(max_length=254)
-    password = models.CharField(max_length=200)
+    
     healthier_ID = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=200)
     date_birth = models.DateField(auto_now=False, auto_now_add=False, )
-    gender = models.BooleanField()
-
+    gender = models.CharField(max_length=5, choices=(("","Select Gender"),('M',"Male"),("F","Female"),),blank=True)
+    text =models.CharField(max_length=200)
 
     def __str__(self):
         """Return a string representation of the model."""
         return self.text
 
 
-class Provider(models.Model):
+class ProviderProfile(models.Model):
     """Organization providing health services and sending reports to users"""
+    user = models.OneToOneField(User, related_name='provider_profile')
     org_name = models.CharField(max_length=30)
     pro_logo = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100,)
-    address = models.CharField(max_length=30)
+    address = models.CharField(max_length=100)
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=200)
-    email = models.EmailField(max_length=254, )
-    password = models.CharField(max_length=200)
     provider_ID = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=200)
     provider_ratings = models.CharField(max_length=200)
 
-    class Meta:
-        verbose_name_plural = 'entries'
+ 
 
     def __str__(self):
         """Return a string representation of the model."""
         return self.text[:50] + "..."
 
 
-class Service(models.Model):
+class HealthService(models.Model):
     """services to be chosen by users"""
     service_name = models.CharField(max_length=30)
     sub_group = models.CharField(max_length=30)
@@ -57,7 +52,7 @@ class Service(models.Model):
         return self.text
 
 
-class Ordered(models.Model):
+class OrderedService(models.Model):
     """A paid for service request to the service organization"""
     healthier_ID = models.CharField(max_length=30)
     service_ID = models.CharField(max_length=30)
@@ -74,7 +69,7 @@ class Ordered(models.Model):
 
 
 
-class Myhealth(models.Model):
+class MyHealth(models.Model):
     """A paid for service request to the service organization"""
     healthier_ID = models.CharField(max_length=30)
     service_date = models.CharField(max_length=200)
@@ -124,3 +119,25 @@ class AmbulReport(models.Model):
     def __str__(self):
         """Return a string representation of the model."""
         return self.text
+
+
+class SentReport(models.Model):
+    """A paid for service request to the service organization"""
+    report_type = models.CharField(max_length=50)
+    order_ID = models.CharField(max_length=30)
+    service_date = models.CharField(max_length=30)
+    service_time = models.CharField(max_length=30)
+    name_staff = models.CharField(max_length=50)
+    presenting_complaints = models.TextField(max_length=30)
+    exam_report = models.TextField(max_length=30)
+    treatment_plan = models.TextField(max_length=30)
+    vaccine_expirydate = models.CharField(max_length=200)
+    vaccine_batchnumber = models.CharField(max_length=200)
+    next_appointment = models.CharField(max_length=30)
+
+
+    def __str__(self):
+        """Return a string representation of the model."""
+        return self.text 
+
+   			
