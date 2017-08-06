@@ -369,7 +369,11 @@ class PasswordResetCompleteView(FormView):
 
 class ServiceUpdateView(TemplateView):
     template_name = "service_update.html"
-
+    # def get_context_data(self, **kwargs):
+    #      context = super(ServiceUpdateView, self).get_context_data(**kwargs)
+    #      context['modelone'] = HealthService.objects.get(*query logic*)
+    #      context['modeltwo'] = ServiceGrouping.objects.get(*query logic*)
+    #      return context
 
 class SendReportView(TemplateView):
     template_name = "send_report.html"
