@@ -8,8 +8,8 @@
 
 <!-- Send Reports" -->
    
-    <div class="w3-row w3-padding w3-card-4 w3-margin w3-orange">
-
+    <div class="w3-container w3-padding w3-card-4 " id="bgimg-4" style="background-image: url('{% static "new_project/python4.jpg" %}')">
+    <div class="w3-row w3-padding w3-card-4 w3-margin w3-yellow">
                 <h3 class="w3-center w3-text-black"><i class="fa fa-users w3-margin-right w3-xxlarge w3-text-teal"></i> Send Report To Users</h3>
     <div class="w3-col m6 w3-container  w3-card-4  w3-padding-16 w3-text-black w3-round-large" >
 
@@ -68,8 +68,9 @@
         <select class="w3-select" name="option" w3-round-large>
         <option value="" disabled selected>Next Appointment Date</option><!--Choose Service-->
         </select>
+        <hr>
+        <p> <input class="w3-input w3-border w3-round-large" name="File Report" type="file" placeholder="File Report"></p>
 
-        <button class="w3-button w3-block w3-section w3-light-grey w3-ripple w3-padding">Upload Report File</button>
         <button class="w3-button w3-block w3-light-grey w3-ripple w3-padding w3-round-xxlarge">Send To User</button>
    </div>
 </div>
@@ -149,6 +150,6 @@ function myFunction() {
 
 </div>
   </div>
-
+</div>
 </form>
    {% endblock content %}

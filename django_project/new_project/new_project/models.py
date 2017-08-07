@@ -14,7 +14,7 @@ class UserProfile(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.text
+        return self.user
 
 
 class ProviderProfile(models.Model):
@@ -33,11 +33,11 @@ class ProviderProfile(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.text[:50] + "..."
+        return self.org_name
 
 
 class HealthService(models.Model):
-    """services to be chosen by users"""
+    """services inputed by providers"""
     service_name = models.CharField(max_length=30)
     sub_group = models.CharField(max_length=30)
     details = models.CharField(max_length=200)
@@ -49,7 +49,7 @@ class HealthService(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.text
+        return self.service_name
 
 
 class OrderedService(models.Model):
@@ -65,7 +65,7 @@ class OrderedService(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.text
+        return self.healthier_ID
 
 
 
@@ -79,7 +79,7 @@ class MyHealth(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.text
+        return self.service_date
 
 
 
@@ -100,7 +100,7 @@ class TestReport(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.text
+        return self.report_type
 
 
 class AmbulReport(models.Model):
@@ -118,7 +118,7 @@ class AmbulReport(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.text
+        return self.order_ID
 
 
 class SentReport(models.Model):
@@ -138,6 +138,19 @@ class SentReport(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.text 
+        return self.report_type 
+
+
+
+class ServiceGroup(models.Model):
+    """Initial services for providers to use as template"""
+    servicegroup = models.CharField(max_length=50)
+    servicesubgroup = models.CharField(max_length=30)
+    servicename = models.CharField(max_length=30)
+ 
+
+    def __str__(self):
+        """Return a string representation of the model."""
+        return self.service_group 
 
    			

@@ -23,7 +23,9 @@ from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.backends import ModelBackend,UserModel
-# from .models import Service
+from .forms import ServiceUpdateForm
+from django.views.generic.list import ListView
+from new_project.models import HealthService
 
 class HealthierView(TemplateView):
     template_name = "myhealthier.html"
@@ -33,11 +35,6 @@ class DashboardView(TemplateView):
 
 class HomeView(TemplateView):
     template_name = "index.html"
-
-
-class HomeView(TemplateView):
-    template_name = "index.html"
-
 
 class TrendView(TemplateView):
     template_name = "trend.html"
@@ -369,14 +366,38 @@ class PasswordResetCompleteView(FormView):
 
 class ServiceUpdateView(TemplateView):
     template_name = "service_update.html"
+    def get(self, request,*args, **kwargs):
+          form = ServiceUpdateForm()
+          return render(request, "service_update.html", {})
+      
+    def post(self, request,*args, **kwargs):
+          form = ServiceUpdateForm(request.POST)
+          if form.is_valid():
+            form.save()
+        #      return HttpResponseRedirect(reverse('learning_logs:topics'))
+          context = {'form': form}
+          return render(request, "service_update.html", {})
+
+
+class ServiceDelete(DeleteView):
+    model = HealthService
+    success_url = reverse_lazy('registered-service')     
+      
     # def get_context_data(self, **kwargs):
     #      context = super(ServiceUpdateView, self).get_context_data(**kwargs)
     #      context['modelone'] = HealthService.objects.get(*query logic*)
     #      context['modeltwo'] = ServiceGrouping.objects.get(*query logic*)
     #      return context
 
+
+
 class SendReportView(TemplateView):
     template_name = "send_report.html"
+
+
+
+class RegisteredServiceView(TemplateView):
+    template_name = "registered_service.html"
 
 
 class ProviderProfileView(TemplateView):
@@ -422,8 +443,16 @@ class AmbulanceView(TemplateView):
 class HealthChecksView(TemplateView):
     template_name = "health_checks.html"
 
-class ServiceListView(TemplateView):
+class ServiceListView(ListView):
     template_name = "service_list.html"
+    context_object_name = 'service_list'
+    model=HealthService
+   
+    def get_queryset(self):
+         """Return the top 5 services.""" 
+         return HealthService.objects.order_by('service_name')[:5]
+
+
 
 class EmailOrUsernameBackend(ModelBackend):
 
@@ -435,3 +464,7 @@ class EmailOrUsernameBackend(ModelBackend):
             new_user = user or email
             if new_user.check_password(password):
                 return new_user
+
+
+
+
