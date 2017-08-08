@@ -27,7 +27,7 @@ class ProviderProfile(models.Model):
     country = models.CharField(max_length=200)
     provider_ID = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=200)
-    provider_ratings = models.CharField(max_length=200)
+   # provider_ratings = models.CharField(max_length=200)
 
  
 
@@ -41,12 +41,12 @@ class HealthService(models.Model):
     service_name = models.CharField(max_length=30)
     sub_group = models.CharField(max_length=30)
     details = models.CharField(max_length=200)
-    cost = models.CharField(max_length=200)
-    cost_denom = models.CharField(max_length=200)
+    cost = models.CharField(max_length=20)
+    cost_denom = models.CharField(max_length=50)
     service_ID = models.CharField(max_length=30)
-    days_available = models.CharField(max_length=200)
-    time_available = models.CharField(max_length=200)
-
+    days_available = models.CharField(max_length=100)
+    time_available = models.CharField(max_length=100)
+    providers = models.ManyToManyField(ProviderProfile)
     def __str__(self):
         """Return a string representation of the model."""
         return self.service_name
@@ -153,4 +153,17 @@ class ServiceGroup(models.Model):
         """Return a string representation of the model."""
         return self.service_group 
 
-   			
+
+
+class ProviderRating(models.Model):
+    """Organization providing health services and sending reports to users"""
+    healthier_ID = models.Charfield()
+    provider_ID = models.CharField(max_length=30)
+    org_name = models.CharField(max_length=30)    
+    provider_ratings = models.CharField(max_length=200)
+
+ 
+
+    def __str__(self):
+        """Return a string representation of the model."""
+        return self.org_name		

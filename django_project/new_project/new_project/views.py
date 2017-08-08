@@ -26,6 +26,7 @@ from django.contrib.auth.backends import ModelBackend,UserModel
 from .forms import ServiceUpdateForm
 from django.views.generic.list import ListView
 from new_project.models import HealthService
+from new_project.models import ProviderProfile
 
 class HealthierView(TemplateView):
     template_name = "myhealthier.html"
@@ -447,10 +448,20 @@ class ServiceListView(ListView):
     template_name = "service_list.html"
     context_object_name = 'service_list'
     model=HealthService
-   
+    queryset = HealthService.objects.all()
+   #service_name depends on that chosen by customer
+   #service details,days ,time available, cost for HealthService Model
+   #Organization, Logo, Address, City, Country, Customer Rating from ProviderProfile Model
+   #filter with country, city, cost, customer rating
+    def get_context_data(self, **kwargs):
+         context = super(ServiceListView, self).get_context_data(**kwargs)
+        # context["provider"] = ProviderProfile.objects.get(*query logic*)
+         context["provider"] = ProviderProfile.objects.all()
+         
+         return context
     def get_queryset(self):
          """Return the top 5 services.""" 
-         return HealthService.objects.order_by('service_name')[:5]
+    #     return HealthService.objects.order_by('service_name')[]
 
 
 
