@@ -396,7 +396,7 @@ class ServiceUpdateView(TemplateView):
           form = ServiceUpdateForm(request.POST)
           if form.is_valid():
             form.save()
-          return render(request, "service_update.html", {})
+          return render(request,"service_update.html", {})
 
 
 class ServiceDelete(DeleteView):
