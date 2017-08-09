@@ -24,15 +24,27 @@ from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.backends import ModelBackend,UserModel
 from .forms import ServiceUpdateForm
+from .forms import SentReportForm
 from django.views.generic.list import ListView
 from new_project.models import HealthService
 from new_project.models import ProviderProfile
+from new_project.models import ProviderRating
+from new_project.models import OrderedService
+
 
 class HealthierView(TemplateView):
     template_name = "myhealthier.html"
+    def post(self, request,*args, **kwargs):
+        form = HealthierForm(request.POST)
+        if form.is_valid():
+            form.save()
+        context = {'form': form}
+        return render(request, "myhealthier.html", {})
+
 
 class DashboardView(TemplateView):
     template_name = "dashboard.html"
+#search box code
 
 class HomeView(TemplateView):
     template_name = "index.html"
@@ -55,6 +67,13 @@ class AboutView(TemplateView):
 
 class CartView(TemplateView):
     template_name = "cart.html"
+    def post(self, request,*args, **kwargs):
+        form = CartForm(request.POST)
+        if form.is_valid():
+            form.save()
+        #      return HttpResponseRedirect(reverse('learning_logs:topics'))
+        context = {'form': form}
+        return render(request, "cart.html", {})
 
 
 class ProvregView(TemplateView):
@@ -220,7 +239,7 @@ def provregister_view(request):
             prov = form.save()
             # auth_login(request,user, EmailOrUsernameBackend())
             return redirect('dashboard')
-        import pdb; pdb.set_trace()
+       
     return render(request,'proregister.html',{'provreg_form':form})
     messages.info(request, "Account successfully created")
 
@@ -367,22 +386,22 @@ class PasswordResetCompleteView(FormView):
 
 class ServiceUpdateView(TemplateView):
     template_name = "service_update.html"
-    def get(self, request,*args, **kwargs):
-          form = ServiceUpdateForm()
-          return render(request, "service_update.html", {})
-      
+    def get_context_data(self, **kwargs):
+        context = super(ServiceUpdateView, self).get_context_data(**kwargs)
+         #Category, Group and service_name from ServiceGrouping Model         
+        form = ServiceUpdateForm()
+        return render(request, "service_update.html", {})
+
     def post(self, request,*args, **kwargs):
           form = ServiceUpdateForm(request.POST)
           if form.is_valid():
             form.save()
-        #      return HttpResponseRedirect(reverse('learning_logs:topics'))
-          context = {'form': form}
           return render(request, "service_update.html", {})
 
 
 class ServiceDelete(DeleteView):
     model = HealthService
-    success_url = reverse_lazy('registered-service')     
+    success_url = reverse_lazy('registered_service.html')     
       
     # def get_context_data(self, **kwargs):
     #      context = super(ServiceUpdateView, self).get_context_data(**kwargs)
@@ -394,7 +413,13 @@ class ServiceDelete(DeleteView):
 
 class SendReportView(TemplateView):
     template_name = "send_report.html"
-
+    def post(self, request,*args, **kwargs):
+        form = SentReportForm(request.POST)
+        if form.is_valid():
+            form.save()
+        #      return HttpResponseRedirect(reverse('learning_logs:topics'))
+        context = {'form': form}
+        return render(request, "send_report.html", {})
 
 
 class RegisteredServiceView(TemplateView):
@@ -407,12 +432,24 @@ class ProviderProfileView(TemplateView):
 
 class QuoteRequestView(TemplateView):
     template_name = "quote_request.html"
-
+    def post(self, request,*args, **kwargs):
+        form = QuoteRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+        #      return HttpResponseRedirect(reverse('learning_logs:topics'))
+        context = {'form': form}
+        return render(request, "quote_requests.html", {})
 
 
 class UserOrdersView(TemplateView):
     template_name = "user_orders.html"
-
+    def post(self, request,*args, **kwargs):
+        form = ServiceUpdateForm(request.POST)
+        if form.is_valid():
+            form.save()
+        #      return HttpResponseRedirect(reverse('learning_logs:topics'))
+        context = {'form': form}
+        return render(request, "user_orders.html", {})
 
 class VaccineView(TemplateView):
     template_name = "vaccines.html"
@@ -448,20 +485,32 @@ class ServiceListView(ListView):
     template_name = "service_list.html"
     context_object_name = 'service_list'
     model=HealthService
+    # model=ProviderProfile
+    # model=ProviderRating
+     # model=OrederedService
     queryset = HealthService.objects.all()
-   #service_name depends on that chosen by customer
-   #service details,days ,time available, cost for HealthService Model
-   #Organization, Logo, Address, City, Country, Customer Rating from ProviderProfile Model
-   #filter with country, city, cost, customer rating
+   #service_name is chosen by customer, servicelist cals also be filtered with country, city, cost, customer rating
     def get_context_data(self, **kwargs):
-         context = super(ServiceListView, self).get_context_data(**kwargs)
-        # context["provider"] = ProviderProfile.objects.get(*query logic*)
-         context["provider"] = ProviderProfile.objects.all()
-         
-         return context
-    def get_queryset(self):
-         """Return the top 5 services.""" 
-    #     return HealthService.objects.order_by('service_name')[]
+        context = super(ServiceListView, self).get_context_data(**kwargs)
+         #service details,days ,time available, cost for HealthService Model         
+        context["provider"] = ProviderProfile.objects.all()
+         #Organization, Logo, Address, City, Country,          
+        context["rating"] = ProviderRating.objects.all()
+        #Rating from ProviderRating Model
+
+        return context
+    
+    def make_appointment(request):
+        if request.method == 'POST':
+           form = AppointmentForm(request.POST)
+           if form.is_valid():
+             preferred_time = form.cleaned_data['time']
+             preferred_date = form.cleaned_data['date']
+             appointment = OrderedService.objects.create(
+                            preffered_time = time,
+                            preffered_date = date,)
+             return render(request,'service_list.html',{'AppointmentForm':form})
+
 
 
 

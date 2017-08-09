@@ -56,7 +56,7 @@ class OrderedService(models.Model):
     """A paid for service request to the service organization"""
     healthier_ID = models.CharField(max_length=30)
     service_ID = models.CharField(max_length=30)
-    payment_status = models.CharField(max_length=30)
+    payment_status = models.CharField(max_length=30, choices=(("","Payment Status"),('P',"Paid"),('NP',"Not Paid"),),blank=True)
     cost = models.CharField(max_length=30)
     order_ID = models.CharField(max_length=30)
     preferred_date = models.CharField(max_length=200)
@@ -144,8 +144,8 @@ class SentReport(models.Model):
 
 class ServiceGroup(models.Model):
     """Initial services for providers to use as template"""
-    servicegroup = models.CharField(max_length=50)
-    servicesubgroup = models.CharField(max_length=30)
+    Category = models.CharField(max_length=50)
+    Group = models.CharField(max_length=30)
     servicename = models.CharField(max_length=30)
  
 
@@ -157,7 +157,7 @@ class ServiceGroup(models.Model):
 
 class ProviderRating(models.Model):
     """Organization providing health services and sending reports to users"""
-    healthier_ID = models.Charfield()
+    healthier_ID = models.CharField(max_length=30)
     provider_ID = models.CharField(max_length=30)
     org_name = models.CharField(max_length=30)    
     provider_ratings = models.CharField(max_length=200)
