@@ -33,6 +33,9 @@ from new_project.models import ProviderRating
 from new_project.models import OrderedService
 from new_project.models import Requests
 from new_project.models import ServiceGroup
+from new_project.models import SentReport
+from .forms import SentReportForm
+
 
 
 
@@ -430,12 +433,18 @@ class ServiceDelete(DeleteView):
 
 class SendReportView(TemplateView):
     template_name = "send_report.html"
-    def post(self, request,*args, **kwargs):
-        form = SentReportForm(request.POST)
-        if form.is_valid():
-            form.save()
-        context = {'form': form}
-        return render(request, "send_report.html", {})
+    # def post(self, request,*args, **kwargs):
+    #     form = SentReportForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     context = {'form': form}
+    #     return render(request, "send_report.html", {})
+    def get_context_data(self, **kwargs):
+        context = super(SendReportView, self).get_context_data(**kwargs)
+        context['services'] = SentReport.objects.all()
+        context["form"]= SentReportForm()
+        return context
+
 
 class MeasuredTestView(TemplateView):
     template_name = "mtest_report.html"

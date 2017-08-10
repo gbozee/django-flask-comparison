@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 
 class UserProfile(models.Model):
@@ -27,7 +28,9 @@ class ProviderProfile(models.Model):
     country = models.CharField(max_length=200)
     provider_ID = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=200)
-   # provider_ratings = models.CharField(max_length=200)
+    likes = models.IntegerField(default=0)
+    dislike = models.IntegerField(default=0)
+    
 
  
 
@@ -38,8 +41,8 @@ class ProviderProfile(models.Model):
 
 class HealthService(models.Model):
     """services inputed by providers"""
-    service_name = models.CharField(max_length=30)
     sub_group = models.CharField(max_length=30)
+    service_name = models.CharField(max_length=30)    
     details = models.CharField(max_length=200)
     cost = models.CharField(max_length=20)
     cost_denom = models.CharField(max_length=50)
@@ -59,7 +62,7 @@ class OrderedService(models.Model):
     payment_status = models.CharField(max_length=30, choices=(("","Payment Status"),('P',"Paid"),('NP',"Not Paid"),),blank=True)
     cost = models.CharField(max_length=30)
     order_ID = models.CharField(max_length=30)
-    preferred_date = models.CharField(max_length=200)
+    preferred_date = models.DateField(auto_now=False, auto_now_add=False, )
     preferred_time = models.CharField(max_length=200)
     promo_code = models.CharField(max_length=200)
 
@@ -72,7 +75,7 @@ class OrderedService(models.Model):
 class MyHealth(models.Model):
     """A paid for service request to the service organization"""
     healthier_ID = models.CharField(max_length=30)
-    service_date = models.CharField(max_length=200)
+    service_date = models.DateField(auto_now=False, auto_now_add=False, )
     health_data = models.CharField(max_length=200)
     data_value = models.CharField(max_length=200)
 
@@ -87,7 +90,7 @@ class MyHealth(models.Model):
 class Requests(models.Model):
     """A paid for service request to the service organization"""
     healthier_ID = models.CharField(max_length=200)
-    request_date = models.CharField(max_length=200)    
+    request_date = models.DateField(auto_now=False, auto_now_add=False, )    
     request_type = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     duration = models.CharField(max_length=30)
@@ -103,7 +106,7 @@ class AmbulReport(models.Model):
     order_ID = models.CharField(max_length=30)
     healthier_ID = models.CharField(max_length=30)
     service_ID = models.CharField(max_length=30)
-    pickup_date = models.CharField(max_length=30)
+    pickup_date = models.DateField(auto_now=False, auto_now_add=False, )
     pickup_address = models.CharField(max_length=30)
     pickup_city = models.CharField(max_length=30)
     destination_address = models.CharField(max_length=30)
@@ -120,13 +123,13 @@ class SentReport(models.Model):
     """A paid for service request to the service organization"""
     report_type = models.CharField(max_length=50)
     order_ID = models.CharField(max_length=30)
-    service_date = models.CharField(max_length=30)
+    service_date = models.DateField(auto_now=False, auto_now_add=False, )
     service_time = models.CharField(max_length=30)
     name_staff = models.CharField(max_length=50)
     presenting_complaints = models.TextField(max_length=30)
     exam_findings = models.TextField(max_length=30)
     treatment_plan = models.TextField(max_length=30)
-    vaccine_expirydate = models.CharField(max_length=200)
+    vaccine_expirydate = models.DateField(auto_now=False, auto_now_add=False, )
     vaccine_batchnumber = models.CharField(max_length=200)
     next_appointment = models.CharField(max_length=30)
 
@@ -139,6 +142,26 @@ class SentReport(models.Model):
 
 class ServiceGroup(models.Model):
     """Initial services for providers to use as template"""
+    # SERVICE_CATEGORIES = (
+    #     ('DIAGNOSTICS','Diagnostics’),
+    #     ('VACCINES','Vaccines’),
+    #     ('CLINICS','Clinics’),
+#         (PR,'Procedures’),
+#         (CA,'Cancer Screening’),
+#         (HC,'Health Checks’),
+#         (HT,' Heart Tracker’),
+#         (FM,'Foreign Medical Treatment’),
+#         (MC,'Medical Concierge’),
+#         (HI,'Health Insurance’),
+#         (TD,'Talk To A Doctor’),
+#         (GF,'Gym & Fitness Services’),
+#         (WM,'Weight Management’),
+#         (AM,'Ambulance & Medical Assistance’),
+#         (AA,'Air Ambulance’),
+#         (SH,'Sexual Health’),
+#         (OT,'Others’),
+#    )
+    
     Category = models.CharField(max_length=50)
     Group = models.CharField(max_length=30)
     servicename = models.CharField(max_length=30)
@@ -167,7 +190,7 @@ class MeasuredTest(models.Model):
     """Db for measured tests including range"""
     healthier_ID = models.CharField(max_length=30)
     order_ID = models.CharField(max_length=30)
-    service_date = models.CharField(max_length=30)
+    service_date = models.DateField(auto_now=False, auto_now_add=False, )
     service_test = models.CharField(max_length=30)
     value = models.CharField(max_length=30)
     lower_range = models.CharField(max_length=30)
