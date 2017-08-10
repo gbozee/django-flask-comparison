@@ -3,6 +3,12 @@ from .models import HealthService
 from .models import OrderedService
 from .models import SentReport
 from .models import UserProfile
+from .models import ProviderProfile
+from .models import MeasuredTest
+from .models import Requests
+
+
+
 
 class ServiceUpdateForm(forms.ModelForm):
         class Meta:
@@ -22,9 +28,10 @@ class AppointmentForm(forms.ModelForm):
 #         model = UserProfile
 
 
-# class ProviderProfileForm(forms.ModelForm):
-#     class Meta:
-#         model = ProviderProfile
+class ProviderProfileForm(forms.ModelForm):
+    class Meta:
+        model = ProviderProfile
+        fields = ['user', 'org_name', 'pro_logo', 'address','city','country', 'provider_ID','phone_number']
 
 
 class CartForm(forms.ModelForm):
@@ -43,10 +50,18 @@ class CartForm(forms.ModelForm):
 #         model = MyHealth
 
 
-# class TestReportForm(forms.ModelForm):
-#     class Meta:
-#         model = TestReport
+class RequestsForm(forms.ModelForm):
+    class Meta:
+        model = Requests
+        fields = ['healthier_ID', 'request_date', 'request_type','name','duration', 'rate']
+       
 
+
+class QuoteRequestForm(forms.ModelForm):
+    class Meta:
+        model = Requests
+        fields = ['healthier_ID', 'request_date', 'request_type','name','duration', 'rate']
+       
 
 # class AmbulReportForm(forms.ModelForm):
 #     class Meta:
@@ -56,7 +71,12 @@ class CartForm(forms.ModelForm):
 class SentReportForm(forms.ModelForm):
     class Meta:
         model = SentReport
-        fields = ['report_type', 'order_ID', 'service_date', 'service_time','name_staff','presenting_complaints', 'exam_report','treatment_plan','vaccine_expirydate', 'vaccine_batchnumber','next_appointment']
+        fields = ['report_type', 'order_ID', 'service_date', 'service_time','name_staff','presenting_complaints', 'exam_findings','treatment_plan','vaccine_expirydate', 'vaccine_batchnumber','next_appointment']
+        
+class MeasuredTestForm(forms.ModelForm):
+    class Meta:
+        model = MeasuredTest
+        fields = ['order_ID', 'service_date', 'service_test','value','lower_range', 'upper_range']
         
 
 class HealthierForm(forms.ModelForm):

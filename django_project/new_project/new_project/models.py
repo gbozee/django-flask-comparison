@@ -84,23 +84,18 @@ class MyHealth(models.Model):
 
 
 
-class TestReport(models.Model):
+class Requests(models.Model):
     """A paid for service request to the service organization"""
-    report_type = models.CharField(max_length=30)
-    order_ID = models.CharField(max_length=30)
-    service_date = models.CharField(max_length=200)
-    service_time = models.CharField(max_length=200)
-    attending_staff = models.CharField(max_length=200)
-    presenting_complaints = models.CharField(max_length=30)
-    exam_findings = models.CharField(max_length=30)
-    treatment_plan = models.CharField(max_length=30)
-    vaccine_expiry = models.CharField(max_length=30)
-    vaccine_batch = models.CharField(max_length=30)
-    next_appointment = models.CharField(max_length=30)
-
+    healthier_ID = models.CharField(max_length=200)
+    request_date = models.CharField(max_length=200)    
+    request_type = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    duration = models.CharField(max_length=30)
+    rate = models.CharField(max_length=30)
+   
     def __str__(self):
         """Return a string representation of the model."""
-        return self.report_type
+        return self.request_type
 
 
 class AmbulReport(models.Model):
@@ -129,7 +124,7 @@ class SentReport(models.Model):
     service_time = models.CharField(max_length=30)
     name_staff = models.CharField(max_length=50)
     presenting_complaints = models.TextField(max_length=30)
-    exam_report = models.TextField(max_length=30)
+    exam_findings = models.TextField(max_length=30)
     treatment_plan = models.TextField(max_length=30)
     vaccine_expirydate = models.CharField(max_length=200)
     vaccine_batchnumber = models.CharField(max_length=200)
@@ -151,7 +146,7 @@ class ServiceGroup(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.service_group 
+        return self.Group 
 
 
 
@@ -167,3 +162,18 @@ class ProviderRating(models.Model):
     def __str__(self):
         """Return a string representation of the model."""
         return self.org_name		
+
+class MeasuredTest(models.Model):
+    """Db for measured tests including range"""
+    healthier_ID = models.CharField(max_length=30)
+    order_ID = models.CharField(max_length=30)
+    service_date = models.CharField(max_length=30)
+    service_test = models.CharField(max_length=30)
+    value = models.CharField(max_length=30)
+    lower_range = models.CharField(max_length=30)
+    upper_range = models.CharField(max_length=30)
+
+ 
+    def __str__(self):
+        """Return a string representation of the model."""
+        return self.service_test

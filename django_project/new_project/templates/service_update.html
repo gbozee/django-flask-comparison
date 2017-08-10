@@ -3,10 +3,10 @@
           {% block content %}
 
 
- <form method="post" action="{% url "service_update" %}">
+ <form method="post" action= "{% url 'service_update'  %}">
      {% csrf_token %}
 
-     
+      {{ form }}
 
  <!-- Update Services -->
 
@@ -18,14 +18,11 @@
          <h3 class="w3-center w3-text-black"><i class="fa fa-pencil w3-margin-right w3-xxlarge w3-text-teal"></i> Update Service Information</h3>
 
  <select class="form-control" name="option" >
-    <option value="" disabled selected>Choose Service Group</option><!--Choose Service-->
+    <option value="Group" disabled selected>Choose Service Group</option><!--Choose Service-->
   </select>
-  
-
-
 
  <select class="form-control" name="option" >
-    <option value="Service Subgroup" disabled selected>Choose Service To Update</option><!--Choose Service-->
+    <option value="servicename" disabled selected>Choose Service To Update</option><!--Choose Service-->
   </select>
 
      
@@ -53,9 +50,6 @@
 
 <!--Service ID is auto-generated with the updated service-->
 
-
-
-
   </div>
 </div>
 </div>
@@ -63,5 +57,4 @@
 
 </form>
 
-
-   {% endblock content %}
+ {% endblock content %}

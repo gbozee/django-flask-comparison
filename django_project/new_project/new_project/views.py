@@ -25,11 +25,15 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.backends import ModelBackend,UserModel
 from .forms import ServiceUpdateForm
 from .forms import SentReportForm
+from .forms import RequestsForm
 from django.views.generic.list import ListView
 from new_project.models import HealthService
 from new_project.models import ProviderProfile
 from new_project.models import ProviderRating
 from new_project.models import OrderedService
+from new_project.models import Requests
+from new_project.models import ServiceGroup
+
 
 
 class HealthierView(TemplateView):
@@ -55,7 +59,11 @@ class TrendView(TemplateView):
 
 class RequestsView(TemplateView):
     template_name = "downloads_requests.html"
-
+    def get_context_data(self, **kwargs):
+        context = super(RequestsView, self).get_context_data(**kwargs)
+        form = RequestsForm()
+        context['services'] = Requests.objects.all()
+        return context
 
 class ReportView(TemplateView):
     template_name = "test_reports.html"
@@ -388,9 +396,18 @@ class ServiceUpdateView(TemplateView):
     template_name = "service_update.html"
     def get_context_data(self, **kwargs):
         context = super(ServiceUpdateView, self).get_context_data(**kwargs)
-         #Category, Group and service_name from ServiceGrouping Model         
-        form = ServiceUpdateForm()
-        return render(request, "service_update.html", {})
+        context['services'] = HealthService.objects.all()
+        context["form"]= ServiceUpdateForm()
+        return context
+        #  #Category, Group and service_name from ServiceGrouping Model         
+        # form = ServiceUpdateForm()
+        # context['services'] = HealthService.objects.all()
+        
+        # return context
+        # # servicer= ServiceGroup.objects.all()
+        # # servicer = ServiceGroup.objects.all().order_by('Group')
+        # # return render(request, 'service_update.html', {'servicer': servicer})
+
 
     def post(self, request,*args, **kwargs):
           form = ServiceUpdateForm(request.POST)
@@ -417,9 +434,17 @@ class SendReportView(TemplateView):
         form = SentReportForm(request.POST)
         if form.is_valid():
             form.save()
-        #      return HttpResponseRedirect(reverse('learning_logs:topics'))
         context = {'form': form}
         return render(request, "send_report.html", {})
+
+class MeasuredTestView(TemplateView):
+    template_name = "mtest_report.html"
+    def post(self, request,*args, **kwargs):
+        form = MeasuredTestForm(request.POST)
+        if form.is_valid():
+            form.save()
+        context = {'form': form}
+        return render(request, "mtest_report.html", {})
 
 
 class RegisteredServiceView(TemplateView):
@@ -428,7 +453,12 @@ class RegisteredServiceView(TemplateView):
 
 class ProviderProfileView(TemplateView):
     template_name = "provider_profile.html"
-
+    def post(self, request,*args, **kwargs):
+        form = ProviderProfileForm(request.POST)
+        if form.is_valid():
+            form.save()
+        context = {'form': form}
+        return render(request, "provider_profile.html", {})
 
 class QuoteRequestView(TemplateView):
     template_name = "quote_request.html"
@@ -436,7 +466,6 @@ class QuoteRequestView(TemplateView):
         form = QuoteRequestForm(request.POST)
         if form.is_valid():
             form.save()
-        #      return HttpResponseRedirect(reverse('learning_logs:topics'))
         context = {'form': form}
         return render(request, "quote_requests.html", {})
 
@@ -489,7 +518,8 @@ class ServiceListView(ListView):
     # model=ProviderRating
      # model=OrederedService
     queryset = HealthService.objects.all()
-   #service_name is chosen by customer, servicelist cals also be filtered with country, city, cost, customer rating
+    #queryset = HealthService.objects.filter(service_name='#service chosen by user')
+    #service_name is chosen by customer, servicelist can then be filtered with country, city, cost, customer rating
     def get_context_data(self, **kwargs):
         context = super(ServiceListView, self).get_context_data(**kwargs)
          #service details,days ,time available, cost for HealthService Model         

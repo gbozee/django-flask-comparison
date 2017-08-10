@@ -9,9 +9,13 @@ from .models import ProviderProfile
 from .models import HealthService
 from .models import OrderedService
 from .models import MyHealth
-from .models import TestReport
+from .models import Requests
 from .models import AmbulReport
 from .models import SentReport
+from .models import ServiceGroup
+from .models import ProviderRating
+from .models import MeasuredTest
+
 
 
 
@@ -41,9 +45,9 @@ class MyHealthAdmin(admin.ModelAdmin):
         model = MyHealth
 
 
-class TestReportAdmin(admin.ModelAdmin):
+class RequestsAdmin(admin.ModelAdmin):
     class Meta:
-        model = TestReport
+        model = Requests
 
 
 class AmbulReportAdmin(admin.ModelAdmin):
@@ -56,14 +60,34 @@ class SentReportAdmin(admin.ModelAdmin):
         model = SentReport
 
 
+
+class ServiceGroupAdmin(admin.ModelAdmin):
+    class Meta:
+        model = ServiceGroup
+
+
+class ProviderRatingAdmin(admin.ModelAdmin):
+    class Meta:
+        model = ProviderRating
+
+
+class MeasuredTestAdmin(admin.ModelAdmin):
+    class Meta:
+        model = MeasuredTest
+
+
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(ProviderProfile, ProviderProfileAdmin)
 admin.site.register(HealthService, HealthServiceAdmin)
-admin.site.register(TestReport, TestReportAdmin)
+admin.site.register(Requests, RequestsAdmin)
 admin.site.register(MyHealth, MyHealthAdmin)
 admin.site.register(OrderedService, OrderedServiceAdmin)
 admin.site.register(AmbulReport, AmbulReportAdmin)
 admin.site.register(SentReport, SentReportAdmin)
+admin.site.register(ServiceGroup, ServiceGroupAdmin)
+admin.site.register(ProviderRating, ProviderRatingAdmin)
+admin.site.register(MeasuredTest, MeasuredTestAdmin)
+
 
 
 
