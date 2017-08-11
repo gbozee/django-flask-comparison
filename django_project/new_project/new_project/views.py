@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
+from django.views.generic import ListView
 from django.conf import settings
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
@@ -34,7 +35,10 @@ from new_project.models import OrderedService
 from new_project.models import Requests
 from new_project.models import ServiceGroup
 from new_project.models import SentReport
+from new_project.models import MeasuredTest
 from .forms import SentReportForm
+from .forms import MeasuredTestForm
+
 
 
 
@@ -394,29 +398,25 @@ class PasswordResetCompleteView(FormView):
      template_name = "registration/password_reset_complete.html"
 
 
-
+#Provider Dashboard Views
 class ServiceUpdateView(TemplateView):
     template_name = "service_update.html"
     def get_context_data(self, **kwargs):
         context = super(ServiceUpdateView, self).get_context_data(**kwargs)
         context['services'] = HealthService.objects.all()
-        context["form"]= ServiceUpdateForm()
+        if 'form' not in context:
+            context["form"]= ServiceUpdateForm()
+        #context = {'form': form}
         return context
-        #  #Category, Group and service_name from ServiceGrouping Model         
-        # form = ServiceUpdateForm()
-        # context['services'] = HealthService.objects.all()
-        
-        # return context
-        # # servicer= ServiceGroup.objects.all()
-        # # servicer = ServiceGroup.objects.all().order_by('Group')
-        # # return render(request, 'service_update.html', {'servicer': servicer})
-
+      
 
     def post(self, request,*args, **kwargs):
-          form = ServiceUpdateForm(request.POST)
-          if form.is_valid():
+        form = ServiceUpdateForm(request.POST)
+        if form.is_valid():
             form.save()
-          return render(request,"service_update.html", {})
+            messages.info(request, "Form Successful")
+            return redirect('service_update')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class ServiceDelete(DeleteView):
@@ -433,12 +433,7 @@ class ServiceDelete(DeleteView):
 
 class SendReportView(TemplateView):
     template_name = "send_report.html"
-    # def post(self, request,*args, **kwargs):
-    #     form = SentReportForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #     context = {'form': form}
-    #     return render(request, "send_report.html", {})
+
     def get_context_data(self, **kwargs):
         context = super(SendReportView, self).get_context_data(**kwargs)
         context['services'] = SentReport.objects.all()
@@ -446,8 +441,24 @@ class SendReportView(TemplateView):
         return context
 
 
+    def post(self, request,*args, **kwargs):
+        form = SentReportForm(request.POST)
+        if form.is_valid():
+            form.save()
+        context = {'form': form}
+        return render(request, "send_report.html", {})
+
+
+
 class MeasuredTestView(TemplateView):
     template_name = "mtest_report.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(MeasuredTestView, self).get_context_data(**kwargs)
+        context['mtest'] = MeasuredTest.objects.all()
+        context["form"]= MeasuredTestForm()
+        return context
+
     def post(self, request,*args, **kwargs):
         form = MeasuredTestForm(request.POST)
         if form.is_valid():
@@ -479,10 +490,10 @@ class QuoteRequestView(TemplateView):
         return render(request, "quote_requests.html", {})
 
 
-class UserOrdersView(TemplateView):
+class UserOrdersView(ListView):
     template_name = "user_orders.html"
     def post(self, request,*args, **kwargs):
-        form = ServiceUpdateForm(request.POST)
+        form = ServiceListForm(request.POST)
         if form.is_valid():
             form.save()
         #      return HttpResponseRedirect(reverse('learning_logs:topics'))
@@ -525,7 +536,7 @@ class ServiceListView(ListView):
     model=HealthService
     # model=ProviderProfile
     # model=ProviderRating
-     # model=OrederedService
+    # model=OrderedService
     queryset = HealthService.objects.all()
     #queryset = HealthService.objects.filter(service_name='#service chosen by user')
     #service_name is chosen by customer, servicelist can then be filtered with country, city, cost, customer rating
@@ -533,9 +544,9 @@ class ServiceListView(ListView):
         context = super(ServiceListView, self).get_context_data(**kwargs)
          #service details,days ,time available, cost for HealthService Model         
         context["provider"] = ProviderProfile.objects.all()
-         #Organization, Logo, Address, City, Country,          
-        context["rating"] = ProviderRating.objects.all()
-        #Rating from ProviderRating Model
+         #Organization, Logo, Address, City, Country, Likes, Dislikes         
+        # context["rating"] = ProviderRating.objects.all()
+        # #Rating from ProviderRating Model
 
         return context
     
@@ -564,6 +575,7 @@ class EmailOrUsernameBackend(ModelBackend):
             if new_user.check_password(password):
                 return new_user
 
-
+              
+              
 
 
