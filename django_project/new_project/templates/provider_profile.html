@@ -3,7 +3,7 @@
           {% block content %}
 
 
- <form method="post" action="{% url "provider_profile" %}">
+ <form method="post" action="{% url 'provider_profile' %}">
      {% csrf_token %}
 
 
@@ -15,6 +15,7 @@
          <h3 class="w3-center w3-text-black"><i class="fa fa-envelope w3-margin-right w3-xxlarge w3-text-teal"></i> Provider Profile</h3>
       
          <div class="w3-padding w3-margin w3-card-4 w3-light-grey">
+                     {{ form.as_p }}
           <img src="hthumbnail.png"  alt="Provider Logo" style="width:30%;min-height:50px;max-height:300px">
          <span <i class="fa fa-home w3-margin-right w3-large w3-text-teal">
            <input class="w3-input w3-border w3-round-large" name="cost" type="text" placeholder="Address"></i></span>

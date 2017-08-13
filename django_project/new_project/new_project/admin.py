@@ -4,8 +4,8 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 
-from .models import UserProfile
-from .models import ProviderProfile
+from .models import Customer
+from .models import Provider
 from .models import HealthService
 from .models import OrderedService
 from .models import MyHealth
@@ -20,14 +20,14 @@ from .models import MeasuredTest
 
 
 
-class UserProfileAdmin(admin.ModelAdmin):
+class CustomerAdmin(admin.ModelAdmin):
     class Meta:
-        model = UserProfile
+        model = Customer
 
 
-class ProviderProfileAdmin(admin.ModelAdmin):
+class ProviderAdmin(admin.ModelAdmin):
     class Meta:
-        model = ProviderProfile
+        model = Provider
 
 
 class HealthServiceAdmin(admin.ModelAdmin):
@@ -76,8 +76,8 @@ class MeasuredTestAdmin(admin.ModelAdmin):
         model = MeasuredTest
 
 
-admin.site.register(UserProfile, UserProfileAdmin)
-admin.site.register(ProviderProfile, ProviderProfileAdmin)
+admin.site.register(Customer, CustomerAdmin)
+admin.site.register(Provider, ProviderAdmin)
 admin.site.register(HealthService, HealthServiceAdmin)
 admin.site.register(Requests, RequestsAdmin)
 admin.site.register(MyHealth, MyHealthAdmin)

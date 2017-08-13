@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 
 
-class UserProfile(models.Model):
+class Customer(models.Model):
     user= models.OneToOneField(User, related_name='user_profile')
     """A customer interested in health services using Healthier"""
     
@@ -18,7 +18,7 @@ class UserProfile(models.Model):
         return self.user
 
 
-class ProviderProfile(models.Model):
+class Provider(models.Model):
     """Organization providing health services and sending reports to users"""
     user = models.OneToOneField(User, related_name='provider_profile')
     org_name = models.CharField(max_length=30)
@@ -50,7 +50,8 @@ class HealthService(models.Model):
     service_ID = models.CharField(max_length=30)
     days_available = models.CharField(max_length=100)
     time_available = models.CharField(max_length=100)
-    providers = models.ManyToManyField(ProviderProfile)
+    providers = models.ManyToManyField(Provider)
+
     def __str__(self):
         """Return a string representation of the model."""
         return self.Service
@@ -58,14 +59,18 @@ class HealthService(models.Model):
 
 class OrderedService(models.Model):
     """A paid for service request to the service organization"""
-    healthier_ID = models.ForeignKey("UserProfile")
+    healthier_ID = models.ForeignKey("Customer")
     service_ID = models.CharField(max_length=30)
     payment_status = models.CharField(max_length=30, choices=(("","Payment Status"),('P',"Paid"),('NP',"Not Paid"),),blank=True)
     cost = models.CharField(max_length=30)
     order_ID = models.CharField(max_length=30)
     preferred_date = models.DateField(auto_now=False, auto_now_add=False, )
     preferred_time = models.CharField(max_length=200)
-    promo_code = models.CharField(max_length=200)
+    promo_code = models.CharField(max_length=10)
+    order_date = models.DateField(auto_now=False, auto_now_add=False, )
+    # service = models.CharField(max_length=50)
+    # serv_provider = models.CharField(max_length=50)
+    
 
     def __str__(self):
         """Return a string representation of the model."""
@@ -75,7 +80,7 @@ class OrderedService(models.Model):
 
 class MyHealth(models.Model):
     """A paid for service request to the service organization"""
-    healthier_ID = models.ForeignKey("UserProfile")
+    healthier_ID = models.ForeignKey("Customer")
     service_date = models.DateField(auto_now=False, auto_now_add=False, )
     health_data = models.CharField(max_length=200)
     data_value = models.CharField(max_length=200)
@@ -90,7 +95,7 @@ class MyHealth(models.Model):
 
 class Requests(models.Model):
     """A paid for service request to the service organization"""
-    healthier_ID = models.ForeignKey("UserProfile")
+    healthier_ID = models.ForeignKey("Customer")
     request_date = models.DateField(auto_now=False, auto_now_add=False, )    
     request_type = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -105,7 +110,7 @@ class Requests(models.Model):
 class AmbulReport(models.Model):
     """A paid for service request to the service organization"""
     order_ID = models.ForeignKey("OrderedService")
-    healthier_ID = models.ForeignKey("UserProfile")
+    healthier_ID = models.ForeignKey("Customer")
     service_ID = models.CharField(max_length=30)
     pickup_date = models.DateField(auto_now=False, auto_now_add=False, )
     pickup_address = models.CharField(max_length=30)
@@ -132,8 +137,8 @@ class SentReport(models.Model):
     treatment_plan = models.TextField(max_length=30)
     vaccine_expirydate = models.DateField(auto_now=False, auto_now_add=False, )
     vaccine_batchnumber = models.CharField(max_length=200)
-    next_appointment = models.CharField(max_length=30)
-    healthier_ID = models.ForeignKey("UserProfile")        
+    next_appointment = models.DateField(auto_now=False, auto_now_add=False, )
+    healthier_ID = models.ForeignKey("Customer")        
 
 
     def __str__(self):
@@ -170,7 +175,7 @@ class ProviderRating(models.Model):
 
 class MeasuredTest(models.Model):
     """Db for measured tests including range"""
-    healthier_ID = models.ForeignKey("UserProfile")
+    healthier_ID = models.ForeignKey("Customer")
     order_ID = models.ForeignKey("OrderedService")
     service_date = models.DateField(auto_now=False, auto_now_add=False, )
     service_test = models.CharField(max_length=30)
