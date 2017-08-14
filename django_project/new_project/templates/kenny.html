@@ -1,0 +1,84 @@
+
+///using jquery - javascript framework ---- 
+//# represents id of your html control i.e id="GroupDropDown" is represented as $('#GroupDropDown') when using jquery to get the control for manipulation
+
+
+/// runs when website is loaded and registers two actions 1.) category select change action 2.) group select change action
+
+$(document).ready(function () {
+
+    // when category select is changed fetch all groups that belong to category
+    $('#CategoryDropDownID').on('change', function () {
+
+        /// clear group and service dropdownlist
+
+        $('#GroupDropDown').html();
+        $('#ServiceDropDown').html();
+
+        /// get ID of selected item in category drowpdown to search database and fetch all groups in this category and bind group db 
+
+        var categoryid = $(this).val();
+        var data = new Object();
+        data.CategoryID = categoryid;
+
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: "url of function",
+            data: data,
+            success: function (data) {
+
+                ///OPTION 1 if return is list of object
+                for (var i = 0; i < data.length; i++) {
+                    $('#GroupDropDown').append('<option value="' + data[i].ID + '">' + data[i].Name + '</option>')
+                }
+
+
+                ///OPTION 2 if return is already formated string of <option></option> 
+                $('#GroupDropDown').html(data);
+            }
+        });
+    });
+
+
+
+
+    // when group select is changed fetch all services that belong to category and group
+    /// same process for groupdown --- only difference is will be posting both category and group ids for server processing to your database
+
+    $('#GroupDropDown').on('change', function () {
+
+        /// clear service dropdownlist
+
+      
+        $('#ServiceDropDown').html();
+
+        /// get ID of selected item in category drowpdown to search database and fetch all groups in this category and bind group db 
+
+        var categoryid = $('#CategoryDropDownID').val();
+        var groupid = $(this).val();
+        var data = new Object();
+        data.CategoryID = categoryid;
+        data.GroupID = groupid;
+
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: "url of function",
+            data: data,
+            success: function (data) {
+
+                ///OPTION 1 if return is list of object
+                for (var i = 0; i < data.length; i++) {
+                    $('#ServiceDropDown').append('<option value="' + data[i].ID + '">' + data[i].Name + '</option>')
+                }
+
+
+                ///OPTION 2 if return is already formated string of <option></option> 
+                $('#ServiceDropDown').html(data);
+            }
+        });
+    });
+});

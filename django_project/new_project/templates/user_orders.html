@@ -3,16 +3,21 @@
 {% load staticfiles %}
           {% block content %}
  <!--Orders-->
+<form method="get" action= "{% url 'user_orders'  %}">
+     {% csrf_token %}
 
-    <div class="w3-panel  w3-topbar w3-bottombar w3-border-amber "id="orders">
-     <h3 class="w3-center w3-text-black" > Customer Orders </h3>
+    <div class="w3-container  w3-topbar w3-bottombar w3-border-amber >
+     <h2 class= "w3-center w3-text-black" > Customer Orders </h2>
+         <div class="w3-card-4 w3-deep-orange w3-padding-32 w3-round-large " >
+    <span onclick="this.parentElement.style.display='none'"class="w3-button w3-white w3-small w3-right">×</span>
 
-         <div class="w3-card-4 w3-deep-orange w3-padding-32 w3-round-large w3-section" id="korder1">
-    <span onclick="this.parentElement.style.display='none'"
-    class="w3-button w3-white w3-small w3-right">×</span>
-
-    <span class="w3-large">First Name</span><br>
-    <span class="w3-large"> Surname</span><br>
+     <ul>
+{% for orderedservice in order_list %} 
+<li>{{ orderedservice.service_ID }}</li>
+{% endfor %} 
+</ul>
+    <span class="w3-large">First Name</span>
+    <span class="w3-large"> Surname</span>
     <span>Service</span>
     <p>Date of Birth</p>
    <p> Healthier ID </p>
@@ -21,47 +26,9 @@
     <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
     <p>Preferred Date </p>
  <p>   Preferred Time </p>
-            <button class="w3-button w3-red w3-block w3-padding w3-round-xxlarge">Confirm Customer Order</button>
+            <button class="w3-button w3-black w3-block w3-padding w3-round-xxlarge">Confirm Customer Order</button>
 
   </div>
-
-   <div class="w3-card-4 w3-green w3-padding-32 w3-round-large w3-section"id="korder2">
-    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-white w3-small w3-right">×</span>
- <h3 class="w3-center w3-text-black"> Service</h3>
-    <span class="w3-large">First Name</span><br>
-    <span class="w3-large"> Surname</span><br>
-    <span>Service</span>
-    <p>Date of Birth</p>
-   <p> Healthier ID </p>
-    <p><b>Service Information:</b> London is the most populous city in the United Kingdom,
-  with a metropolitan area of over 9 million inhabitants</p>
-    <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
-    <p>Preferred Date </p>
- <p>   Preferred Time </p>
-            <button class="w3-button w3-red w3-block w3-padding w3-round-xxlarge">Confirm Customer Order</button>
-
-  </div>
-
-         <div class="w3-card-4 w3-grey w3-padding w3-round-large w3-section"id="korder3">
-    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-white w3-small w3-right">×</span>
-    <div class="w3-row ">
-         <h3 class="w3-center w3-text-black"> Service</h3>
-      <div class="w3-col s6">
-          <p>Service</p>
-          <p>First Name</p>
-         <p> Surname</p>
-         <p>Date of Birth</p>
-         <p> Healthier ID </p>
-    </div>
-        <div class="w3-col s6">
-
-           <p><b>Service Information:</b> London is the most populous city in the United Kingdom,
-  with a metropolitan area of over 9 million inhabitants</p>
-           <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
-           <p>Preferred Date </p>
-           <p>   Preferred Time </p>
-            <button class="w3-button w3-red w3-block w3-padding w3-round-xxlarge">Confirm Customer Order</button>
- </div>
-  </div>
-</div>
+          </div>
+          </form>
            {% endblock content %}

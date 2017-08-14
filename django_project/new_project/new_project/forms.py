@@ -1,7 +1,7 @@
 from django import forms
 from .models import (HealthService,OrderedService,SentReport,Customer,
 Provider,MeasuredTest,Requests,ServiceGroup,)
-from django.forms import (TextInput,DateInput,SelectDateWidget,extras)
+from django.forms import (TextInput,DateInput,SelectDateWidget,extras, )
 from django.contrib.admin.widgets import AdminDateWidget
 
 
@@ -62,7 +62,14 @@ class HealthierForm(forms.ModelForm):
         fields = ['user', 'healthier_ID', 'phone_number',
                   'date_birth', 'gender', 'text']
 
-#Dashboard Forms                  
+#Dashboard Forms 
+
+
+class UserOrderForm(forms.ModelForm):
+    class Meta:
+        model = OrderedService
+        fields = ['healthier_ID', 'service_ID', 'payment_status','cost','order_ID','preferred_date','preferred_time','promo_code',
+                  'order_date', ]                 
 
 class QuoteRequestForm(forms.ModelForm):
     healthier_ID = forms.ModelChoiceField(queryset=Requests.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
@@ -76,10 +83,17 @@ class QuoteRequestForm(forms.ModelForm):
 
 
 class SentReportForm(forms.ModelForm):
+    CONSULTATION = 'CO'
+    VACCINE = 'VA'
+    MICROBIOLOGY = 'MI'
+    OTHERS = 'OT'
     healthier_ID = forms.ModelChoiceField(queryset=SentReport.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))        
-    report_type = forms.ModelChoiceField(queryset=SentReport.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))    
+    report_type = forms.ChoiceField(choices=((CONSULTATION,'Consultation'),
+                           (VACCINE, 'Vaccine'),
+                           (MICROBIOLOGY, 'Microbiology'),
+                           (OTHERS,'Other Reports')), widget=forms.Select(attrs={'class':'form-control'}))
     order_ID = forms.ModelChoiceField(queryset=SentReport.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
-   # service_date = forms.DateField(widget=extras.SelectDateWidget),
+    service_date = forms.DateField(widget=extras.SelectDateWidget),
     service_date = forms.DateField(widget=AdminDateWidget())
     
     class Meta:
@@ -88,16 +102,16 @@ class SentReportForm(forms.ModelForm):
                   'exam_findings', 'treatment_plan', 'vaccine_expirydate', 'vaccine_batchnumber', 'next_appointment']
       
         widgets = {
-           # 'service_date': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            #'report_type': select(attrs={'class': "form-control"}),
            # 'service_date' : DateInput(attrs={'type': 'date'}),
             'service_time': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'name_staff': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'presenting_complaints': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'exam_findings': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'treatment_plan': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'vaccine_expirydate': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'vaccine_expirydate': DateInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'vaccine_batchnumber': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'next_appointment': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'next_appointment': DateInput(attrs={'class': "w3-input w3-border w3-round-large"}),
         }
 
 

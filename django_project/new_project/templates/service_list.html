@@ -1,56 +1,20 @@
 {% extends "index.html" %}
 {% load staticfiles %}
           {% block content %}
-
+ 
           <!--Service List-->
 
-    <div class=" w3-panel  w3-topbar w3-bottombar w3-border-amber  w3-white " >
-        <h3 class="w3-center w3-text-black" > Service Providers </h3>
-         <input type="text" id="servsearch" onkeyup="myFunction()" placeholder="Search By Service, City & Country" class="pull-right w3-block w3-round-large w3-margin ">
-
-     <br>
-
-    <div class=" w3-card-4  w3-white w3-margin w3-padding w3-round-large w3-section" id="bgimg-6" style="background-image: url('{% static "new_project/python6.jpeg" %}')">
-    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-white w3-small w3-right">×</span>
-    <div class="w3-row-padding ">
-      <div class="w3-col s6 w3-text-white">
-
-    <img src="img_avatar3.png" alt="Provider Logo" class="w3-left w3-round-xlarge w3-margin-right" style="width:50%"> <!--Service Provider Logo-->
-    <span class="w3-large"> Service</span><br>
-    <span>Organization</span>
-    <p><b>Service Information:</b></p>
-    <p>Days Available</p>
-    <p>Time Available</p>
-    <p>Address</p>
-
-
-          <p><tag class="w3-white" ><i class="fa fa-thumbs-down">5 Dislikes</i> 
-    <i class="fa fa-thumbs-up">30 Likes</i> </tag></p>
-   </div>
-
-        <div class="w3-col s6 w3-text-white">
-         <p placeholder="City">City.</p>
-      <p placeholder="Country">Country.</p>
-     <p><b>Service Cost:</b>  NGN 5,000 </p><!--Cost and Denomination from the service DB -->
-
- <select class="w3-select w3-margin" name="option" w3-round-large>
-    <option value="" disabled selected>Choose Preferred Time</option><!--Time Chooser:Choose preferred time to access service-->
-
-  </select>
-     <br>
-     <select class="w3-select w3-margin " name="option" >
-    <option value="" disabled selected>Choose Date</option><!--Date Chooser:Choose date for user to enjoy service-->
-
-  </select>
-     <br>
-       <button class="w3-button w3-block w3-light-grey w3-round-xxlarge"> CheckOut Cart</button>
-  </div>
-
-       </div>
- </div>
-
-
-  <div class="w3-light-grey w3-card-4 w3-padding-32 w3-margin w3-round-large w3-section" id="bgimg-7" style="background-image: url('{% static "new_project/python7.jpeg" %}')">
+    <div class=" w3-panel  w3-padding-64 w3-topbar w3-bottombar w3-border-amber  w3-blue-grey " >
+        <h2 class="w3-center w3-text-black" > Services </h2>
+         <input type="text" id="servsearch" onkeyup="myFunction()" placeholder="Search By Service, City & Country" class="w3-block w3-padding w3-round-large  ">
+ 
+ 
+         <form method="post" action="{% url 'service_list' %}">
+     {% csrf_token %}
+     {% for queryset in HealthService %}
+     ({HealthService.Service})
+ {% endfor %}
+  <div class="w3-light-grey w3-card-4 w3-round-large " id="bgimg-7" style="background-image: url('{% static "new_project/python7.jpeg" %}')">
 <header class="w3-container w3-light-grey">
       <span onclick="this.parentElement.style.display='none'"
     class="w3-button w3-white w3-small w3-right">×</span>
@@ -66,7 +30,7 @@
 
   </select>
 
-                                       <select class="w3-select" name="option" w3-round-large>
+    <select class="w3-select" name="option" w3-round-large>
     <option value="" disabled selected>Choose Date</option><!--Date Chooser:Choose date for user to enjoy service-->
 
   </select>
@@ -78,78 +42,11 @@
   
        <button class="w3-button w3-block w3-light-grey w3-round-xxlarge"> CheckOut Cart</button>
 </footer>
-
+</form>
   </div>
     
-
-
-
-   <!--Checkout cart button adds service and cost to the checkout table, where its automatically added for payment-->
-
-    <div class=" w3-blue-gray w3-card-4 w3-margin w3-padding-32 w3-round-large w3-section" id="bgimg-2" style="background-image: url('{% static "new_project/python2.png"%}')";>
-
-    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-white w3-small w3-right">×</span>
-    <img src="img_avatar3.png" alt="Provider Logo" class="w3-left w3-round w3-margin-right" style="width:60px"> <!--Service Provider Logo-->
-    <span class="w3-large"> Service</span><br>
-    <span>Organization</span>
-    <p><b>Service Information:</b> Service<> Available on <>Days Available<>between <>Time Available<>at <>Address<>.</p>
-    <div class="w3-margin-bottom">  <p placeholder="City">City.</p>
-             <p placeholder="Country">Country.</p> </div>
-     <>Service Cost<> is <>Cost Denomination<>NGN 5,000
-   <div class="w3-row-padding" w3-display-bottommiddle>
-  <div class="w3-third">
- <select class="w3-select" name="option" w3-round-large>
-    <option value="" disabled selected>Choose Preferred Time</option><!--Time Chooser:Choose preferred time to access service-->
-
-  </select> </div>
-          <div class="w3-third">
-                                       <select class="w3-select" name="option" w3-round-large>
-    <option value="" disabled selected>Choose Date</option><!--Date Chooser:Choose date for user to enjoy service-->
-
-  </select>
-              </div>
- <p><button class="w3-xlarge w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>
-    <button class="w3-xlarge w3-blue" ><i class="fa fa-thumbs-up"></i> 20</button></p>
-          <div class="w3-third">
-       <button class="w3-button w3-block w3-light-grey"> CheckOut Cart</button>
-  </div>
-       </div>
- </div>
-
-  <div class="w3-blue-gray w3-card-4 w3-margin w3-padding-32 w3-round-large w3-section"  id="bgimg-2" style="background-image: url('{% static "new_project/python2.png"%}')";>
-
-    <span onclick="this.parentElement.style.display='none'" class="w3-button w3-white w3-small w3-right">×</span>
-    <img src="img_avatar3.png" alt="Provider Logo" class="w3-left w3-round w3-margin-right" style="width:60px">
-
-    <span class="w3-large"> Service</span><br>
-    <span>Organization</span>
- <div w3-display-left>   <p><b>Service Information:</b> Service<> Available on <>Days Available<>between <>Time Available<>at <>Address<>City<><>Country</p></div>
-  <>Service Cost<> is <>Cost Denomination<>NGN 2,000
-   <div class="w3-row-padding" w3-display-bottommiddle>
-  <div class="w3-third">
- <select class="w3-select" name="option" w3-round-large>
-    <option value="" disabled selected>Choose Preferred Time</option><!--Time Chooser:Choose preferred time to access service-->
-
-  </select> </div>
-          <div class="w3-third">
-                                       <select class="w3-select" name="option" w3-round-large>
-    <option value="" disabled selected>Choose Date</option><!--Date Chooser:Choose date for user to enjoy service-->
-
-  </select>
-   <p><tag class="w3-white" ><i class="fa fa-thumbs-down">5 Dislikes</i> 
-    <i class="fa fa-thumbs-up">30 Likes</i> </tag></p>
-              </div>
-          <div class="w3-third">
-       <button class="w3-button w3-block w3-light-grey w3-round-xxlarge"> CheckOut Cart</button>
-
-   <!--Checkout cart button adds service and cost to the checkout table, where its automatically added for payment-->
-  </div>
-          </div>
-
-   </div>
-
-
-  </div>
-
-
+   <!--Checkout cart button adds service and cost to the checkout table, where its automatically added for payment-->  
+<p>Likes: {(instance.likes.count)}
+</p>
+  
    {% endblock content %}

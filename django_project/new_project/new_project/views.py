@@ -428,7 +428,7 @@ class HealthChecksView(TemplateView):
 class ServiceListView(ListView):
     template_name = "service_list.html"
     context_object_name = 'service_list'
-    queryset = HealthService.objects.all()
+    queryset = HealthService.objects.filter(Service = '')
     #queryset = HealthService.objects.filter(service_name='#service chosen by user')
     #service_name is chosen by customer, servicelist can then be filtered with country, city, cost, customer rating
     def get_context_data(self, **kwargs):
@@ -436,7 +436,7 @@ class ServiceListView(ListView):
          #service details,days ,time available, cost for HealthService Model         
         context["provider"] = Provider.objects.all()
          #Organization, Logo, Address, City, Country, Likes, Dislikes         
-        # context["rating"] = ProviderRating.objects.all()
+        #context["appoint"] = ProviderRating.objects.all()
         # #Rating from ProviderRating Model
 
         return context
@@ -496,11 +496,11 @@ class UserOrdersView(ListView):
     template_name = "user_orders.html"
     context_object_name = 'order_list'
     model=OrderedService
-    queryset = OrderedService.objects.all()
+    queryset = OrderedService.objects.order_by('order_date')
 
     def get_queryset(self):
         """Return the last five published questions.""" 
-        return OrderedService.objects.order_by('-service_ID')[:5]
+        return OrderedService.objects.order_by('order_date')[:5]
 
 
 class ServiceUpdateView(TemplateView):

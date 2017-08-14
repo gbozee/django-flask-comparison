@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
+from django.conf import settings
 
 
 class Customer(models.Model):
@@ -15,7 +16,7 @@ class Customer(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.user
+        return self.healthier_ID
 
 
 class Provider(models.Model):
@@ -28,10 +29,8 @@ class Provider(models.Model):
     country = models.CharField(max_length=200)
     provider_ID = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=200)
-    likes = models.IntegerField(default=0)
     dislike = models.IntegerField(default=0)
-    
-
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_likes')
  
 
     def __str__(self):
@@ -50,7 +49,8 @@ class HealthService(models.Model):
     service_ID = models.CharField(max_length=30)
     days_available = models.CharField(max_length=100)
     time_available = models.CharField(max_length=100)
-    providers = models.ManyToManyField(Provider)
+    provider_ID = models.ForeignKey("Provider",on_delete=models.CASCADE, blank=True,null=True,)
+
 
     def __str__(self):
         """Return a string representation of the model."""
@@ -126,8 +126,17 @@ class AmbulReport(models.Model):
 
 
 class SentReport(models.Model):
+    CONSULTATION = 'CO'
+    VACCINE = 'VA'
+    MICROBIOLOGY = 'MI'
+    OTHERS = 'OT'
+    REPORT_TYPE_CHOICES = (
+                           (CONSULTATION,'Consultation'),
+                           (VACCINE, 'Vaccine'),
+                           (MICROBIOLOGY, 'Microbiology'),
+                           (OTHERS,'Other Reports'),)
     """A paid for service request to the service organization"""
-    report_type = models.CharField(max_length=50)
+    report_type = models.CharField(max_length=50,  choices = REPORT_TYPE_CHOICES,)
     order_ID = models.ForeignKey("OrderedService")
     service_date = models.DateField(auto_now=False, auto_now_add=False, )
     service_time = models.CharField(max_length=30)
@@ -143,7 +152,7 @@ class SentReport(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.report_type 
+        return self.report_type
 
 
 

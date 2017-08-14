@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='sentreport',
             name='healthier_ID',
-            field=models.ForeignKey(default=int, on_delete=django.db.models.deletion.CASCADE, to='new_project.UserProfile'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='new_project.UserProfile'),
             preserve_default=False,
         ),
         migrations.AlterField(
