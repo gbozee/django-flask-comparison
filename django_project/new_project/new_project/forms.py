@@ -1,6 +1,6 @@
 from django import forms
 from .models import (HealthService,OrderedService,SentReport,Customer,
-Provider,MeasuredTest,Requests,ServiceGroup,)
+Provider,MeasuredTest,Requests,ServiceGroup,ProviderRating)
 from django.forms import (TextInput,DateInput,SelectDateWidget,extras, )
 from django.contrib.admin.widgets import AdminDateWidget
 
@@ -26,7 +26,7 @@ class CartForm(forms.ModelForm):
 class ServiceListForm(forms.ModelForm):
     class Meta:
         model = Provider
-        fields = ['org_name', 'pro_logo', 'address', 'city', 'country', 'likes', 'dislike', ] 
+        fields = ['org_name', 'pro_logo', 'address', 'city', 'country',  ] 
 
 
 class ServiceListForm1(forms.ModelForm):
@@ -39,6 +39,12 @@ class AppointmentForm(forms.ModelForm):
         model = OrderedService
         fields = ['preferred_time', 'preferred_date', 'cost', ]
 
+
+
+class RatingForm(forms.ModelForm):
+    class Meta:
+        model = ProviderRating
+        fields = ['likes', 'dislikes', 'comments', ]
 
 # class MyHealthForm(forms.ModelForm):
 #     class Meta:

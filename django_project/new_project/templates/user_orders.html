@@ -10,25 +10,36 @@
      <h2 class= "w3-center w3-text-black" > Customer Orders </h2>
          <div class="w3-card-4 w3-deep-orange w3-padding-32 w3-round-large " >
     <span onclick="this.parentElement.style.display='none'"class="w3-button w3-white w3-small w3-right">×</span>
+        <div class="w3-col m6 w3-container  w3-card-4  w3-padding-16 w3-text-black w3-round-large" >
 
-     <ul>
-{% for orderedservice in order_list %} 
-<li>{{ orderedservice.service_ID }}</li>
-{% endfor %} 
-</ul>
-    <span class="w3-large">First Name</span>
-    <span class="w3-large"> Surname</span>
-    <span>Service</span>
-    <p>Date of Birth</p>
-   <p> Healthier ID </p>
-    <p><b>Service Information:</b> London is the most populous city in the United Kingdom,
-  with a metropolitan area of over 9 million inhabitants</p>
-    <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
-    <p>Preferred Date </p>
- <p>   Preferred Time </p>
-            <button class="w3-button w3-black w3-block w3-padding w3-round-xxlarge">Confirm Customer Order</button>
+            <ul>
+                  {% for order in orders %} 
+              <li>{{ order.healthier_ID }}</li>
+              <li>{{ order.first_name }}</li
+              <li>{{ order.last_name }}</li>
+              <li>{{ order.date_birth }}</li> 
+              <li>{{ order.service_ID }}</li>
 
-  </div>
+            
+                  </div>
+                <div class="w3-col m6 w3-container  w3-card-4  w3-padding-16 w3-text-black w3-round-large" >
+      
+      
+              <li>{{ order.payment_status }}</li>
+              <li>{{ order.cost }}</li>
+              <li>{{ order.order_ID }}</li>
+              <li>{{ order.preferred_date }}</li>
+              <li>{{ order.preferred_time }}</li>
+              <li>{{ order.promo_code }}</li>
+              <li>{{ order.order_date }}</li>
+                  {% endfor %} 
+              </ul>
+             <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
+  
+             <button class="w3-button w3-black w3-block w3-padding w3-round-xxlarge">Confirm Customer Order</button>
+              
+          </div>
+          </div>
           </div>
           </form>
            {% endblock content %}

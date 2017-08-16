@@ -15,18 +15,22 @@
          <h3 class="w3-center w3-text-black"><i class="fa fa-envelope w3-margin-right w3-xxlarge w3-text-teal"></i> Provider Profile</h3>
       
          <div class="w3-padding w3-margin w3-card-4 w3-light-grey">
-                     {{ form.as_p }}
-          <img src="hthumbnail.png"  alt="Provider Logo" style="width:30%;min-height:50px;max-height:300px">
-         <span <i class="fa fa-home w3-margin-right w3-large w3-text-teal">
-           <input class="w3-input w3-border w3-round-large" name="cost" type="text" placeholder="Address"></i></span>
-          <p id="providercity"><i class="fa fa-home fa-fw w3-margin-right w3-large w3-text-teal"></i>City</p>
-          <p id="providercountry"><i class="fa fa-globe fa-fw w3-margin-right w3-large w3-text-teal"></i>Country</p>
-          <p id="provideremail"><i class="fa fa-envelope fa-fw w3-margin-right w3-large w3-text-teal"></i>you@healthier.com</p>
-          <p id="providerphone"><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-teal"></i>081777910**</p>
-          <p id="providerpassword"><i class="fa fa-eye fa-fw w3-margin-right w3-large w3-text-teal"></i>passw**d</p>
-          <button type="submit" class="w3-button w3-black w3-block w3-padding w3-round-xxlarge">Save Profile</button><br>
+ 
+          {% for profile in provider_profile %}
+        <i><b>Organization:</i></b> {{ profile.org_name }}<br>
+        <img src="/images{{ profile.pro_logo }}" height="300" width="300"></img><br>
+        <i class="fa fa-home fa-fw><b>Address:</i></b> {{ profile.address }}<br>
+        <i class="fa fa-home fa-fw><b>City:</i></b> {{ profile.city }}<br><br>
+        <i class="fa fa-globe fa-fw><b>Country:</i></b> {{ profile.country }}<br><br>
+        <i class="fa fa-phone fa-fw ><b>Phone Number:</i></b> {{ profile.phone_number }}<br><br>
+        <i class="fa fa-envelope fa-fw><b>Provider Email:</i></b> {{ profile.email }}<br><br>
+        <i class="fa fa-eye fa-fw ><b>Password:</i></b> {{ profile.password }}<br><br>  
+        <i class="fa fa-eye fa-fw ><b>Website:</i></b> {{ profile.portal }}<br><br>       
+             
+               
+{% endfor %}
           <button class="w3-button w3-blue-gray w3-block w3-padding w3-round-xxlarge">Edit Profile</button>
-          <hr>
+         
 <p><b>Register Account Details</b></p>
    </div>
     </div>

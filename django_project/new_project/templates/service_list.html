@@ -7,24 +7,30 @@
     <div class=" w3-panel  w3-padding-64 w3-topbar w3-bottombar w3-border-amber  w3-blue-grey " >
         <h2 class="w3-center w3-text-black" > Services </h2>
          <input type="text" id="servsearch" onkeyup="myFunction()" placeholder="Search By Service, City & Country" class="w3-block w3-padding w3-round-large  ">
- 
- 
          <form method="post" action="{% url 'service_list' %}">
      {% csrf_token %}
-     {% for queryset in HealthService %}
-     ({HealthService.Service})
- {% endfor %}
+    
+
+ {% for service in services %}
+        <i><b>Organization:</i></b> {{ service.org }}<br>
+        <i><b>Service:</i></b> {{ service.name }}<br>        
+        <img src="/images{{ service.logo }}" height="300" width="300"></img><br>
+        <i><b>Service Information:</i></b> {{ service.details }}<br>
+        <p><i>{{ service.denom }}{{ service.cost }}</i></p>
+        <i><b>Service Days:</i></b> {{ service.days }}<br><br>
+        <i><b>Service Time:</i></b> {{ service.time }}<br><br>
+        <i><b>Address:</i></b> {{ service.address }}<br><br>
+        <i><b>City:</i></b> {{ service.city }}<br><br>
+        <i><b>Country:</i></b> {{ service.country }}<br><br>       
+{% endfor %}
+
   <div class="w3-light-grey w3-card-4 w3-round-large " id="bgimg-7" style="background-image: url('{% static "new_project/python7.jpeg" %}')">
 <header class="w3-container w3-light-grey">
       <span onclick="this.parentElement.style.display='none'"
     class="w3-button w3-white w3-small w3-right">×</span>
-    <p>Organization</p>
-     <p > Service</p>
 </header>
 
-<div class="w3-container w3-text-white">
-     <img src="img_avatar3.png" alt="Provider Logo" class="w3-left w3-round-xlarge w3-margin-right" style="width:20%">
-     <p><b>Service Information:</b> Service<> Available on <>Days Available<>between <>Time Available<>at <>Address<>City<><>Country</p>
+
       <select class="w3-select" name="option" w3-round-large>
     <option value="" disabled selected>Choose Preferred Time</option><!--Time Chooser:Choose preferred time to access service-->
 
@@ -34,8 +40,7 @@
     <option value="" disabled selected>Choose Date</option><!--Date Chooser:Choose date for user to enjoy service-->
 
   </select>
-        <>Service Cost<> is <>Cost Denomination<>NGN 2,000
-</div>
+
  <p><button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>
     <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> 20</button></p>
 <footer class="w3-container w3-light-grey">
@@ -45,8 +50,5 @@
 </form>
   </div>
     
-   <!--Checkout cart button adds service and cost to the checkout table, where its automatically added for payment-->  
-<p>Likes: {(instance.likes.count)}
-</p>
   
    {% endblock content %}

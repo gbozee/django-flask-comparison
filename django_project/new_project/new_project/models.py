@@ -29,8 +29,8 @@ class Provider(models.Model):
     country = models.CharField(max_length=200)
     provider_ID = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=200)
-    dislike = models.IntegerField(default=0)
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_likes')
+    portal = models.URLField(blank = True, null = True)
+    # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_likes')
  
 
     def __str__(self):
@@ -74,7 +74,7 @@ class OrderedService(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.healthier_ID
+        return self.service_ID
 
 
 
@@ -172,10 +172,10 @@ class ServiceGroup(models.Model):
 class ProviderRating(models.Model):
     """Organization providing health services and sending reports to users"""
     healthier_ID = models.CharField(max_length=30)
-    provider_ID = models.CharField(max_length=30)
-    org_name = models.CharField(max_length=30)    
-    provider_ratings = models.CharField(max_length=200)
-
+    provider = models.ForeignKey("Provider")
+    comments = models.CharField(max_length=200, null=True, blank=True)
+    dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_dislikes')
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_likes')
  
 
     def __str__(self):

@@ -428,18 +428,33 @@ class HealthChecksView(TemplateView):
 class ServiceListView(ListView):
     template_name = "service_list.html"
     context_object_name = 'service_list'
-    queryset = HealthService.objects.filter(Service = '')
+    model = HealthService
+    # queryset = HealthService.objects.filter(Service = '')
     #queryset = HealthService.objects.filter(service_name='#service chosen by user')
     #service_name is chosen by customer, servicelist can then be filtered with country, city, cost, customer rating
+    def get_queryset(self):
+        query = super().get_queryset()
+        get_params = self.kwargs.get('service_name')
+        # get_params = self.request.GET
+        # if 'service_name' in get_params:
+        #     value = get_params['service_name']
+        if get_params:
+            import pdb;
+            return query.filter(Service=get_params)
+        return query
+
     def get_context_data(self, **kwargs):
         context = super(ServiceListView, self).get_context_data(**kwargs)
-         #service details,days ,time available, cost for HealthService Model         
-        context["provider"] = Provider.objects.all()
-         #Organization, Logo, Address, City, Country, Likes, Dislikes         
-        #context["appoint"] = ProviderRating.objects.all()
-        # #Rating from ProviderRating Model
-
+        context["services"] = HealthService.objects.all()
         return context
+     #service details,days ,time available, cost for HealthService Model         
+        # aa  = Provider.objects.all()
+        # context["provider"] = Provider.objects.all()
+        #  #Organization, Logo, Address, City, Country, Likes, Dislikes         
+        # #context["appoint"] = ProviderRating.objects.all()
+        # # #Rating from ProviderRating Model
+
+        #return context
     
     def make_appointment(request):
         if request.method == 'POST':
@@ -494,13 +509,13 @@ class QuoteRequestView(TemplateView):
 
 class UserOrdersView(ListView):
     template_name = "user_orders.html"
-    context_object_name = 'order_list'
     model=OrderedService
-    queryset = OrderedService.objects.order_by('order_date')
+    def get_context_data(self, **kwargs):
+        context = super(UserOrdersView, self).get_context_data(**kwargs)
+        context["orders"] = OrderedService.objects.all()
+        return context
 
-    def get_queryset(self):
-        """Return the last five published questions.""" 
-        return OrderedService.objects.order_by('order_date')[:5]
+
 
 
 class ServiceUpdateView(TemplateView):
@@ -518,7 +533,7 @@ class ServiceUpdateView(TemplateView):
         form = ServiceUpdateForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.info(request, "Form Successful")
+            messages.info(request, " Service Registered !!")
             return redirect('service_update')
         return self.render_to_response(self.get_context_data(form=form))
 
@@ -544,8 +559,11 @@ class SendReportView(TemplateView):
         form = SentReportForm(request.POST)
         if form.is_valid():
             form.save()
-        context = {'form': form}
-        return render(request, "send_report.html", {})
+            messages.info(request, " Report Sent To User !!")            
+        #context = {'form': form}
+        #return render(request, "send_report.html", {})
+            return redirect('send_report')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 
@@ -571,11 +589,18 @@ class RegisteredServiceView(TemplateView):
 
 
 
-class ProviderProfileView(UpdateView):
+class ProviderProfileView(TemplateView):
     template_name = "provider_profile.html"
-    model = Provider
-    fields = ['user', 'org_name', 'pro_logo', 'address','city', 'country', 'provider_ID', 'phone_number']
-    template_name_suffix = 'ProviderProfileForm'  
+    model=Provider
+    def get_context_data(self, **kwargs):
+        context = super(ProviderProfileView, self).get_context_data(**kwargs)
+        context["orders"] = Provider.objects.all()
+        return context 
+
+    # template_name = "provider_profile.html"
+    # model = Provider
+    # fields = ['user', 'org_name', 'pro_logo', 'address','city', 'country', 'provider_ID', 'phone_number']
+    # template_name_suffix = 'ProviderProfileForm'  
 
     # def get(self, request, **kwargs):
     #     self.object = ProviderProfile.objects.get(id=self.kwargs['id'])

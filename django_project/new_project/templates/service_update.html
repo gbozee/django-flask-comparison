@@ -10,7 +10,11 @@
  <!-- Update Services -->
 
       <div class="w3-panel  w3-topbar w3-bottombar w3-border-amber " id="bgimg-4" style="background-image: url('{% static "new_project/python4.jpg" %}')">
-
+ {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+  {% endif %}
     <div class="w3-card-4  w3-light-grey w3-padding w3-round-large w3-margin">
    <div class="w3-container w3-round-large ">
 

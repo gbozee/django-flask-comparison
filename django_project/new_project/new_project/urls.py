@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^vaccines/$', views.VaccineView.as_view(), name='vaccines'),
     url(r'^cancer_screen/$', views.CancerScreenView.as_view(), name='cancer_screen'),
     url(r'^service_list/$', views.ServiceListView.as_view(), name='service_list'),
+    url(r'^service_list/(?P<service_name>[\w-]+)/$', views.ServiceListView.as_view(), name='s_list_name'),
     url(r'^clinics/$', views.ClinicsView.as_view(), name='clinics'),
     url(r'^diagnostics/$', views.DiagnosticsView.as_view(), name='diagnostics'),
     url(r'^health_checks/$', views.HealthChecksView.as_view(), name='health_checks'),
