@@ -8,38 +8,53 @@
 
     <div class="w3-container  w3-topbar w3-bottombar w3-border-amber >
      <h2 class= "w3-center w3-text-black" > Customer Orders </h2>
-         <div class="w3-card-4 w3-deep-orange w3-padding-32 w3-round-large " >
-    <span onclick="this.parentElement.style.display='none'"class="w3-button w3-white w3-small w3-right">×</span>
-        <div class="w3-col m6 w3-container  w3-card-4  w3-padding-16 w3-text-black w3-round-large" >
-
-            <ul>
-                  {% for order in orders %} 
-              <li>{{ order.healthier_ID }}</li>
-              <li>{{ order.first_name }}</li
-              <li>{{ order.last_name }}</li>
-              <li>{{ order.date_birth }}</li> 
-              <li>{{ order.service_ID }}</li>
-
+           
+         
+         <div class="w3-card-4 w3-deep-orange w3-margin w3-padding-32 w3-round-large " >
+            <span onclick="this.parentElement.style.display='none'"class="w3-button w3-white w3-small w3-right">×</span>
+             {% for order in orders %} 
+<div class="w3-row-padding w3-card-4 w3-margin w3-white">
+    <div class="w3-col m6 w3-container  w3-card-4  w3-padding w3-text-black w3-center w3-round-large" >
+             
+         <img src="/images{{ order.healthier_ID.user_pix }}" height="100" width="100"></img><br><br>
+        
+         <p>   <b>First Name:</b> {{ order.healthier_ID.first_name }}              
+                  
+            <b>Surname:</b> {{ order.healthier_ID.last_name }}<br><br>    </p>           
+              
+        <p>    <b>Date of Birth:</b> {{ order.healthier_ID.date_birth }}  
+            <b>Gender:</b> {{ order.healthier_ID.gender }}<br><br> </p>
+         <p>   <b>Customer Phone No:</b> {{ order.healthier_ID.phone_number }}</p>            
             
-                  </div>
-                <div class="w3-col m6 w3-container  w3-card-4  w3-padding-16 w3-text-black w3-round-large" >
+           </div>
+
+
+    <div class="w3-col m6 w3-container  w3-card-4  w3-padding-16 w3-text-black w3-round-large" >
+ 
+    
+<b>Service :</b> {{ order.service_ID }}<br><br>               
       
-      
-              <li>{{ order.payment_status }}</li>
-              <li>{{ order.cost }}</li>
-              <li>{{ order.order_ID }}</li>
-              <li>{{ order.preferred_date }}</li>
-              <li>{{ order.preferred_time }}</li>
-              <li>{{ order.promo_code }}</li>
-              <li>{{ order.order_date }}</li>
-                  {% endfor %} 
-              </ul>
-             <p>Payment Status <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > Paid</span></p>
+            <p><b>Payment Status:</b> <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > {{ order.payment_status }}</span></p>
+              
+            <b>Service Cost:</b> {{ order.cost }}<br><br>               
+              
+              
+         <p>   <b>Preferred Date:</b> {{ order.preferred_date }}<br><br>               
+              
+            <b>Preferred Time:</b> {{ order.preferred_time }}<br><br>   </p>            
+              
+            <b>Promo Code:</b> {{  order.promo_code }}<br><br>               
+                      
+
   
              <button class="w3-button w3-black w3-block w3-padding w3-round-xxlarge">Confirm Customer Order</button>
-              
           </div>
+        
+    </div>
+    
+             
+               {% endfor %} 
           </div>
-          </div>
+      
           </form>
            {% endblock content %}

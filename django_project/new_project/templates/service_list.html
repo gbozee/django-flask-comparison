@@ -4,49 +4,56 @@
  
           <!--Service List-->
 
-    <div class=" w3-panel  w3-padding-64 w3-topbar w3-bottombar w3-border-amber  w3-blue-grey " >
+    <div class=" w3-panel  w3-padding-64 w3-topbar w3-bottombar w3-border-amber  w3-light-grey " >
+         {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+  {% endif %}
         <h2 class="w3-center w3-text-black" > Services </h2>
          <input type="text" id="servsearch" onkeyup="myFunction()" placeholder="Search By Service, City & Country" class="w3-block w3-padding w3-round-large  ">
          <form method="post" action="{% url 'service_list' %}">
      {% csrf_token %}
-    
-
- {% for service in services %}
-        <i><b>Organization:</i></b> {{ service.org }}<br>
-        <i><b>Service:</i></b> {{ service.name }}<br>        
-        <img src="/images{{ service.logo }}" height="300" width="300"></img><br>
-        <i><b>Service Information:</i></b> {{ service.details }}<br>
-        <p><i>{{ service.denom }}{{ service.cost }}</i></p>
-        <i><b>Service Days:</i></b> {{ service.days }}<br><br>
-        <i><b>Service Time:</i></b> {{ service.time }}<br><br>
-        <i><b>Address:</i></b> {{ service.address }}<br><br>
-        <i><b>City:</i></b> {{ service.city }}<br><br>
-        <i><b>Country:</i></b> {{ service.country }}<br><br>       
-{% endfor %}
-
-  <div class="w3-light-grey w3-card-4 w3-round-large " id="bgimg-7" style="background-image: url('{% static "new_project/python7.jpeg" %}')">
-<header class="w3-container w3-light-grey">
-      <span onclick="this.parentElement.style.display='none'"
+     {% for service in services %}
+  <div class="w3-light-grey w3-card-4 w3-round-large w3-margin w3-text-white w3-border-white" id="bgimg-7" style="background-image: url('{% static "new_project/python7.jpeg" %}')">
+<div class="w3-row w3-padding-32 w3-card-4 w3-margin w3-white">
+     <span onclick="this.parentElement.style.display='none'"
     class="w3-button w3-white w3-small w3-right">×</span>
-</header>
+    
+    <div class="w3-col m6 w3-container  w3-padding w3-text-black w3-center w3-round-large" >
+   
+      <p>  
+        <img class="w3-image w3-rounded" src="/images{{ service.provider_ID.pro_logo }}" height="150" width="150"></img><br><br> 
+    <b>Organization:</b> {{ service.provider_ID.org_name }}<br><br>
+        <b>Address:</b> {{ service.provider_ID.address }}<br><br>
+        <b>City:</b> {{ service.provider_ID.city }}<br><br>
+        <b>Country:</b> {{ service.provider_ID.country }}<br><br> 
+        <b>Contact Number:</b> {{ service.provider_ID.phone_number }}<br><br> 
+    <button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>
+    <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> 20</button> </p>     
+</div>
 
-
-      <select class="w3-select" name="option" w3-round-large>
-    <option value="" disabled selected>Choose Preferred Time</option><!--Time Chooser:Choose preferred time to access service-->
-
-  </select>
+    <div class="w3-col m6 w3-container  w3-padding w3-text-black w3-center w3-round-large" >
+               <p>   <b>Service:</b> {{ service.Service }}<br>   <br>             
+        <b>Service Information:</b> {{ service.details }}<br>   <br> 
+        <b>Service Cost:</b>{{ service.cost_denom }}{{ service.cost }}<br>   <br> 
+        <b>Service Days:</b> {{ service.days_available }}<br><br>
+        <b>Service Time:</b> {{ service.time_available }}<br><br>
+        <select class="w3-select" name="option" w3-round-large>
+          <option value="" disabled selected>Choose Preferred Time</option><!--Time Chooser:Choose preferred time to access service-->
+          </select>
 
     <select class="w3-select" name="option" w3-round-large>
     <option value="" disabled selected>Choose Date</option><!--Date Chooser:Choose date for user to enjoy service-->
+    </select>
+      </p>
+          <button type ="submit" class="w3-button w3-block w3-blue-gray w3-ripple w3-padding w3-round-xxlarge">Checkout Cart</button>
 
-  </select>
+ </div>
+    </div>
 
- <p><button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>
-    <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> 20</button></p>
-<footer class="w3-container w3-light-grey">
-  
-       <button class="w3-button w3-block w3-light-grey w3-round-xxlarge"> CheckOut Cart</button>
-</footer>
+      </div>
+      {% endfor %}
 </form>
   </div>
     

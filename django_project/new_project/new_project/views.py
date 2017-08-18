@@ -380,11 +380,18 @@ class AboutView(TemplateView):
 
 class CartView(TemplateView):
     template_name = "cart.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(CartView, self).get_context_data(**kwargs)
+        context["services"] = OrderedService.objects.all()
+        return context
+
     def post(self, request,*args, **kwargs):
         form = CartForm(request.POST)
         if form.is_valid():
             form.save()
         #      return HttpResponseRedirect(reverse('learning_logs:topics'))
+        return redirect('index')
         context = {'form': form}
         return render(request, "cart.html", {})
 
@@ -427,7 +434,7 @@ class HealthChecksView(TemplateView):
 
 class ServiceListView(ListView):
     template_name = "service_list.html"
-    context_object_name = 'service_list'
+    #context_object_name = 'service_list'
     model = HealthService
     # queryset = HealthService.objects.filter(Service = '')
     #queryset = HealthService.objects.filter(service_name='#service chosen by user')
@@ -446,28 +453,27 @@ class ServiceListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ServiceListView, self).get_context_data(**kwargs)
         context["services"] = HealthService.objects.all()
+        
         return context
-     #service details,days ,time available, cost for HealthService Model         
-        # aa  = Provider.objects.all()
-        # context["provider"] = Provider.objects.all()
-        #  #Organization, Logo, Address, City, Country, Likes, Dislikes         
-        # #context["appoint"] = ProviderRating.objects.all()
-        # # #Rating from ProviderRating Model
-
-        #return context
+     
     
-    def make_appointment(request):
-        if request.method == 'POST':
-           form = AppointmentForm(request.POST)
-           if form.is_valid():
-             preferred_time = form.cleaned_data['time']
-             preferred_date = form.cleaned_data['date']
-             appointment = OrderedService.objects.create(
-                            preffered_time = time,
-                            preffered_date = date,)
-             return render(request,'service_list.html',{'AppointmentForm':form})
+    # def save_service(request):
+    #     if request.method == 'POST':
+    #        form = ServiceListForm(request.POST)
+    #        if form.is_valid():
+    #         form.save()               
+    #         messages.info(request, " Service Ordered !!")                         
+    #         savedserv = OrderedService.objects.create()
+    #         return render(request,'cart.html',{'form':form})
 
-
+    def saveserv(self, request,*args, **kwargs):
+        model = OrderedService
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, " Service Ordered !!")
+            return redirect('cart')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class EmailOrUsernameBackend(ModelBackend):
@@ -594,7 +600,7 @@ class ProviderProfileView(TemplateView):
     model=Provider
     def get_context_data(self, **kwargs):
         context = super(ProviderProfileView, self).get_context_data(**kwargs)
-        context["orders"] = Provider.objects.all()
+        context["profile"] = Provider.objects.get(id = User)
         return context 
 
     # template_name = "provider_profile.html"
@@ -603,15 +609,15 @@ class ProviderProfileView(TemplateView):
     # template_name_suffix = 'ProviderProfileForm'  
 
     # def get(self, request, **kwargs):
-    #     self.object = ProviderProfile.objects.get(id=self.kwargs['id'])
+    #     self.object = Provider.objects.get(id=self.kwargs['id'])
     #     form_class = self.get_form_class()
     #     form = self.get_form(form_class)
     #     context = self.get_context_data(object=self.object, form=form)
     #     return self.render_to_response(context)
 
-    # def get_object(self, queryset=None):
-    #     obj = ProviderProfile.objects.get(id=self.kwargs['id'])
-    #     return obj
+    def get_object(self, queryset=None):
+        obj = Provider.objects.get(id=self.kwargs['provider_profile'])
+        return obj
               
 
     # def get_object(self, queryset=None): 

@@ -13,6 +13,7 @@ class Customer(models.Model):
     date_birth = models.DateField(auto_now=False, auto_now_add=False, )
     gender = models.CharField(max_length=5, choices=(("","Select Gender"),('M',"Male"),("F","Female"),),blank=True)
     text =models.CharField(max_length=200)
+    user_pix = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100,null=True, blank=True,)
 
     def __str__(self):
         """Return a string representation of the model."""
@@ -60,21 +61,20 @@ class HealthService(models.Model):
 class OrderedService(models.Model):
     """A paid for service request to the service organization"""
     healthier_ID = models.ForeignKey("Customer")
-    service_ID = models.CharField(max_length=30)
-    payment_status = models.CharField(max_length=30, choices=(("","Payment Status"),('P',"Paid"),('NP',"Not Paid"),),blank=True)
+    serv_ordered = models.CharField(max_length=30)
+    payment_status = models.CharField(max_length=30, choices=(("","Payment Status"),('Paid',"P"),('Not Paid',"NP"),),blank=True)
     cost = models.CharField(max_length=30)
     order_ID = models.CharField(max_length=30)
     preferred_date = models.DateField(auto_now=False, auto_now_add=False, )
     preferred_time = models.CharField(max_length=200)
     promo_code = models.CharField(max_length=10)
     order_date = models.DateField(auto_now=False, auto_now_add=False, )
-    # service = models.CharField(max_length=50)
-    # serv_provider = models.CharField(max_length=50)
+    serv_provider = models.ForeignKey("Provider",on_delete=models.CASCADE, blank=True,null=True,)
     
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.service_ID
+        return self.serv_ordered
 
 
 
@@ -172,7 +172,7 @@ class ServiceGroup(models.Model):
 class ProviderRating(models.Model):
     """Organization providing health services and sending reports to users"""
     healthier_ID = models.CharField(max_length=30)
-    provider = models.ForeignKey("Provider")
+    provider = models.ForeignKey("Provider", on_delete=models.CASCADE, null =True)
     comments = models.CharField(max_length=200, null=True, blank=True)
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_dislikes')
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_likes')

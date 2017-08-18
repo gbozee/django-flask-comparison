@@ -16,19 +16,17 @@
       
          <div class="w3-padding w3-margin w3-card-4 w3-light-grey">
  
-          {% for profile in provider_profile %}
+        {% for profile in profile %}
         <i><b>Organization:</i></b> {{ profile.org_name }}<br>
-        <img src="/images{{ profile.pro_logo }}" height="300" width="300"></img><br>
+        <img src="/images{{ profile.pro_logo }}" height="200" width="200"></img><br>
         <i class="fa fa-home fa-fw><b>Address:</i></b> {{ profile.address }}<br>
-        <i class="fa fa-home fa-fw><b>City:</i></b> {{ profile.city }}<br><br>
+        <i class="fa fa-home fa-fw><b>City:</i></b> {{ profile.city }}<br>
         <i class="fa fa-globe fa-fw><b>Country:</i></b> {{ profile.country }}<br><br>
         <i class="fa fa-phone fa-fw ><b>Phone Number:</i></b> {{ profile.phone_number }}<br><br>
         <i class="fa fa-envelope fa-fw><b>Provider Email:</i></b> {{ profile.email }}<br><br>
         <i class="fa fa-eye fa-fw ><b>Password:</i></b> {{ profile.password }}<br><br>  
-        <i class="fa fa-eye fa-fw ><b>Website:</i></b> {{ profile.portal }}<br><br>       
-             
-               
-{% endfor %}
+        <i class="fa fa-eye fa-fw ><b>Website:</i></b> {{ profile.portal }}<br><br>               
+       {% endfor %}
           <button class="w3-button w3-blue-gray w3-block w3-padding w3-round-xxlarge">Edit Profile</button>
          
 <p><b>Register Account Details</b></p>
