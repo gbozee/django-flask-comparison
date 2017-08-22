@@ -175,7 +175,7 @@ class ServiceGroup(models.Model):
 
 class ProviderRating(models.Model):
     """Organization providing health services and sending reports to users"""
-    healthier_ID = models.ForeignKey("Customer", on_delete=models.CASCADE, null =True)
+    healthier_ID = models.ForeignKey("Customer", on_delete=models.CASCADE, null =True, related_name='customer_rating')
     provider = models.ForeignKey("Provider", on_delete=models.CASCADE, null =True)
     comments = models.CharField(max_length=200, null=True, blank=True)
     dislikes = models.IntegerField(blank=True, default=0)
