@@ -29,8 +29,8 @@
         <b>City:</b> {{ service.provider_ID.city }}<br><br>
         <b>Country:</b> {{ service.provider_ID.country }}<br><br> 
         <b>Contact Number:</b> {{ service.provider_ID.phone_number }}<br><br> 
-    <button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>
-    <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> 20</button> </p>     
+    <button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> {{ service.provider_ID.dislikes }}</button>
+    <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> {{ service.days_available }}</button> </p>     
 </div>
 
     <div class="w3-col m6 w3-container  w3-padding w3-text-black w3-center w3-round-large" >

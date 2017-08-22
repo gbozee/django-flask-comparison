@@ -1,0 +1,85 @@
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
+body, html {
+    height: 100%;
+    line-height: 1.2;
+}
+
+/* Full height image header */
+.bgimg-1 {
+    background-position: center;
+    background-size: cover;
+ 
+    background-image:url('{{ STATIC_URL }}/images/python1.jpg');
+    min-height: 100%;
+}
+
+.bgimg-2 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python2.png");
+    min-height: 100%;
+}
+
+.bgimg-3 {
+    background-position: center;
+    background-size: cover;
+    
+    background-image:url('{{ STATIC_URL }}/images/python3.jpg');
+    min-height: 100%;
+}
+
+.bgimg-4 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python4.jpg");
+    min-height: 100%;
+}
+.bgimg-5 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("dashboard.jpeg");
+    min-height: 100%;
+}
+
+.bgimg-6 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python6.jpeg");
+    min-height: 100%;
+}
+
+
+.bgimg-7 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python7.jpeg");
+    min-height: 100%;
+}
+
+
+.bgimg-8 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python8.jpeg");
+    min-height: 100%;
+}
+
+.bgimg-9 {
+    background-position: center;
+    background-size: cover;
+    background-image: url("python9.jpeg");
+    min-height: 100%;
+}
+
+.loginbg-1 {
+    background-position: center;
+    background-size: cover;
+ 
+    background-image:url('{{ STATIC_URL }}/images/python1.jpg');
+    min-height: 100%;
+}
+.w3-bar .w3-button {
+    padding: 16px;
+}
+
+.city {display:none;}

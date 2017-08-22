@@ -147,7 +147,8 @@ class SentReport(models.Model):
     vaccine_expirydate = models.DateField(auto_now=False, auto_now_add=False, )
     vaccine_batchnumber = models.CharField(max_length=200)
     next_appointment = models.DateField(auto_now=False, auto_now_add=False, )
-    healthier_ID = models.ForeignKey("Customer")        
+    healthier_ID = models.ForeignKey("Customer") 
+    file_upload = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True)       
 
 
     def __str__(self):
@@ -161,26 +162,29 @@ class ServiceGroup(models.Model):
     Categories = models.CharField(max_length=50)
     Group = models.CharField(max_length=30)
     servicename = models.CharField(max_length=30)
+    category_ID = models.CharField(max_length=30, blank =True)
+    group_ID = models.CharField(max_length=30, blank=True)
  
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.Categories 
+        return self.servicename
+    
 
 
 
 class ProviderRating(models.Model):
     """Organization providing health services and sending reports to users"""
-    healthier_ID = models.CharField(max_length=30)
+    healthier_ID = models.ForeignKey("Customer", on_delete=models.CASCADE, null =True)
     provider = models.ForeignKey("Provider", on_delete=models.CASCADE, null =True)
     comments = models.CharField(max_length=200, null=True, blank=True)
-    dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_dislikes')
-    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_likes')
+    dislikes = models.IntegerField(blank=True, default=0)
+    likes = models.IntegerField(blank=True,default=0)
  
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.org_name		
+        return self.comments		
 
 class MeasuredTest(models.Model):
     """Db for measured tests including range"""

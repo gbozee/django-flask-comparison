@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.contrib import admin
-
-
+from import_export.admin import ImportExportModelAdmin
+from import_export import resources
 from .models import Customer
 from .models import Provider
 from .models import HealthService
@@ -61,9 +61,23 @@ class SentReportAdmin(admin.ModelAdmin):
 
 
 
-class ServiceGroupAdmin(admin.ModelAdmin):
+
+class ServiceGroupResource(resources.ModelResource):
+    def get_instance(self, instance_loaders, row):
+        return False
+
     class Meta:
         model = ServiceGroup
+        fields = ('id', 'category', 'group', 'service', 'group_id', 'category_id',)
+
+
+class ServiceGroupAdmin(ImportExportModelAdmin):
+        resource_class = ServiceGroupResource
+    
+    # class Meta:
+    #     model = ServiceGroup
+    #     import_id_fields = ('category id',)
+    #     fields = ('id','category', 'group', 'service', 'group id', 'category id',)
 
 
 class ProviderRatingAdmin(admin.ModelAdmin):
@@ -74,6 +88,10 @@ class ProviderRatingAdmin(admin.ModelAdmin):
 class MeasuredTestAdmin(admin.ModelAdmin):
     class Meta:
         model = MeasuredTest
+
+
+# class BookAdmin(ImportExportModelAdmin):
+#     resource_class = ServiceResource
 
 
 admin.site.register(Customer, CustomerAdmin)

@@ -380,10 +380,13 @@ class AboutView(TemplateView):
 
 class CartView(TemplateView):
     template_name = "cart.html"
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(CartView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
-        context["services"] = OrderedService.objects.all()
+        context["servicost"] = OrderedService.objects.all()
         return context
 
     def post(self, request,*args, **kwargs):
@@ -457,14 +460,13 @@ class ServiceListView(ListView):
         return context
      
     
-    # def save_service(request):
-    #     if request.method == 'POST':
-    #        form = ServiceListForm(request.POST)
-    #        if form.is_valid():
-    #         form.save()               
-    #         messages.info(request, " Service Ordered !!")                         
-    #         savedserv = OrderedService.objects.create()
-    #         return render(request,'cart.html',{'form':form})
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(ServiceListView, self).get_context_data(**kwargs)
+    #     context["dislikes"] = ProviderRating.objects.filter(my_object__id=my_object.id, rate=-1).count()
+    #     context["likes"] = ProviderRating.objects.filter(my_object__id=my_object.id, rate=1).count()
+    #     return context 
+    
 
     def saveserv(self, request,*args, **kwargs):
         model = OrderedService
@@ -562,7 +564,7 @@ class SendReportView(TemplateView):
 
 
     def post(self, request,*args, **kwargs):
-        form = SentReportForm(request.POST)
+        form = SentReportForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.info(request, " Report Sent To User !!")            
@@ -629,3 +631,5 @@ class ProviderProfileView(TemplateView):
     #     context = {}        
     #     self.object = context.save(clean) 
     #     return super(UserUpdate, self).form_valid(form)
+
+

@@ -3,6 +3,7 @@ from .models import (HealthService,OrderedService,SentReport,Customer,
 Provider,MeasuredTest,Requests,ServiceGroup,ProviderRating)
 from django.forms import (TextInput,DateInput,SelectDateWidget,extras, )
 from django.contrib.admin.widgets import AdminDateWidget
+import datetime
 
 
 
@@ -19,11 +20,12 @@ from django.contrib.admin.widgets import AdminDateWidget
 class CartForm(forms.ModelForm):
     class Meta:
         model = OrderedService
-        fields = ['promo_code','serv_provider', 'cost', 'healthier_ID']
+        fields = ['promo_code','serv_provider', 'cost', 'serv_ordered']
 #service provider, service,
 # 
 
 class ServiceListForm(forms.ModelForm):
+    pro_logo = forms.FileField(label='Select a profile Image')
     class Meta:
         model = Provider
         fields = ['org_name', 'pro_logo', 'address', 'city', 'country',  ] 
@@ -67,6 +69,7 @@ class HealthierForm(forms.ModelForm):
         model = Customer
         fields = ['user', 'healthier_ID', 'phone_number',
                   'date_birth', 'gender', 'text']
+                 # forms.FileField(label='Select a profile Image')
 
 #Dashboard Forms 
 
@@ -99,23 +102,26 @@ class SentReportForm(forms.ModelForm):
                            (MICROBIOLOGY, 'Microbiology'),
                            (OTHERS,'Other Reports')), widget=forms.Select(attrs={'class':'form-control'}))
     order_ID = forms.ModelChoiceField(queryset=SentReport.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
-    service_date = forms.DateField(widget=extras.SelectDateWidget),
-    
+    service_date = forms.DateField(initial=datetime.date.today,  widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
+    exam_findings = forms.CharField(widget=forms.Textarea(attrs={'cols': 75, 'rows': 10}))
+    vaccine_expirydate = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
+    next_appointment = forms.DateField(initial=datetime.date.today,  widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
+    file_upload = forms.FileField(label='Choose File', widget=forms.ClearableFileInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     class Meta:
         model = SentReport
         fields = ['healthier_ID', 'report_type', 'order_ID', 'service_date', 'service_time',  'presenting_complaints',
-                  'exam_findings', 'treatment_plan', 'vaccine_expirydate', 'vaccine_batchnumber', 'next_appointment','name_staff',]
+                  'exam_findings', 'treatment_plan', 'vaccine_expirydate', 'vaccine_batchnumber', 'next_appointment','name_staff', 'file_upload',]
       
         widgets = {
             #'report_type': select(attrs={'class': "form-control"}),
            # 'service_date' : DateInput(attrs={'type': 'date'}),
             'service_time': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'presenting_complaints': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'exam_findings': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+           # 'exam_findings': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'treatment_plan': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'vaccine_expirydate': DateInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            #'vaccine_expirydate': DateInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'vaccine_batchnumber': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'next_appointment': DateInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            #'next_appointment': DateInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'name_staff': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             
         }
@@ -144,9 +150,9 @@ class OrderedServiceForm(forms.ModelForm):
 
 
 class ServiceUpdateForm(forms.ModelForm):
-    Category = forms.ModelChoiceField(queryset=ServiceGroup.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))    
-    sub_group = forms.ModelChoiceField(queryset=ServiceGroup.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
-    Service = forms.ModelChoiceField(queryset=ServiceGroup.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
+    Category = forms.ModelChoiceField(queryset=ServiceGroup.objects.only('Categories'), widget=forms.Select(attrs={'class':'form-control'}))    
+    sub_group = forms.ModelChoiceField(queryset=ServiceGroup.objects.only('Group'), widget=forms.Select(attrs={'class':'form-control'}))
+    Service = forms.ModelChoiceField(queryset=ServiceGroup.objects.only('servicename'), widget=forms.Select(attrs={'class':'form-control'}))
     class Meta:
         model = HealthService
         fields = ['Category','sub_group','Service', 'details', 'cost',

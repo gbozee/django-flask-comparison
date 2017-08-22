@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'users',
     'new_project',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -127,6 +128,11 @@ STATICFILES_DIRS = [
    # '/var/www/static/',
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'wsgi', 'static')
+
 # My settings
 LOGIN_URL = '/users/login/'
 INTERNAL_IPS  = ['127.0.0.1',]
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
