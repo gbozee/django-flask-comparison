@@ -142,12 +142,12 @@ class SentReport(models.Model):
     service_time = models.CharField(max_length=30)
     name_staff = models.CharField(max_length=50)
     presenting_complaints = models.TextField(max_length=30)
-    exam_findings = models.TextField(max_length=30)
+    general_findings = models.TextField(max_length=300, null=True)
     treatment_plan = models.TextField(max_length=30)
     vaccine_expirydate = models.DateField(auto_now=False, auto_now_add=False, )
     vaccine_batchnumber = models.CharField(max_length=200)
     next_appointment = models.DateField(auto_now=False, auto_now_add=False, )
-    healthier_ID = models.ForeignKey("Customer") 
+    customer = models.ForeignKey("Customer") 
     file_upload = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True)       
 
 
@@ -184,7 +184,7 @@ class ProviderRating(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.comments		
+        return self.likes		
 
 class MeasuredTest(models.Model):
     """Db for measured tests including range"""

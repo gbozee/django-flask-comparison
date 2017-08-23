@@ -7,16 +7,42 @@ import datetime
 
 
 
+#USER FORMS
+class CustomerForm(forms.ModelForm):
+    user_pix = forms.FileField(label='Select a profile Image')    
+    class Meta:
+        model = Customer
+        fields = ['user_pix', 'date_birth','phone_number',  'gender','healthier_ID','text',]
 
-# class UserProfileForm(forms.ModelForm):
+# class MyHealthForm(forms.ModelForm):
 #     class Meta:
+#         model = MyHealth
 
-#         model = UserProfile
+class MeasuredUserForm(forms.ModelForm):
+    result = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
+    class Meta:
+        model = MeasuredTest
+        fields = ['service_date', 'service_test',
+                  'value', 'lower_range', 'upper_range']
+        widgets = {
+            'service_date': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'service_test': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'value': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'lower_range': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'upper_range': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}), }
+
+class UserReportForm(forms.ModelForm):
+    class Meta:
+     
+        model = SentReport
+        fields = ['service_date','report_type', 'general_findings', 'treatment_plan', 'next_appointment','name_staff',
+                  'vaccine_expirydate', 'vaccine_batchnumber', ]
+      
 
 
 
 
-
+#SERVICE FORMS
 class CartForm(forms.ModelForm):
     class Meta:
         model = OrderedService
@@ -25,7 +51,7 @@ class CartForm(forms.ModelForm):
 # 
 
 class ServiceListForm(forms.ModelForm):
-    pro_logo = forms.FileField(label='Select a profile Image')
+    pro_logo = forms.FileField(label='service provider logo')
     class Meta:
         model = Provider
         fields = ['org_name', 'pro_logo', 'address', 'city', 'country',  ] 
@@ -48,32 +74,16 @@ class RatingForm(forms.ModelForm):
         model = ProviderRating
         fields = ['likes', 'dislikes', 'comments', ]
 
-# class MyHealthForm(forms.ModelForm):
-#     class Meta:
-#         model = MyHealth
-
 # class AmbulReportForm(forms.ModelForm):
 #     class Meta:
 #         model = AmbulReport
 
 
-class RequestsForm(forms.ModelForm):
-    healthier_ID = forms.ModelChoiceField(queryset=OrderedService.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))            
-    class Meta:
-        model = Requests
-        fields = ['request_date','request_type', 'name', 'duration', 'rate']
 
 
-class HealthierForm(forms.ModelForm):
-    class Meta:
-        model = Customer
-        fields = ['user', 'healthier_ID', 'phone_number',
-                  'date_birth', 'gender', 'text']
-                 # forms.FileField(label='Select a profile Image')
-
-#Dashboard Forms 
 
 
+#DASHBOARD FORMS
 class UserOrderForm(forms.ModelForm):
     class Meta:
         model = OrderedService
@@ -103,14 +113,14 @@ class SentReportForm(forms.ModelForm):
                            (OTHERS,'Other Reports')), widget=forms.Select(attrs={'class':'form-control'}))
     order_ID = forms.ModelChoiceField(queryset=SentReport.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
     service_date = forms.DateField(initial=datetime.date.today,  widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
-    exam_findings = forms.CharField(widget=forms.Textarea(attrs={'cols': 75, 'rows': 10}))
+    general_findings = forms.CharField(widget=forms.Textarea(attrs={'cols': 75, 'rows': 10}))
     vaccine_expirydate = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     next_appointment = forms.DateField(initial=datetime.date.today,  widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     file_upload = forms.FileField(label='Choose File', widget=forms.ClearableFileInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     class Meta:
         model = SentReport
         fields = ['healthier_ID', 'report_type', 'order_ID', 'service_date', 'service_time',  'presenting_complaints',
-                  'exam_findings', 'treatment_plan', 'vaccine_expirydate', 'vaccine_batchnumber', 'next_appointment','name_staff', 'file_upload',]
+                  'general_findings', 'treatment_plan', 'vaccine_expirydate', 'vaccine_batchnumber', 'next_appointment','name_staff', 'file_upload',]
       
         widgets = {
             #'report_type': select(attrs={'class': "form-control"}),
@@ -128,11 +138,11 @@ class SentReportForm(forms.ModelForm):
 
 
 class MeasuredTestForm(forms.ModelForm):
-    healthier_ID = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
+    customer = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
     order_ID = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
     class Meta:
         model = MeasuredTest
-        fields = ['healthier_ID', 'order_ID', 'service_date', 'service_test',
+        fields = ['customer', 'order_ID', 'service_date', 'service_test',
                   'value', 'lower_range', 'upper_range']
         widgets = {
             'service_date': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
@@ -173,8 +183,16 @@ class ServiceUpdateForm(forms.ModelForm):
 
         
 class ProviderProfileForm(forms.ModelForm):
-    org_name = forms.ModelChoiceField(queryset=Provider.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
+    #org_name = forms.ModelChoiceField(queryset=Provider.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
     class Meta:
         model = Provider
-        fields = ['user', 'org_name', 'pro_logo', 'address',
+        fields = ['pro_logo', 'user', 'org_name', 'address',
                   'city', 'country', 'provider_ID', 'phone_number']
+
+
+class RequestsForm(forms.ModelForm):
+    healthier_ID = forms.ModelChoiceField(queryset=OrderedService.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))            
+    class Meta:
+        model = Requests
+        fields = ['request_date','request_type', 'name', 'duration', 'rate']
+

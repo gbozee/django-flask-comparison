@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from import_export import resources
+from import_export import resources, fields
 from .models import Customer
 from .models import Provider
 from .models import HealthService
@@ -15,7 +15,26 @@ from .models import SentReport
 from .models import ServiceGroup
 from .models import ProviderRating
 from .models import MeasuredTest
+from django.contrib import messages
+from django.contrib.auth.admin import UserAdmin,User,Group
 
+admin.site.unregister(User)
+
+@admin.register(User)
+class OurUserAdmin(UserAdmin):
+    actions = ['add_user_to_provider_group','add_user_to_customer_group']
+
+    def add_user_to_provider_group(self, request, queryset):
+        provider_group = Group.objects.filter(name="Providers").first()
+        for x in queryset.all():
+            x.groups.add(provider_group)
+        messages.info(request, "Successfully added to Provider Group")
+
+    def add_user_to_customer_group(self, request, queryset):
+        customer_group = Group.objects.filter(name="Customers").first()
+        for x in queryset.all():
+            x.groups.add(customer_group)
+        messages.info(request, "Successfully added to Customer Group")
 
 
 
@@ -63,12 +82,15 @@ class SentReportAdmin(admin.ModelAdmin):
 
 
 class ServiceGroupResource(resources.ModelResource):
-    def get_instance(self, instance_loaders, row):
-        return False
-
+    # def get_instance(self, instance_loaders, row):
+    #     return False
+    group_id = fields.Field()
     class Meta:
         model = ServiceGroup
-        fields = ('id', 'category', 'group', 'service', 'group_id', 'category_id',)
+        fields = ('id', 'Categories', 'Group', 'servicename', 'group_ID', 'category_ID',)
+
+    def dehydrate_group_id(self, obj):
+        return obj.group_ID
 
 
 class ServiceGroupAdmin(ImportExportModelAdmin):

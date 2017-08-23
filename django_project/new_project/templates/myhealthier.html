@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles add_attr %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,35 +17,47 @@
 
     <body>
  {% include "includes/navigation2.html" %}
-{% block content %}
+ {% block content %}
 
 
 
 <!-- Header with full-height image -->
-<header class="bgimg-1 w3-display-container w3-margin  w3-hover-opacity " id="healthierhome" id="bgimg-1" style="background-image: url('{% static "new_project/python1.png"%}');>
-  <div class=" w3-text-black w3-center w3-padding-large w3-margin" style="padding:48px">
+<header class="bgimg-1 w3-display-container w3-margin  w3-hover-opacity "  id="bgimg-1" style="background-image: url('{% static "new_project/python1.png" %}');>
+  <div class=" w3-text-black w3-center w3-padding-large w3-margin" >
     <hr> <h3 class="w3-xxlarge w3-hide-large w3-hide-medium w3-center w3-padding-large ">Your Personal Health Manager</h3><br><br>
+        {% if messages %}
+            {% for message in messages %}
+              <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+            {% endfor %}
+          {% endif %}
 
      <span class="w3-jumbo w3-hide-small">Take Charge of Your Health</span><br>
 
     <span class="w3-xlarge w3-margin-top">Be In Charge Of Your Health Information!! </span>
     <br><br
      <div class = "w3-card-2 w3-padding-large">
-        <p><span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-block w3-xlarge" type="text" > {{request.user.email}}</span></p>
+        <p><span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-block w3-xlarge" type="text" > {{request.user.email}}</span> </p>
        <p> <button class="w3-button w3-block w3-btn w3-blue-gray w3-border w3-border-orange w3-large w3-padding w3-round-xxlarge" ><i i class="fa fa-plus  w3-text-orange"></i>Add Another Account</button> </p>
               <p> <button class="w3-button w3-block w3-btn w3-orange w3-border w3-border-orange w3-large w3-padding w3-round-xxlarge" onclick="document.getElementById('id01').style.display='block'"><i></i>Complete Your Registration</button> </p>
        <p> <a href="{% url 'logout' %}" class="w3-button w3-block w3-btn w3-white w3-border w3-border-red w3-large w3-padding w3-round-xxlarge" ><i i class="fa fa-minus  w3-text-red"></i>Logout</a> </p>
       </div>
     </div>
-
+ 
 </header>
 
   <div id="id01" class="w3-modal">
     <div class="w3-modal-content">
       <div class="w3-container">
+        
+        <form method="post" action= "{% url 'myhealthier' %}" >
+        {% csrf_token %}
+            {{ form.as_p }}
+        
         <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-         <div class = "w3-card-2 w3-padding w3-round w3-light-grey">
-<h3 class="w3-center w3-text-black"> Complete Your Registration</h3>
+        <div class = "w3-card-2 w3-padding w3-round w3-light-grey">
+        <h3 class="w3-center w3-text-black"> Complete Your Registration</h3>
+
+
 <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Date of Birth"></p>
   <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Phone Number"></p>
   <select class="w3-select" name="option" w3-round-large>
@@ -53,18 +65,18 @@
     <option value="1">Male</option>
      <option value="2">Female</option> 
   </select>
+  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Auto-Generate Healthier ID"></p>
+    
      <button type="submit" class="w3-button w3-block w3-blue-gray w3-ripple w3-padding w3-round-xxlarge "> Save</button>
      <hr>
-  <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="Auto-Generate Healthier ID"></p>
        </div>
+        </form>
      </div>
     </div>
   </div>
 
   </div>
 
-
-  </div>
  {% endblock content %}
 
 <script>

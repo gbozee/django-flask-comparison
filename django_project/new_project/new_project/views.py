@@ -39,6 +39,8 @@ from new_project.models import MeasuredTest
 from .forms import SentReportForm
 from .forms import MeasuredTestForm
 from .forms import QuoteRequestForm
+from .forms import CustomerForm
+
 
 
 
@@ -48,11 +50,33 @@ from .forms import QuoteRequestForm
 class HealthierView(TemplateView):
     template_name = "myhealthier.html"
     def post(self, request,*args, **kwargs):
-        form = HealthierForm(request.POST)
+        form = CustomerForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.info(request, " Registration Completed !!")            
         context = {'form': form}
         return render(request, "myhealthier.html", {})
+
+class MeasuredUserView(TemplateView):
+    template_name = "test_reports.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(MeasuredUserView, self).get_context_data(**kwargs)
+        context['usertest'] = SentReport.objects.all()
+        #user filtered from those patronizing particular provider
+        context["form"]= MeasuredUserForm()
+        return context
+
+
+class TestReportView(TemplateView):
+    template_name = "test_reports.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(MeasuredUserView, self).get_context_data(**kwargs)
+        context['usertest'] = SentReport.objects.all()
+        #user filtered from those patronizing particular provider
+        context["form"]= MeasuredUserForm()
+        return context
 
 class TrendView(TemplateView):
     template_name = "trend.html"
@@ -213,6 +237,8 @@ class ProviderSignUpForm(UserCreationForm):
         prov.username = user.email
         if commit:
             prov.save()
+            provider_group = Group.objects.get(name="Providers")
+            prov.groups.add(provider_group)
         return prov
 
 def provregister_view(request):
@@ -460,6 +486,10 @@ class ServiceListView(ListView):
         return context
      
     
+    def my_views(request,id):
+        my_object = Customer.objects.get(id=id)
+        like_votes = my_object.customer_rating.filter(rate=1).count()
+        dislike_votes = my_object.customer_rating.filter(rate=-1).count()
 
     # def get_context_data(self, **kwargs):
     #     context = super(ServiceListView, self).get_context_data(**kwargs)
@@ -584,12 +614,12 @@ class MeasuredTestView(TemplateView):
         context["form"]= MeasuredTestForm()
         return context
 
-    def post(self, request,*args, **kwargs):
-        form = MeasuredTestForm(request.POST)
-        if form.is_valid():
-            form.save()
-        context = {'form': form}
-        return render(request, "mtest_report.html", {})
+    # def post(self, request,*args, **kwargs):
+    #     form = MeasuredTestForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     context = {'form': form}
+    #     return render(request, "mtest_report.html", {})
 
 
 class RegisteredServiceView(TemplateView):
@@ -602,7 +632,9 @@ class ProviderProfileView(TemplateView):
     model=Provider
     def get_context_data(self, **kwargs):
         context = super(ProviderProfileView, self).get_context_data(**kwargs)
-        context["profile"] = Provider.objects.get(id = User)
+        #context["profile"] = Provider.objects.get(id=User)
+        context["profile"] = Provider.objects.all()
+        
         return context 
 
     # template_name = "provider_profile.html"
@@ -617,9 +649,9 @@ class ProviderProfileView(TemplateView):
     #     context = self.get_context_data(object=self.object, form=form)
     #     return self.render_to_response(context)
 
-    def get_object(self, queryset=None):
-        obj = Provider.objects.get(id=self.kwargs['provider_profile'])
-        return obj
+    # def get_object(self, queryset=None):
+    #     obj = Provider.objects.get(id=self.kwargs['provider_profile'])
+    #     return obj
               
 
     # def get_object(self, queryset=None): 
