@@ -149,10 +149,7 @@ class MeasuredTestForm(forms.ModelForm):
         fields = ['customer', 'ordered_service', 'service_date', 'service_test',
                   'value', 'lower_range', 'upper_range']
         widgets = {
-            'service_test': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'value': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'lower_range': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'upper_range': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}), }
+}
 
 
 class OrderedServiceForm(forms.ModelForm):
