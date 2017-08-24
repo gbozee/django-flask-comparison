@@ -8,7 +8,7 @@ class Customer(models.Model):
     user= models.OneToOneField(User, related_name='user_profile')
     """A customer interested in health services using Healthier"""
     
-    healthier_ID = models.CharField(max_length=30)
+    customer_name = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=200)
     date_birth = models.DateField(auto_now=False, auto_now_add=False, )
     gender = models.CharField(max_length=5, choices=(("","Select Gender"),('M',"Male"),("F","Female"),),blank=True)
@@ -17,7 +17,7 @@ class Customer(models.Model):
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.healthier_ID
+        return self.customer_name
 
 
 class Provider(models.Model):
@@ -28,7 +28,6 @@ class Provider(models.Model):
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=200)
-    provider_ID = models.CharField(max_length=30)
     phone_number = models.CharField(max_length=200)
     portal = models.URLField(blank = True, null = True)
     # likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='provider_likes')
@@ -47,10 +46,9 @@ class HealthService(models.Model):
     details = models.CharField(max_length=200)
     cost = models.CharField(max_length=20)
     cost_denom = models.CharField(max_length=50)
-    service_ID = models.CharField(max_length=30)
     days_available = models.CharField(max_length=100)
     time_available = models.CharField(max_length=100)
-    provider_ID = models.ForeignKey("Provider",on_delete=models.CASCADE, blank=True,null=True,)
+    provider = models.ForeignKey("Provider",on_delete=models.CASCADE, blank=True,null=True,)
 
 
     def __str__(self):
@@ -60,11 +58,10 @@ class HealthService(models.Model):
 
 class OrderedService(models.Model):
     """A paid for service request to the service organization"""
-    healthier_ID = models.ForeignKey("Customer")
+    customer = models.ForeignKey("Customer")
     serv_ordered = models.CharField(max_length=30)
     payment_status = models.CharField(max_length=30, choices=(("","Payment Status"),('Paid',"P"),('Not Paid',"NP"),),blank=True)
     cost = models.CharField(max_length=30)
-    order_ID = models.CharField(max_length=30)
     preferred_date = models.DateField(auto_now=False, auto_now_add=False, )
     preferred_time = models.CharField(max_length=200)
     promo_code = models.CharField(max_length=10)
@@ -80,7 +77,7 @@ class OrderedService(models.Model):
 
 class MyHealth(models.Model):
     """A paid for service request to the service organization"""
-    healthier_ID = models.ForeignKey("Customer")
+    customer = models.ForeignKey("Customer")
     service_date = models.DateField(auto_now=False, auto_now_add=False, )
     health_data = models.CharField(max_length=200)
     data_value = models.CharField(max_length=200)
@@ -95,7 +92,7 @@ class MyHealth(models.Model):
 
 class Requests(models.Model):
     """A paid for service request to the service organization"""
-    healthier_ID = models.ForeignKey("Customer")
+    customer = models.ForeignKey("Customer")
     request_date = models.DateField(auto_now=False, auto_now_add=False, )    
     request_type = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -109,9 +106,9 @@ class Requests(models.Model):
 
 class AmbulReport(models.Model):
     """A paid for service request to the service organization"""
-    order_ID = models.ForeignKey("OrderedService")
-    healthier_ID = models.ForeignKey("Customer")
-    service_ID = models.CharField(max_length=30)
+    order = models.ForeignKey("OrderedService")
+    customer = models.ForeignKey("Customer")
+    service = models.CharField(max_length=30)
     pickup_date = models.DateField(auto_now=False, auto_now_add=False, )
     pickup_address = models.CharField(max_length=30)
     pickup_city = models.CharField(max_length=30)
@@ -137,7 +134,7 @@ class SentReport(models.Model):
                            (OTHERS,'Other Reports'),)
     """A paid for service request to the service organization"""
     report_type = models.CharField(max_length=50,  choices = REPORT_TYPE_CHOICES,)
-    order_ID = models.ForeignKey("OrderedService")
+    ordered_service = models.ForeignKey("OrderedService")
     service_date = models.DateField(auto_now=False, auto_now_add=False, )
     service_time = models.CharField(max_length=30)
     name_staff = models.CharField(max_length=50)
@@ -162,20 +159,20 @@ class ServiceGroup(models.Model):
     Categories = models.CharField(max_length=50)
     Group = models.CharField(max_length=30)
     servicename = models.CharField(max_length=30)
-    category_ID = models.CharField(max_length=30, blank =True)
-    group_ID = models.CharField(max_length=30, blank=True)
+    category_code = models.CharField(max_length=30, blank =True)
+    group_code = models.CharField(max_length=30, blank=True)
  
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.servicename
+        return self.Categories
     
 
 
 
 class ProviderRating(models.Model):
     """Organization providing health services and sending reports to users"""
-    healthier_ID = models.ForeignKey("Customer", on_delete=models.CASCADE, null =True, related_name='customer_rating')
+    customer = models.ForeignKey("Customer", on_delete=models.CASCADE, null =True, related_name='customer_rating')
     provider = models.ForeignKey("Provider", on_delete=models.CASCADE, null =True)
     comments = models.CharField(max_length=200, null=True, blank=True)
     dislikes = models.IntegerField(blank=True, default=0)
@@ -188,8 +185,8 @@ class ProviderRating(models.Model):
 
 class MeasuredTest(models.Model):
     """Db for measured tests including range"""
-    healthier_ID = models.ForeignKey("Customer")
-    order_ID = models.ForeignKey("OrderedService")
+    customer = models.ForeignKey("Customer")
+    ordered_service = models.ForeignKey("OrderedService")
     service_date = models.DateField(auto_now=False, auto_now_add=False, )
     service_test = models.CharField(max_length=30)
     value = models.CharField(max_length=30)

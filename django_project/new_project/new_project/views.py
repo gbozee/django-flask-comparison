@@ -40,6 +40,7 @@ from .forms import SentReportForm
 from .forms import MeasuredTestForm
 from .forms import QuoteRequestForm
 from .forms import CustomerForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -68,7 +69,7 @@ class MeasuredUserView(TemplateView):
         return context
 
 
-class TestReportView(TemplateView):
+class TestReportView(LoginRequiredMixin, TemplateView):
     template_name = "test_reports.html"
 
     def get_context_data(self, **kwargs):
@@ -78,7 +79,7 @@ class TestReportView(TemplateView):
         context["form"]= MeasuredUserForm()
         return context
 
-class TrendView(TemplateView):
+class TrendView(LoginRequiredMixin, TemplateView):
     template_name = "trend.html"
 
 
@@ -175,6 +176,8 @@ class UserSignUpForm(UserCreationForm):
         user.username = user.email
         if commit:
             user.save()
+            customer_group = Group.objects.get(name="Customers")
+            user.groups.add(customer_group)
         return user
 
 def register_view(request):
@@ -404,7 +407,7 @@ class HomeView(TemplateView):
 class AboutView(TemplateView):
     template_name = "about.html"
 
-class CartView(TemplateView):
+class CartView(LoginRequiredMixin, TemplateView):
     template_name = "cart.html"
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
@@ -545,7 +548,7 @@ class QuoteRequestView(TemplateView):
         return render(request, "quote_request.html", {})
 
 
-class UserOrdersView(ListView):
+class UserOrdersView(LoginRequiredMixin, ListView):
     template_name = "user_orders.html"
     model=OrderedService
     def get_context_data(self, **kwargs):
@@ -555,8 +558,8 @@ class UserOrdersView(ListView):
 
 
 
-
-class ServiceUpdateView(TemplateView):
+#@login_required
+class ServiceUpdateView(LoginRequiredMixin, TemplateView):
     template_name = "service_update.html"
     def get_context_data(self, **kwargs):
         context = super(ServiceUpdateView, self).get_context_data(**kwargs)
@@ -583,7 +586,7 @@ class ServiceDelete(DeleteView):
 
 
 
-class SendReportView(TemplateView):
+class SendReportView(LoginRequiredMixin, TemplateView):
     template_name = "send_report.html"
 
     def get_context_data(self, **kwargs):
@@ -605,7 +608,7 @@ class SendReportView(TemplateView):
 
 
 
-class MeasuredTestView(TemplateView):
+class MeasuredTestView(LoginRequiredMixin, TemplateView):
     template_name = "mtest_report.html"
 
     def get_context_data(self, **kwargs):

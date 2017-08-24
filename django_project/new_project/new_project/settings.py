@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'new_project',
     'import_export',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

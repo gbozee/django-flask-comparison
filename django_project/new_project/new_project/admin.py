@@ -52,7 +52,7 @@ class ProviderAdmin(admin.ModelAdmin):
 class HealthServiceAdmin(admin.ModelAdmin):
     class Meta:
         model = HealthService
-
+        list_display = ('Service', 'details', 'cost',)
 
 class OrderedServiceAdmin(admin.ModelAdmin):
     class Meta:
@@ -84,18 +84,18 @@ class SentReportAdmin(admin.ModelAdmin):
 class ServiceGroupResource(resources.ModelResource):
     # def get_instance(self, instance_loaders, row):
     #     return False
-    group_id = fields.Field()
+    #group_id = fields.Field()
     class Meta:
         model = ServiceGroup
-        fields = ('id', 'Categories', 'Group', 'servicename', 'group_ID', 'category_ID',)
+        fields = ('id', 'Categories', 'Group', 'servicename', 'group_code', 'category_code',)
 
-    def dehydrate_group_id(self, obj):
-        return obj.group_ID
+    # def dehydrate_group_id(self, obj):
+    #     return obj.group_ID
 
 
 class ServiceGroupAdmin(ImportExportModelAdmin):
         resource_class = ServiceGroupResource
-    
+        
     # class Meta:
     #     model = ServiceGroup
     #     import_id_fields = ('category id',)

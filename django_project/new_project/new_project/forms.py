@@ -12,7 +12,7 @@ class CustomerForm(forms.ModelForm):
     user_pix = forms.FileField(label='Select a profile Image')    
     class Meta:
         model = Customer
-        fields = ['user_pix', 'date_birth','phone_number',  'gender','healthier_ID','text',]
+        fields = ['user_pix', 'date_birth','phone_number',  'gender','customer_name','text',]
 
 # class MyHealthForm(forms.ModelForm):
 #     class Meta:
@@ -60,7 +60,7 @@ class ServiceListForm(forms.ModelForm):
 class ServiceListForm1(forms.ModelForm):
     class Meta:
         model = HealthService
-        fields = ['Service', 'details', 'cost','service_ID', 'days_available','time_available', ] 
+        fields = ['Service', 'details', 'cost', 'days_available','time_available', ] 
 
 class AppointmentForm(forms.ModelForm):
     class Meta:
@@ -87,17 +87,19 @@ class RatingForm(forms.ModelForm):
 class UserOrderForm(forms.ModelForm):
     class Meta:
         model = OrderedService
-        fields = ['healthier_ID', 'serv_ordered', 'payment_status','cost','order_ID','preferred_date','preferred_time','promo_code',
+        fields = ['customer', 'serv_ordered', 'payment_status','cost','preferred_date','preferred_time','promo_code',
                   'order_date', ]                 
 
 class QuoteRequestForm(forms.ModelForm):
-    healthier_ID = forms.ModelChoiceField(queryset=Requests.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
+    customer = forms.ModelChoiceField(queryset=Requests.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
     request_type = forms.ModelChoiceField(queryset=Requests.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
+    request_date = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     
     class Meta:
         model = Requests
-        fields = ['healthier_ID', 'request_date',
-                  'request_type', 'name', 'duration', 'rate']
+        fields = ['customer','request_type', 'request_date',
+                   'name', 'duration', 'rate']
+        
 
 
 
@@ -106,12 +108,12 @@ class SentReportForm(forms.ModelForm):
     VACCINE = 'VA'
     MICROBIOLOGY = 'MI'
     OTHERS = 'OT'
-    healthier_ID = forms.ModelChoiceField(queryset=SentReport.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))        
+    customer = forms.ModelChoiceField(queryset=SentReport.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))        
     report_type = forms.ChoiceField(choices=((CONSULTATION,'Consultation'),
                            (VACCINE, 'Vaccine'),
                            (MICROBIOLOGY, 'Microbiology'),
                            (OTHERS,'Other Reports')), widget=forms.Select(attrs={'class':'form-control'}))
-    order_ID = forms.ModelChoiceField(queryset=SentReport.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
+    ordered_service = forms.ModelChoiceField(queryset=SentReport.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
     service_date = forms.DateField(initial=datetime.date.today,  widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     general_findings = forms.CharField(widget=forms.Textarea(attrs={'cols': 75, 'rows': 10}))
     vaccine_expirydate = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
@@ -119,7 +121,7 @@ class SentReportForm(forms.ModelForm):
     file_upload = forms.FileField(label='Choose File', widget=forms.ClearableFileInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     class Meta:
         model = SentReport
-        fields = ['healthier_ID', 'report_type', 'order_ID', 'service_date', 'service_time',  'presenting_complaints',
+        fields = ['customer', 'report_type', 'ordered_service', 'service_date', 'service_time',  'presenting_complaints',
                   'general_findings', 'treatment_plan', 'vaccine_expirydate', 'vaccine_batchnumber', 'next_appointment','name_staff', 'file_upload',]
       
         widgets = {
@@ -139,13 +141,14 @@ class SentReportForm(forms.ModelForm):
 
 class MeasuredTestForm(forms.ModelForm):
     customer = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
-    order_ID = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
+    ordered_service = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
+    service_date = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
+    
     class Meta:
         model = MeasuredTest
-        fields = ['customer', 'order_ID', 'service_date', 'service_test',
+        fields = ['customer', 'ordered_service', 'service_date', 'service_test',
                   'value', 'lower_range', 'upper_range']
         widgets = {
-            'service_date': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'service_test': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'value': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'lower_range': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
@@ -156,7 +159,7 @@ class OrderedServiceForm(forms.ModelForm):
     class Meta:
         model = OrderedService
         fields = ['preferred_time', 'preferred_date', 'cost', 'promo_code',
-                  'order_ID', 'payment_status', 'serv_ordered', 'healthier_ID']
+         'payment_status', 'serv_ordered', 'customer']
 
 
 class ServiceUpdateForm(forms.ModelForm):
@@ -166,7 +169,7 @@ class ServiceUpdateForm(forms.ModelForm):
     class Meta:
         model = HealthService
         fields = ['Category','sub_group','Service', 'details', 'cost',
-                  'cost_denom', 'service_ID', 'days_available', 'time_available']
+                  'cost_denom', 'days_available', 'time_available']
 
         widgets = {
             'Category': TextInput(attrs={'class': "form-control"}),
@@ -175,7 +178,6 @@ class ServiceUpdateForm(forms.ModelForm):
             'details': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'cost': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'cost_denom': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
-            'service_ID': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'days_available': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'time_available': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
         }
@@ -187,7 +189,7 @@ class ProviderProfileForm(forms.ModelForm):
     class Meta:
         model = Provider
         fields = ['pro_logo', 'user', 'org_name', 'address',
-                  'city', 'country', 'provider_ID', 'phone_number']
+                  'city', 'country', 'portal', 'phone_number']
 
 
 class RequestsForm(forms.ModelForm):

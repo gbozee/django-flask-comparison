@@ -1,11 +1,11 @@
    {% extends "dashboard.html" %}
 {% load staticfiles  %}
+{% load widget_tweaks %}
           {% block content %}
 
 
  <form method="post" action="{% url 'mtest_report' %}">
      {% csrf_token %}
-
 <!-- Send Measured Test Table" -->
    
     <div class="w3-container w3-topbar w3-bottombar w3-border-amber w3-padding w3-card-4 " id="bgimg-4" style="background-image: url('{% static "new_project/python4.jpg" %}')">
@@ -20,13 +20,37 @@
 
      <!--Service Group is auto-filled with chosen service-->
 
-  <div class="w3-card-4 w3-bordered w3-border" >
-      <table>
-        {{ form.as_table }}
+  <div class="w3-card-4 w3-bordered w3-border w3-container w3-card-4 w3-padding-16 w3-round-large " >
+            {{ form.as_p }}
 
-      </table>
-<hr>
+      
+                            <table id="taskTable" class="w3-table w3-bordered w3-border">
+                                <thead>
+                                    <tr class="w3-orange w3-center">
+                                       <th>Select</th>
+                                        <th>Test</th>
+                                        <th>Value</th>
+                                        <th>Lower Range</th>
+                                        <th>Upper Range</th>
+                                    </tr>
+                                </thead>
+                <tbody id="taskBod">
+                                    <tr id="tbod0">
+                                        <td><input type="radio" name="tbodRadio" value="0"></input></td>
+                                        <td>{{ form.service_test|attr:"placeholder:Test"|attr:"class:w3-round-large" }}</td>
+                                        <td>{{ form.value|attr:"placeholder:Value"|attr:"class:w3-round-large"|attr:"type:text" }}</td>
+                                        <td>{{ form.lower_range|attr:"placeholder:Lower Range"|attr:"class:w3-round-large"|attr:"type:text" }}</td> 
+                                        <td>{{ form.upper_range|attr:"placeholder:Upper Range"|attr:"class:w3-round-large"|attr:"type:text" }}</td>                                                       </tr>
+                                                                                            </tr>
+                    <tr id="tbod1">
+                                    </tr>
+                                </tbody>
+                            </table>
+                       <p>     <input type="button" id="addTask" class="w3-button w3-block w3-green w3-ripple w3-padding w3-round-large" value="Add another row" </input>
+                            <input type="button" id="removeTask" class="w3-button w3-block w3-blue-gray w3-ripple w3-padding w3-round-large"value="Delete the row" </input> </p><hr>
           <button type="submit" class="w3-button w3-block w3-indigo w3-ripple w3-padding w3-round-xxlarge">Send To User</button>
+             
+
 </div>
 </div>
 
@@ -35,4 +59,22 @@
 
 
 </form>
+
+<script>
+
+
+window.onload = function(){ //onblur='myBlur(this);' onfocus='myFocus(this);'  
+
+    var counterTask = 1;
+
+
+    $("#addTask").click(function(){
+    $("#tbod" + counterTask).html('<td><input type="radio" value="'+ counterTask +'" name="tbodRadio"></input></td><td>{{ form.service_test|attr:"placeholder:Test"|attr:"class:w3-round-large" }}</td><td>{{ form.value|attr:"placeholder:Value"|attr:"class:w3-round-large"|attr:"type:date" }}</td><td>{{ form.lower_range|attr:"placeholder:Lower Range"|attr:"class:w3-round-large"|attr:"type:date" }}</td><td>{{ form.upper_range|attr:"placeholder:Upper Range"|attr:"class:w3-round-large"|attr:"type:date" }}</td>');
+
+    $('#taskBod').append("<tr id='tbod"+(++counterTask)+"'></tr>");
+    });
+}
+
+</script>
+
    {% endblock content %}
