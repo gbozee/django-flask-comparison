@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^logout/$',views.logout_view,name="logout"),
     url(r'^users/', include('users.urls', namespace='users')),
     url(r'^trend/$', views.TrendView.as_view(), name='trend'),
+    url(r'^personal_health/$', views.PersonalHealthView.as_view(), name='personal_health'), 
     url(r'^requests/$', views.RequestsView.as_view(), name='requests'),
     url(r'^reports/$', views.ReportView.as_view(), name='reports'),
     url(r'^consult/$', views.ConsultView.as_view(), name='consult'),

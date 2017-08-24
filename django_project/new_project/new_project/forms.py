@@ -1,9 +1,10 @@
 from django import forms
 from .models import (HealthService,OrderedService,SentReport,Customer,
-Provider,MeasuredTest,Requests,ServiceGroup,ProviderRating)
+Provider,MeasuredTest,Requests,ServiceGroup,ProviderRating, MyHealth)
 from django.forms import (TextInput,DateInput,SelectDateWidget,extras, )
 from django.contrib.admin.widgets import AdminDateWidget
 import datetime
+from datetimewidget.widgets import DateTimeWidget
 
 
 
@@ -14,9 +15,20 @@ class CustomerForm(forms.ModelForm):
         model = Customer
         fields = ['user_pix', 'date_birth','phone_number',  'gender','customer_name','text',]
 
-# class MyHealthForm(forms.ModelForm):
-#     class Meta:
-#         model = MyHealth
+
+
+class MyHealthForm(forms.ModelForm):
+    class Meta:
+        model = MyHealth
+        fields = ['service_date', 'health_data','data_value', ]
+        
+
+
+class PersonalHealthForm(forms.ModelForm):
+    class Meta:
+        model = MyHealth
+        fields = ['service_date', 'health_data','data_value', ]
+
 
 class MeasuredUserForm(forms.ModelForm):
     result = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
@@ -149,6 +161,7 @@ class MeasuredTestForm(forms.ModelForm):
         fields = ['customer', 'ordered_service', 'service_date', 'service_test',
                   'value', 'lower_range', 'upper_range']
         widgets = {
+                   'service_date': DateTimeWidget(attrs={'id':"service_date"}, usel10n = True, bootstrap_version=3)
 }
 
 

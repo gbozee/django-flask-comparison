@@ -35,11 +35,14 @@ from new_project.models import OrderedService
 from new_project.models import Requests
 from new_project.models import ServiceGroup
 from new_project.models import SentReport
+from new_project.models import MyHealth
 from new_project.models import MeasuredTest
 from .forms import SentReportForm
 from .forms import MeasuredTestForm
 from .forms import QuoteRequestForm
 from .forms import CustomerForm
+from .forms import MyHealthForm
+from .forms import PersonalHealthForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -81,6 +84,22 @@ class TestReportView(LoginRequiredMixin, TemplateView):
 
 class TrendView(LoginRequiredMixin, TemplateView):
     template_name = "trend.html"
+    def get_context_data(self, **kwargs):
+        context = super(TrendView, self).get_context_data(**kwargs)
+        form = RequestsForm()
+        context['services'] = MyHealth.objects.all()
+        return context
+
+
+class PersonalHealthView(LoginRequiredMixin, TemplateView):
+    template_name = "personal_health.html"
+    def post(self, request,*args, **kwargs):
+        form = PersonalHealthForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('personal_health')
+        context = {'form': form}
+        return render(request, "personal_health.html", {})
 
 
 class RequestsView(TemplateView):

@@ -5,7 +5,7 @@
     <!-- Right-sided navbar links -->
     <div class="w3-right w3-hide-small">
 
-
+      <a href="{% url "personal_health" %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i>PERSONAL HEALTH </a>
       <a href="{% url "trend" %}" class="w3-bar-item w3-button"><i class="fa fa-th"></i>HEALTH TRENDS</a>
       <a href="{% url "reports" %}" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>REPORTS & VACCINES</a>
         <a href="{% url "requests" %}" class="w3-bar-item w3-button"><i class="fa fa-bars"></i>REQUESTS</a>
@@ -27,7 +27,7 @@
 <nav class="w3-sidebar w3-bar-block w3-black w3-card-2 w3-animate-left w3-hide-medium w3-hide-large" style="display:none" id="mySidebar">
   <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-large w3-padding-16">Close ×</a>
 
-
+  <a href="{% url "personal_health" %}" onclick="w3_close()" class="w3-bar-item w3-button">PERSONAL HEALTH</a>
   <a href="{% url "trend" %}" onclick="w3_close()" class="w3-bar-item w3-button">HEALTH TRENDS</a>
   <a href="{% url "reports" %}" onclick="w3_close()" class="w3-bar-item w3-button">REPORTS & VACCINES</a>
      <a href="{% url "requests" %}" onclick="w3_close()" class="w3-bar-item w3-button">REQUESTS</a>
