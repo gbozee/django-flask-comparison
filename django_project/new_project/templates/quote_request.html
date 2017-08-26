@@ -30,9 +30,9 @@
                 <tbody id="taskBod">
                                     <tr id="tbod0">
                                         <td><input type="radio" name="tbodRadio" value="0"></input></td>
-                                        <td>{{ form.name|attr:"placeholder:Name-Service"|attr:"class:w3-round-large" }}</td>
-                                        <td>{{ form.duration|attr:"placeholder:Duration"|attr:"class:w3-round-large"|attr:"type:text" }}</td>
-                                        <td>{{ form.rate|attr:"placeholder:Rate"|attr:"class:w3-round-large"|attr:"type:text" }}</td> 
+                                        <td>{{ form.name|attr:"placeholder:Name-Service"|attr:"class:w3-round-large w3-block" }}</td>
+                                        <td>{{ form.duration|attr:"placeholder:Duration"|attr:"class:w3-round-large w3-block"|attr:"type:text" }}</td>
+                                        <td>{{ form.rate|attr:"placeholder:Rate"|attr:"class:w3-round-large w3-block"|attr:"type:text" }}</td> 
                                                                                             </tr>
                     <tr id="tbod1">
                                     </tr>
@@ -61,7 +61,7 @@ window.onload = function(){ //onblur='myBlur(this);' onfocus='myFocus(this);'
 
 
     $("#addTask").click(function(){
-    $("#tbod" + counterTask).html('<td><input type="radio" value="'+ counterTask +'" name="tbodRadio"></input></td><td>{{ form.name|attr:"placeholder:Name-Service"|attr:"class:w3-round-large" }}</td><td>{{ form.duration|attr:"placeholder:Duration"|attr:"class:w3-round-large"|attr:"type:text" }}</td><td>{{ form.rate|attr:"placeholder:Rate"|attr:"class:w3-round-large"|attr:"type:text" }}</td> ');
+    $("#tbod" + counterTask).html('<td><input type="radio" value="'+ counterTask +'" name="tbodRadio"></input></td><td>{{ form.name|attr:"placeholder:Name-Service"|attr:"class:w3-round-large w3-block" }}</td><td>{{ form.duration|attr:"placeholder:Duration"|attr:"class:w3-round-large w3-block"|attr:"type:text" }}</td><td>{{ form.rate|attr:"placeholder:Rate"|attr:"class:w3-round-large w3-block"|attr:"type:text" }}</td> ');
 
     $('#taskBod').append("<tr id='tbod"+(++counterTask)+"'></tr>");
     });

@@ -37,12 +37,17 @@ from new_project.models import ServiceGroup
 from new_project.models import SentReport
 from new_project.models import MyHealth
 from new_project.models import MeasuredTest
+from new_project.models import Customer
 from .forms import SentReportForm
 from .forms import MeasuredTestForm
 from .forms import QuoteRequestForm
 from .forms import CustomerForm
 from .forms import MyHealthForm
 from .forms import PersonalHealthForm
+from .forms import UserRequestForm
+from .forms import UserReportForm
+
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -50,111 +55,105 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
-
+#MYHEALTH VIEWS
 class HealthierView(TemplateView):
     template_name = "myhealthier.html"
     def post(self, request,*args, **kwargs):
-        form = CustomerForm(request.POST)
+        form = CustomerForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.info(request, " Registration Completed !!")            
-        context = {'form': form}
         return render(request, "myhealthier.html", {})
-
-class MeasuredUserView(TemplateView):
-    template_name = "test_reports.html"
-
-    def get_context_data(self, **kwargs):
-        context = super(MeasuredUserView, self).get_context_data(**kwargs)
-        context['usertest'] = SentReport.objects.all()
-        #user filtered from those patronizing particular provider
-        context["form"]= MeasuredUserForm()
-        return context
+        return self.render_to_response(self.get_context_data(form=form))
 
 
-class TestReportView(LoginRequiredMixin, TemplateView):
-    template_name = "test_reports.html"
 
-    def get_context_data(self, **kwargs):
-        context = super(MeasuredUserView, self).get_context_data(**kwargs)
-        context['usertest'] = SentReport.objects.all()
-        #user filtered from those patronizing particular provider
-        context["form"]= MeasuredUserForm()
-        return context
 
 class TrendView(LoginRequiredMixin, TemplateView):
     template_name = "trend.html"
     def get_context_data(self, **kwargs):
         context = super(TrendView, self).get_context_data(**kwargs)
-        form = RequestsForm()
+        form = MyHealthForm()
         context['services'] = MyHealth.objects.all()
         return context
 
 
 class PersonalHealthView(LoginRequiredMixin, TemplateView):
     template_name = "personal_health.html"
+    model = MyHealth
+    
     def post(self, request,*args, **kwargs):
-        form = PersonalHealthForm(request.POST)
+        form = MyHealthForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect('personal_health')
-        context = {'form': form}
         return render(request, "personal_health.html", {})
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonalHealthView, self).get_context_data(**kwargs)
+        context['profiles'] = Customer.objects.all()
+        return context
+    
 
 
 class RequestsView(TemplateView):
     template_name = "downloads_requests.html"
     def get_context_data(self, **kwargs):
         context = super(RequestsView, self).get_context_data(**kwargs)
-        form = RequestsForm()
-        context['services'] = Requests.objects.all()
+        form = UserRequestForm()
+        context['requests'] = Requests.objects.all()
+        return context
+    
+    
+    def my_views(request,id):
+        my_object = Customer.objects.get(id=id)
+        like_votes = my_object.customer_rating.filter(rate=1).count()
+        dislike_votes = my_object.customer_rating.filter(rate=-1).count()
+
+
+
+class TestReportView(TemplateView):
+    template_name = "test_reports.html"
+    model = OrderedService
+    def get_context_data(self, **kwargs):
+        context = super(TestReportView, self).get_context_data(**kwargs)
+        context['reports'] = OrderedService.objects.all()
+        return context
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super(TestReportView, self).get_context_data(**kwargs)
+    #     context['report'] = SentReport.objects.all()
+    #     return context
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(TestReportView, self).get_context_data(**kwargs)
+    #     context['mtest'] = MeasuredTest.objects.all()
+    #     return context
+    
+    
+    def my_views(request,id):
+        my_object = Customer.objects.get(id=id)
+        like_votes = my_object.customer_rating.filter(rate=1).count()
+        dislike_votes = my_object.customer_rating.filter(rate=-1).count()
+
+
+class ConsultView(TemplateView):
+    template_name = "consult.html"
+    model = SentReport
+    def get_context_data(self, **kwargs):
+        context = super(ConsultView, self).get_context_data(**kwargs)
+        context['consults'] = SentReport.objects.all()
         return context
 
-class ReportView(TemplateView):
-    template_name = "test_reports.html"
+    def my_views(request,id):
+        my_object = Customer.objects.get(id=id)
+        like_votes = my_object.customer_rating.filter(rate=1).count()
+        dislike_votes = my_object.customer_rating.filter(rate=-1).count()
+
+ 
 
 
-
-# class ServiceCreate(CreateView):
-#     model = Service
-#     fields = ['name']
-
-# class ServiceUpdate(UpdateView):
-#     model = Service
-#     fields = ['name']
-
-# class ServiceDelete(DeleteView):
-#     model = Service
-#     success_url = reverse_lazy('author-list')
-
-# class UserLoginView(FormView):
-#     #form_class = LoginForm
-#     template_name = "login.html"
-
-#     def post(self, request):
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(username=username, password=password)
-
-#         if user is not None:
-#             if user.is_active:
-#                 login(request, user)
-
-#                 return HttpResponseRedirect('login')
-#             else:
-#                 return HttpResponse("Inactive user.")
-#         else:
-#             return HttpResponseRedirect(settings.LOGIN_URL)
-
-#         return render(request, "index.html")
-
-# class LogoutView(FormView):
-#     def get(self, request):
-#         logout(request)
-#         return HttpResponseRedirect(settings.LOGIN_URL)
-
-
-
+#USER CREATION AND LOGIN
 class LoginForm(AuthenticationForm):
     remember_me = forms.BooleanField(required=False)
 
@@ -213,16 +212,6 @@ def register_view(request):
     return render(request,'register.html',{'reg_form':form})
     messages.info(request, "Account successfully created")
 
-    # else:
-    #     # Process completed form.
-    #     form = UserCreationForm(data=request.POST)
-    #     if form.is_valid():
-    #         new_user = form.save()
-    #         # Log the user in and then redirect to home page.
-    #         authenticated_user = authenticate(username=new_user.username,
-    #             password=request.POST['password1'])
-    #         login(request, authenticated_user)
-    #         return HttpResponseRedirect(reverse('users:index'))
 
 @login_required
 def logout_view(request):
@@ -237,9 +226,7 @@ def logout_view(request):
 class ProviderSignUpForm(UserCreationForm):
     org_name = forms.CharField()
     email = forms.EmailField()
-    # date_of_birth = forms.DateInput()
-    # phone_number = forms.CharField()
-    # gender = forms.CharField()
+  
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].required = False
@@ -265,8 +252,7 @@ class ProviderSignUpForm(UserCreationForm):
 
 def provregister_view(request):
     """Register a new provider."""
-    # if request.method != 'POST':
-    #     # Display blank registration form.
+  
     form = ProviderSignUpForm()
     if request.method == 'POST':
         form = ProviderSignUpForm(data=request.POST)
@@ -418,7 +404,7 @@ class PasswordResetCompleteView(FormView):
      template_name = "registration/password_reset_complete.html"
 
 
-# User Home and Index App
+# HOME AND CHOOSING SERVICE App
 class HomeView(TemplateView):
     template_name = "index.html"
 
@@ -507,11 +493,12 @@ class ServiceListView(ListView):
         
         return context
      
-    
-    def my_views(request,id):
-        my_object = Customer.objects.get(id=id)
-        like_votes = my_object.customer_rating.filter(rate=1).count()
-        dislike_votes = my_object.customer_rating.filter(rate=-1).count()
+    def get_ratings(self, **kwargs):
+        context = super(ServiceListView, self).get_context_data(**kwargs)
+        context["rating"] = ProviderRating.objects.all()
+        
+        return context
+  
 
     # def get_context_data(self, **kwargs):
     #     context = super(ServiceListView, self).get_context_data(**kwargs)
@@ -545,8 +532,6 @@ class EmailOrUsernameBackend(ModelBackend):
 
 
 #Provider Dashboard Views
-
-
 class DashboardView(TemplateView):
     template_name = "dashboard.html"
 #search box code

@@ -16,15 +16,15 @@
 <div class="w3-row-padding w3-card-4 w3-margin w3-white">
     <div class="w3-col m6 w3-container  w3-card-4  w3-padding w3-text-black w3-center w3-round-large" >
              
-         <img src="/images{{ order.healthier_ID.user_pix }}" height="100" width="100"></img><br><br>
+         <img src="/images{{ order.customer.user_pix }}" height="100" width="100"></img><br><br>
         
-         <p>   <b>First Name:</b> {{ order.healthier_ID.first_name }}              
+         <p>   <b>First Name:</b> {{ order.customer.first_name }}              
                   
-            <b>Surname:</b> {{ order.healthier_ID.last_name }}<br><br>    </p>           
+            <b>Surname:</b> {{ order.customer.last_name }}<br><br>    </p>           
               
-        <p>    <b>Date of Birth:</b> {{ order.healthier_ID.date_birth }}  
-            <b>Gender:</b> {{ order.healthier_ID.gender }}<br><br> </p>
-         <p>   <b>Customer Phone No:</b> {{ order.healthier_ID.phone_number }}</p>            
+        <p>    <b>Date of Birth:</b> {{ order.customer.date_birth }}  
+            <b>Gender:</b> {{ order.customer.gender }}<br><br> </p>
+         <p>   <b>Customer Phone No:</b> {{ order.customer.phone_number }}</p>            
             
            </div>
 
@@ -32,7 +32,7 @@
     <div class="w3-col m6 w3-container  w3-card-4  w3-padding-16 w3-text-black w3-round-large" >
  
     
-<b>Service :</b> {{ order.service_ID }}<br><br>               
+<b>Service :</b> {{ order.serv_ordered }}<br><br>               
       
             <p><b>Payment Status:</b> <span class="w3-tag w3-round-xxlarge w3-teal w3-center w3-large" type="text" > {{ order.payment_status }}</span></p>
               
@@ -55,6 +55,6 @@
              
                {% endfor %} 
           </div>
-      
+      </div>
           </form>
            {% endblock content %}

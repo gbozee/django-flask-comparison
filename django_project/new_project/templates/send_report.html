@@ -10,11 +10,7 @@
 <!-- Send Reports" -->
    
     <div class="w3-container w3-padding w3-card-4 " id="bgimg-4" style="background-image: url('{% static "new_project/python4.jpg" %}')">
-     {% if messages %}
-    {% for message in messages %}
-      <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
-    {% endfor %}
-  {% endif %}
+    
   <div class="w3-row w3-padding w3-card-4 w3-margin w3-light-grey">
                 <h3 class="w3-center w3-text-black"><i class="fa fa-users w3-margin-right w3-xxlarge w3-text-teal"></i> Send Report To Users</h3>
     
@@ -33,7 +29,11 @@
    </div>
 </div>
 
-
+ {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}">{{ message|safe }}</div>
+    {% endfor %}
+  {% endif %}
   </div>
 
 </form>

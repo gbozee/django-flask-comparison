@@ -10,14 +10,29 @@ from datetimewidget.widgets import DateTimeWidget
 
 #USER FORMS
 class CustomerForm(forms.ModelForm):
-    user_pix = forms.FileField(label='Select a profile Image')    
+    user_pix = forms.ImageField(label='Choose Profile Image') 
     class Meta:
         model = Customer
-        fields = ['user_pix', 'date_birth','phone_number',  'gender','customer_name','text',]
+        fields = ['user_pix', 'date_birth','phone_number', 'last_name','first_name', 'gender','text',]
 
 
 
 class MyHealthForm(forms.ModelForm):
+    SYSTOLIC_BLOOD_PRESSURE = 'Systolic Blood Pressure'
+    DIASTOLIC_BLOOD_PRESSURE = 'Diastolic Blood Pressure'
+    RANDOM_BLOOD_SUGAR = 'Random Blood Sugar'
+    FASTING_BLOOD_SUGAR = 'Fasting Blood Sugar'
+    WEIGHT = 'Weight'
+    CHOLESTEROL = 'Cholseterol'
+    CURRENT_DRUGS = 'Current Drugs'
+    health_data = forms.ChoiceField(choices=((
+                           (SYSTOLIC_BLOOD_PRESSURE, 'Systolic Blood Pressure'),
+                           (DIASTOLIC_BLOOD_PRESSURE, 'Diastolic Blood Pressure'),
+                           (RANDOM_BLOOD_SUGAR, 'Random Blood Sugar'),
+                           (FASTING_BLOOD_SUGAR, 'Fasting Blood Sugar'),
+                           (WEIGHT, 'Weight'),
+                           (CHOLESTEROL, 'Cholseterol'),
+                           (CURRENT_DRUGS,'Current Drugs')),
     class Meta:
         model = MyHealth
         fields = ['service_date', 'health_data','data_value', ]
@@ -26,8 +41,8 @@ class MyHealthForm(forms.ModelForm):
 
 class PersonalHealthForm(forms.ModelForm):
     class Meta:
-        model = MyHealth
-        fields = ['service_date', 'health_data','data_value', ]
+        model = Customer
+        fields = ['first_name', 'last_name','date_birth', 'phone_number', ]
 
 
 class MeasuredUserForm(forms.ModelForm):
@@ -44,12 +59,31 @@ class MeasuredUserForm(forms.ModelForm):
             'upper_range': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}), }
 
 class UserReportForm(forms.ModelForm):
-    class Meta:
-     
+    class Meta:    
         model = SentReport
         fields = ['service_date','report_type', 'general_findings', 'treatment_plan', 'next_appointment','name_staff',
                   'vaccine_expirydate', 'vaccine_batchnumber', ]
-      
+
+
+  
+class OrderedServiceForm2(forms.ModelForm):
+    class Meta:
+        model = OrderedService
+        fields = ['serv_ordered', 'serv_provider']
+
+
+class UserRequestForm(forms.ModelForm):
+    class Meta:
+        model = Requests
+        fields = ['request_date','request_type', 'name', 'duration', 'rate']
+        
+
+        
+class ConsultForm(forms.ModelForm):
+    class Meta:    
+        model = SentReport
+        fields = ['service_date','presenting_complaints', 'general_findings', 'treatment_plan', 'next_appointment','name_staff',
+                   ]
 
 
 
@@ -120,12 +154,12 @@ class SentReportForm(forms.ModelForm):
     VACCINE = 'VA'
     MICROBIOLOGY = 'MI'
     OTHERS = 'OT'
-    customer = forms.ModelChoiceField(queryset=SentReport.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))        
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all(),widget=forms.Select(attrs={'class':'form-control'}))        
     report_type = forms.ChoiceField(choices=((CONSULTATION,'Consultation'),
                            (VACCINE, 'Vaccine'),
                            (MICROBIOLOGY, 'Microbiology'),
                            (OTHERS,'Other Reports')), widget=forms.Select(attrs={'class':'form-control'}))
-    ordered_service = forms.ModelChoiceField(queryset=SentReport.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
+    ordered_service = forms.ModelChoiceField(queryset=OrderedService.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
     service_date = forms.DateField(initial=datetime.date.today,  widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     general_findings = forms.CharField(widget=forms.Textarea(attrs={'cols': 75, 'rows': 10}))
     vaccine_expirydate = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))

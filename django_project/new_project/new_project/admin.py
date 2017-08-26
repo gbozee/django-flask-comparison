@@ -40,6 +40,7 @@ class OurUserAdmin(UserAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'gender','user_pix','date_birth',)    
     class Meta:
         model = Customer
 
@@ -50,11 +51,14 @@ class ProviderAdmin(admin.ModelAdmin):
 
 
 class HealthServiceAdmin(admin.ModelAdmin):
+    list_display = ('Service', 'details', 'cost',)
+    
     class Meta:
         model = HealthService
-        list_display = ('Service', 'details', 'cost',)
 
 class OrderedServiceAdmin(admin.ModelAdmin):
+    list_display = ('customer', 'serv_ordered', 'cost','order_date','serv_provider',)
+    
     class Meta:
         model = OrderedService
 

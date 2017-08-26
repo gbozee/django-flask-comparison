@@ -8,16 +8,17 @@ class Customer(models.Model):
     user= models.OneToOneField(User, related_name='user_profile')
     """A customer interested in health services using Healthier"""
     
-    customer_name = models.CharField(max_length=30)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30, blank=True)    
     phone_number = models.CharField(max_length=200)
     date_birth = models.DateField(auto_now=False, auto_now_add=False, )
     gender = models.CharField(max_length=5, choices=(("","Select Gender"),('M',"Male"),("F","Female"),),blank=True)
     text =models.CharField(max_length=200)
-    user_pix = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100,null=True, blank=True,)
+    user_pix = models.ImageField(upload_to="images/", height_field=None, width_field=None, max_length=100,null=True, blank=True,)
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.customer_name
+        return self.last_name
 
 
 class Provider(models.Model):
@@ -76,16 +77,32 @@ class OrderedService(models.Model):
 
 
 class MyHealth(models.Model):
+    SYSTOLIC_BLOOD_PRESSURE = 'Systolic Blood Pressure'
+    DIASTOLIC_BLOOD_PRESSURE = 'Diastolic Blood Pressure'
+    RANDOM_BLOOD_SUGAR = 'Random Blood Sugar'
+    FASTING_BLOOD_SUGAR = 'Fasting Blood Sugar'
+    WEIGHT = 'Weight'
+    CHOLESTEROL = 'Cholseterol'
+    CURRENT_DRUGS = 'Current Drugs'
+    
+    HEALTH_TYPE_CHOICES = (
+                           (SYSTOLIC_BLOOD_PRESSURE, 'Systolic Blood Pressure'),
+                           (DIASTOLIC_BLOOD_PRESSURE, 'Diastolic Blood Pressure'),
+                           (RANDOM_BLOOD_SUGAR, 'Random Blood Sugar'),
+                           (FASTING_BLOOD_SUGAR, 'Fasting Blood Sugar'),
+                           (WEIGHT, 'Weight'),
+                           (CHOLESTEROL, 'Cholseterol'),
+                           (CURRENT_DRUGS,'Current Drugs'),)
     """A paid for service request to the service organization"""
     customer = models.ForeignKey("Customer")
     service_date = models.DateField(auto_now=False, auto_now_add=False, )
-    health_data = models.CharField(max_length=200)
+    health_data = models.CharField(max_length=50,  choices = HEALTH_TYPE_CHOICES,)
     data_value = models.CharField(max_length=200)
 
 
     def __str__(self):
         """Return a string representation of the model."""
-        return self.service_date
+        return self.health_data
 
 
 
@@ -137,16 +154,16 @@ class SentReport(models.Model):
     report_type = models.CharField(max_length=50,  choices = REPORT_TYPE_CHOICES,)
     ordered_service = models.ForeignKey("OrderedService")
     service_date = models.DateField(auto_now=False, auto_now_add=False, )
-    service_time = models.CharField(max_length=30)
+    service_time = models.CharField(max_length=30, blank=True)
     name_staff = models.CharField(max_length=50)
-    presenting_complaints = models.TextField(max_length=30)
-    general_findings = models.TextField(max_length=300, null=True)
-    treatment_plan = models.TextField(max_length=30)
-    vaccine_expirydate = models.DateField(auto_now=False, auto_now_add=False, )
-    vaccine_batchnumber = models.CharField(max_length=200)
-    next_appointment = models.DateField(auto_now=False, auto_now_add=False, )
+    presenting_complaints = models.TextField(max_length=30, blank=True)
+    general_findings = models.TextField(max_length=300, null=True, blank=True)
+    treatment_plan = models.TextField(max_length=30, blank=True)
+    vaccine_expirydate = models.DateField(auto_now=False, auto_now_add=False, blank=True )
+    vaccine_batchnumber = models.CharField(max_length=20, blank=True)
+    next_appointment = models.DateField(auto_now=False, auto_now_add=False, blank=True )
     customer = models.ForeignKey("Customer") 
-    file_upload = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True)       
+    file_upload = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True, blank =True)       
 
 
     def __str__(self):

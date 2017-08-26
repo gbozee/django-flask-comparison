@@ -24,11 +24,11 @@
    
       <p>  
         <img class="w3-image w3-rounded" src="/images{{ service.provider_ID.pro_logo }}" height="150" width="150"></img><br><br> 
-    <b>Organization:</b> {{ service.provider_ID.org_name }}<br><br>
-        <b>Address:</b> {{ service.provider_ID.address }}<br><br>
-        <b>City:</b> {{ service.provider_ID.city }}<br><br>
-        <b>Country:</b> {{ service.provider_ID.country }}<br><br> 
-        <b>Contact Number:</b> {{ service.provider_ID.phone_number }}<br><br> 
+    <b>Organization:</b> {{ service.provider.org_name }}<br><br>
+        <b>Address:</b> {{ service.provider.address }}<br><br>
+        <b>City:</b> {{ service.provider.city }}<br><br>
+        <b>Country:</b> {{ service.provider.country }}<br><br> 
+        <b>Contact Number:</b> {{ service.provider.phone_number }}<br><br> 
     <button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> {{ service.provider_ID.dislikes }}</button>
     <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> {{ service.days_available }}</button> </p>     
 </div>
