@@ -2,12 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.conf import settings
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Customer(models.Model):
-    user= models.OneToOneField(User, related_name='user_profile')
-    """A customer interested in health services using Healthier"""
-    
+    user = models.OneToOneField(User, related_name='user_profile')    
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30, blank=True)    
     phone_number = models.CharField(max_length=200)
@@ -15,17 +17,29 @@ class Customer(models.Model):
     gender = models.CharField(max_length=5, choices=(("","Select Gender"),('M',"Male"),("F","Female"),),blank=True)
     text =models.CharField(max_length=200)
     user_pix = models.ImageField(upload_to="images/", height_field=None, width_field=None, max_length=100,null=True, blank=True,)
+    user_thumbnail = ImageSpecField(source='user_pix',
+                                      processors=[ResizeToFill(100, 50)],
+                                      format='JPEG',
+                                      options={'quality': 60})
 
     def __str__(self):
         """Return a string representation of the model."""
         return self.last_name
+    # @receiver(post_save, sender=User)
+    # def create_user_profile(sender, instance, created, **kwargs):
+    #     if created:
+    #         Customer.objects.create(user=instance)
 
+    # @receiver(post_save, sender=User)
+    # def save_user_profile(sender, instance, **kwargs):
+    #     instance.profile.save()
+        
 
 class Provider(models.Model):
     """Organization providing health services and sending reports to users"""
     user = models.OneToOneField(User, related_name='provider_profile')
     org_name = models.CharField(max_length=30)
-    pro_logo = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100,)
+    pro_logo = models.ImageField(upload_to="images/", height_field=None, width_field=None, max_length=100,)
     address = models.CharField(max_length=100)
     city = models.CharField(max_length=200)
     country = models.CharField(max_length=200)

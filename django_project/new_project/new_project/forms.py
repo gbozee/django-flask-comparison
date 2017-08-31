@@ -25,18 +25,23 @@ class MyHealthForm(forms.ModelForm):
     WEIGHT = 'Weight'
     CHOLESTEROL = 'Cholseterol'
     CURRENT_DRUGS = 'Current Drugs'
-    health_data = forms.ChoiceField(choices=((
+    health_data = forms.ChoiceField(choices=(
                            (SYSTOLIC_BLOOD_PRESSURE, 'Systolic Blood Pressure'),
                            (DIASTOLIC_BLOOD_PRESSURE, 'Diastolic Blood Pressure'),
                            (RANDOM_BLOOD_SUGAR, 'Random Blood Sugar'),
                            (FASTING_BLOOD_SUGAR, 'Fasting Blood Sugar'),
                            (WEIGHT, 'Weight'),
-                           (CHOLESTEROL, 'Cholseterol'),
-                           (CURRENT_DRUGS,'Current Drugs')),
+                           (CHOLESTEROL, 'Cholesterol'),
+                           (CURRENT_DRUGS,'Current Drugs')), widget=forms.Select(attrs={'class':'form-control'}))
+    service_date = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
+                           
     class Meta:
         model = MyHealth
         fields = ['service_date', 'health_data','data_value', ]
         
+        widgets = {
+            'data_value': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+        }
 
 
 class PersonalHealthForm(forms.ModelForm):
@@ -186,7 +191,7 @@ class SentReportForm(forms.ModelForm):
 
 
 class MeasuredTestForm(forms.ModelForm):
-    customer = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
     ordered_service = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
     service_date = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     
@@ -237,8 +242,7 @@ class ProviderProfileForm(forms.ModelForm):
 
 
 class RequestsForm(forms.ModelForm):
-    healthier_ID = forms.ModelChoiceField(queryset=OrderedService.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))            
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))            
     class Meta:
         model = Requests
         fields = ['request_date','request_type', 'name', 'duration', 'rate']
-

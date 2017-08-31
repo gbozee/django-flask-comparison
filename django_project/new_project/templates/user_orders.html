@@ -1,6 +1,7 @@
 
    {% extends "dashboard.html" %}
 {% load staticfiles %}
+{% load scheduletags %}
           {% block content %}
  <!--Orders-->
 <form method="get" action= "{% url 'user_orders'  %}">

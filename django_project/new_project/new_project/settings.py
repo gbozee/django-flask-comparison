@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'import_export',
     'widget_tweaks',
     'datetimewidget',
+    'imagekit',
+     'jchart',
+     'schedule',
+     'djangobower',
+     
 ]
 
 MIDDLEWARE = [
@@ -137,5 +142,20 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'wsgi', 'static')
 LOGIN_URL = '/users/login/'
 INTERNAL_IPS  = ['127.0.0.1',]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'new_project/media')
 MEDIA_URL = '/media/'
+
+
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+)
+
+BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
+
+
+BOWER_INSTALLED_APPS = (
+    
+)

@@ -21,6 +21,7 @@ from django.conf.urls import url
 from .views import HealthierView
 from .views import DashboardView
 from .views import HomeView
+from .views import ConsultMonthArchiveView
 from users import views as user_views
 from .import views
 from django.contrib.auth.decorators import login_required
@@ -68,11 +69,15 @@ urlpatterns = [
     url(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     url(r'^reset/done/$', views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    url(r'^(?P<year>[0-9]{4})/(?P<month>[-\w]+)/$',
+        ConsultMonthArchiveView.as_view(),
+        name="consult_month"),
     #url('^', include('django.contrib.auth.urls')),
      # url(r'^proregister/$', views.ProvregView.as_view(), name='prore
     # url (r'^login/', login_required(UserloginView.as_view(template_name="login.html"))),
     # (r'^logout/', login_required(ProviderView.as_view(template_name="index.html"))),
-]  # Add Django site authentication urls (for login, logout, password management)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ # Add Django site authentication urls (for login, logout, password management)
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [

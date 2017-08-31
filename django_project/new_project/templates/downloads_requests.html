@@ -1,5 +1,6 @@
 {% extends "myhealthier.html" %}
 {% load staticfiles %}
+{% load scheduletags %}
           {% block content %}
     <form method="post" action="">
      {% csrf_token %}
@@ -9,9 +10,7 @@
 <h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Downloads,Requests</h3>
 
 <div class = "w3-margin w3-padding w3-white">
-<p class="pull-left"><i class="fa fa-calendar w3-margin-right w3-large "></i> Search Date</p>
-<br>
-
+    <button class="w3-button w3-large w3-white" ><i class="fa fa-calendar"></i> Search by Date</button></p>
   <p><input class="w3-input w3-border w3-round-large" name="day" type="text" placeholder="Request Type; Test, Prescription, Quotes"></p>
   <p> <input class="w3-input w3-border w3-round-large" name="time" type="text" placeholder="value, test request, prescription"></p>
 
@@ -35,5 +34,19 @@
 </div>
 </div>
 </div>
+<ul>
+    {% for article in object_list %}
+        <li>{{ article.pub_date|date:"F j, Y" }}: {{ article.title }}</li>
+    {% endfor %}
+</ul>
+
+<p>
+    {% if previous_month %}
+        Previous Month: {{ previous_month|date:"F Y" }}
+    {% endif %}
+    {% if next_month %}
+        Next Month: {{ next_month|date:"F Y" }}
+    {% endif %}
+</p>
 </form>
            {% endblock content %}

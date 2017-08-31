@@ -45,10 +45,12 @@ from .forms import CustomerForm
 from .forms import MyHealthForm
 from .forms import PersonalHealthForm
 from .forms import UserRequestForm
+from .forms import ProviderProfileForm
+
 from .forms import UserReportForm
-
-
+from django.views.generic.dates import MonthArchiveView
 from django.contrib.auth.mixins import LoginRequiredMixin
+#import arrow
 
 
 
@@ -78,23 +80,75 @@ class TrendView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class PersonalHealthView(LoginRequiredMixin, TemplateView):
-    template_name = "personal_health.html"
-    model = MyHealth
+class TrendView(TemplateView):
+    template_name = 'trend.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TrendView, self).get_context_data(**kwargs)
+        context['health_data'] = self.health_data()
+        return context
+
+    def health_data(self):
+        final_data = []
+
+        #date = arrow.now()
+        # for day in xrange(1, 30):
+        #     date = date.replace(days=-1)
+        #     count = MyHealth.objects.filter(
+        #         date_joined__gte=date.floor('day').datetime,
+        #         date_joined__lte=date.ceil('day').datetime).count()
+        #     final_data.append(count)
+
+        return final_data
+
+
+# class PersonalHealthView(LoginRequiredMixin, TemplateView):
+#     template_name = "personal_health.html"
+#     model = MyHealth
+
+#     def post(self, request,*args, **kwargs):
+#         form = MyHealthForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#         return render(request, "personal_health.html", {})
+#         return self.render_to_response(self.get_context_data(form=form))
+
     
+#     def get_context_data(self,**kwargs):
+#         context = super(PersonalHealthView, self).get_context_data(**kwargs)
+#         user = self.request.user
+#         #context['profiles'] = Customer.objects.filter(user = self.request.user)
+#         context['profiles'] = Customer.objects.all()
+#         return context
+    
+        #request.user_report.set
+class PersonalHealthView(TemplateView):
+    template_name = "personal_health.html"
+     
     def post(self, request,*args, **kwargs):
         form = MyHealthForm(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, "personal_health.html", {})
+        return redirect('personal_health')
         return self.render_to_response(self.get_context_data(form=form))
 
-    def get_context_data(self, **kwargs):
-        context = super(PersonalHealthView, self).get_context_data(**kwargs)
-        context['profiles'] = Customer.objects.all()
-        return context
-    
 
+
+    # def get_context_data(self,**kwargs):
+    #     context = super(PersonalHealthView, self).get_context_data(**kwargs)
+    #     user = self.request.user
+    #     context['profiles'] = Customer.objects.filter(user=user).first() # since a user should have only one profile,
+    #     if 'form' not in context:
+    #         context.update(form=MyHealthForm())
+    #     return context   
+
+    def get_context_data(self,**kwargs):
+        context = super(PersonalHealthView, self).get_context_data(**kwargs)
+        customer = self.request.user
+        context['profiles'] = MyHealth.objects.all() # since a user should have only one profile,
+        if 'form' not in context:
+            context.update(form=MyHealthForm())
+        return context 
 
 class RequestsView(TemplateView):
     template_name = "downloads_requests.html"
@@ -120,15 +174,6 @@ class TestReportView(TemplateView):
         context['reports'] = OrderedService.objects.all()
         return context
     
-    # def get_context_data(self, **kwargs):
-    #     context = super(TestReportView, self).get_context_data(**kwargs)
-    #     context['report'] = SentReport.objects.all()
-    #     return context
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(TestReportView, self).get_context_data(**kwargs)
-    #     context['mtest'] = MeasuredTest.objects.all()
-    #     return context
     
     
     def my_views(request,id):
@@ -150,7 +195,10 @@ class ConsultView(TemplateView):
         like_votes = my_object.customer_rating.filter(rate=1).count()
         dislike_votes = my_object.customer_rating.filter(rate=-1).count()
 
- 
+class ConsultMonthArchiveView(MonthArchiveView):
+    queryset = SentReport.objects.all()
+    date_field = "service_date"
+    allow_future = True
 
 
 #USER CREATION AND LOGIN
@@ -637,13 +685,20 @@ class RegisteredServiceView(TemplateView):
 class ProviderProfileView(TemplateView):
     template_name = "provider_profile.html"
     model=Provider
-    def get_context_data(self, **kwargs):
-        context = super(ProviderProfileView, self).get_context_data(**kwargs)
-        #context["profile"] = Provider.objects.get(id=User)
-        context["profile"] = Provider.objects.all()
-        
-        return context 
+    def get_context_data(self,**kwargs):
+            context = super(ProviderProfileView, self).get_context_data(**kwargs)
+            user = self.request.user
+            context['profiles'] = Provider.objects.filter(user=user).first() # since a user should have only one profile,
+            # if 'form' not in context:
+            #     context.update(form=ProviderProfileForm())
+            return context   
 
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(ServiceListView, self).get_context_data(**kwargs)
+    #     context["services"] = Provider.objects.all()
+        
+    #     return context
     # template_name = "provider_profile.html"
     # model = Provider
     # fields = ['user', 'org_name', 'pro_logo', 'address','city', 'country', 'provider_ID', 'phone_number']

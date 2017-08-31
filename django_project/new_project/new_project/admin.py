@@ -46,6 +46,8 @@ class CustomerAdmin(admin.ModelAdmin):
 
 
 class ProviderAdmin(admin.ModelAdmin):
+    list_display = ('org_name', 'city', 'country',)
+    
     class Meta:
         model = Provider
 
@@ -64,6 +66,8 @@ class OrderedServiceAdmin(admin.ModelAdmin):
 
 
 class MyHealthAdmin(admin.ModelAdmin):
+    list_display = ('service_date', 'customer', 'health_data','data_value',)
+
     class Meta:
         model = MyHealth
 
@@ -86,9 +90,8 @@ class SentReportAdmin(admin.ModelAdmin):
 
 
 class ServiceGroupResource(resources.ModelResource):
-    # def get_instance(self, instance_loaders, row):
-    #     return False
-    #group_id = fields.Field()
+    list_display = ('servicename', 'Group', 'Categories',)
+
     class Meta:
         model = ServiceGroup
         fields = ('id', 'Categories', 'Group', 'servicename', 'group_code', 'category_code',)

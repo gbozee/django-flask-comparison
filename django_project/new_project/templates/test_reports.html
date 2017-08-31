@@ -11,8 +11,8 @@
      <div class=" w3-col m6 w3-card-4  w3-white w3-margin w3-padding w3-round-large" >
        {% for report in reports %} 
 <h3 class="w3-center "><i class="fa fa-envelope   w3-margin-right w3-xxlarge w3-text-teal"></i> Reports | Vaccines </h3>
-<p class="pull-left "><i class="fa fa-calendar w3-margin-right w3-large "></i> Search Date</p>
-<br><br>
+    <button class="w3-button w3-large w3-white" ><i class="fa fa-calendar"></i> Search by Date</button></p>
+
  <p><b> Service Provider:</b>{{ report.serv_provider }} </p>
   <p><b> Service Ordered:</b>{{ report.serv_ordered }} </p>
   <p><b> Report Type:</b>{{ report.sentreport.report_type}} </p>
@@ -32,8 +32,8 @@
 <div class="w3-col m6 w3-container w3-card-4 w3-pale-blue w3-margin w3-padding-24 w3-round-large " >
 
 <h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Measured Test Report</h3>
-<p class="pull-left w3-text-black"><i class="fa fa-calendar w3-margin-right w3-large "></i> Search Date</p>
-     
+<button class="w3-button w3-large w3-pale-blue" ><i class="fa fa-calendar"></i> Search by Date</button></p>
+
 
  <table class="w3-table w3-bordered w3-border" id="labTable">
 <thead>
@@ -60,11 +60,12 @@
   <th>{{ report.measuredtest.upper_range }}</th>
 </tr>
 <tr>
-  <th>25/5/17</th>
-  <td>Cholesterol</td>
-  <td>110</td>
-  <th>100</th>
-  <th>165</th>
+  
+   <th>{{ report.measuredtest.service_date }}</th>
+  <th>{{ report.measuredtest.service_test }}</th>
+  <th>{{ report.measuredtest.value }}</th>
+  <th>{{ report.measuredtest.lower_range }}</th>
+  <th>{{ report.measuredtest.upper_range }}</th>
 </tr>
 </table>
 <hr>

@@ -5,6 +5,7 @@
     <!-- Right-sided navbar links -->
     <div class="w3-right w3-hide-small">
      <img alt="@femain" class="avatar" src="https://avatars0.githubusercontent.com/u/30289369?v=4&amp;s=40" height="20" width="20">
+     <img class="avatar"  src="{{ customer.user_thumbnail.url }}" />
       <a href="{% url "personal_health" %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i>PERSONAL HEALTH </a>
       <a href="{% url "trend" %}" class="w3-bar-item w3-button"><i class="fa fa-th"></i>HEALTH TRENDS</a>
       <a href="{% url "test_reports" %}" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>REPORTS & VACCINES</a>
