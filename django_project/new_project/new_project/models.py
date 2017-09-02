@@ -128,8 +128,8 @@ class Requests(models.Model):
     request_date = models.DateField(auto_now=False, auto_now_add=False, )    
     request_type = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
-    duration = models.CharField(max_length=30)
-    rate = models.CharField(max_length=30)
+    duration = models.CharField(max_length=30, blank=True)
+    rate = models.CharField(max_length=30, blank=True)
    
     def __str__(self):
         """Return a string representation of the model."""

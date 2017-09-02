@@ -65,10 +65,16 @@ class HealthierView(TemplateView):
         if form.is_valid():
             form.save()
             messages.info(request, " Registration Completed !!")            
-        return render(request, "myhealthier.html", {})
+        return render(request, "myhealthier", {})
         return self.render_to_response(self.get_context_data(form=form))
 
-
+    def get_context_data(self,**kwargs):
+        context = super(HealthierView, self).get_context_data(**kwargs)
+        user = self.request.user
+        context['profiles'] = Customer.objects.filter(user=user).first() # since a user should have only one profile,
+        if 'form' not in context:
+            context.update(form=CustomerForm())
+        return context 
 
 
 class TrendView(LoginRequiredMixin, TemplateView):
@@ -126,13 +132,13 @@ class PersonalHealthView(TemplateView):
     template_name = "personal_health.html"
      
     def post(self, request,*args, **kwargs):
-        form = MyHealthForm(request.POST)
+        form = MyHealthForm(request.POST, request.FILE)
         if form.is_valid():
             form.save()
         return redirect('personal_health')
         return self.render_to_response(self.get_context_data(form=form))
 
-
+    
 
     # def get_context_data(self,**kwargs):
     #     context = super(PersonalHealthView, self).get_context_data(**kwargs)
@@ -144,8 +150,8 @@ class PersonalHealthView(TemplateView):
 
     def get_context_data(self,**kwargs):
         context = super(PersonalHealthView, self).get_context_data(**kwargs)
-        customer = self.request.user
-        context['profiles'] = MyHealth.objects.all() # since a user should have only one profile,
+        user = self.request.user
+        context['profiles'] = MyHealth.objects.filter(customer=user).first() # since a user should have only one profile,
         if 'form' not in context:
             context.update(form=MyHealthForm())
         return context 
@@ -175,7 +181,6 @@ class TestReportView(TemplateView):
         return context
     
     
-    
     def my_views(request,id):
         my_object = Customer.objects.get(id=id)
         like_votes = my_object.customer_rating.filter(rate=1).count()
@@ -184,10 +189,10 @@ class TestReportView(TemplateView):
 
 class ConsultView(TemplateView):
     template_name = "consult.html"
-    model = SentReport
+    model = OrderedService
     def get_context_data(self, **kwargs):
         context = super(ConsultView, self).get_context_data(**kwargs)
-        context['consults'] = SentReport.objects.all()
+        context['consults'] = OrderedService.objects.all()
         return context
 
     def my_views(request,id):
@@ -242,7 +247,7 @@ class UserSignUpForm(UserCreationForm):
         user.username = user.email
         if commit:
             user.save()
-            customer_group = Group.objects.get(name="Customers")
+            customer_group = Group.objects.get(name="Customer")
             user.groups.add(customer_group)
         return user
 
@@ -294,7 +299,7 @@ class ProviderSignUpForm(UserCreationForm):
         prov.username = user.email
         if commit:
             prov.save()
-            provider_group = Group.objects.get(name="Providers")
+            provider_group = Group.objects.get(name="Provider")
             prov.groups.add(provider_group)
         return prov
 
@@ -592,12 +597,14 @@ class QuoteRequestView(TemplateView):
         context["form"]= QuoteRequestForm()
         return context
     
+
     def post(self, request,*args, **kwargs):
         form = QuoteRequestForm(request.POST)
         if form.is_valid():
             form.save()
-        context = {'form': form}
-        return render(request, "quote_request.html", {})
+            messages.info(request, " Report Sent To User !!")                        
+            return redirect('quote_request')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class UserOrdersView(LoginRequiredMixin, ListView):
@@ -653,8 +660,6 @@ class SendReportView(LoginRequiredMixin, TemplateView):
         if form.is_valid():
             form.save()
             messages.info(request, " Report Sent To User !!")            
-        #context = {'form': form}
-        #return render(request, "send_report.html", {})
             return redirect('send_report')
         return self.render_to_response(self.get_context_data(form=form))
 
@@ -665,16 +670,18 @@ class MeasuredTestView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(MeasuredTestView, self).get_context_data(**kwargs)
-        context['mtest'] = MeasuredTest.objects.all()
+        context['qrequest'] = MeasuredTest.objects.all()
         context["form"]= MeasuredTestForm()
         return context
 
-    # def post(self, request,*args, **kwargs):
-    #     form = MeasuredTestForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #     context = {'form': form}
-    #     return render(request, "mtest_report.html", {})
+    def post(self, request,*args, **kwargs):
+        form = MeasuredTestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.info(request, " Report Sent To User !!")                        
+            return redirect('mtest_report')
+        return self.render_to_response(self.get_context_data(form=form))
+
 
 
 class RegisteredServiceView(TemplateView):

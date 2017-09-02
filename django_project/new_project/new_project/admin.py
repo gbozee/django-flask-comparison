@@ -73,6 +73,8 @@ class MyHealthAdmin(admin.ModelAdmin):
 
 
 class RequestsAdmin(admin.ModelAdmin):
+    list_display = ('customer', 'request_type', 'name', 'request_date', 'duration',)
+    
     class Meta:
         model = Requests
 
@@ -83,6 +85,8 @@ class AmbulReportAdmin(admin.ModelAdmin):
 
 
 class SentReportAdmin(admin.ModelAdmin):
+    list_display = ('service_date', 'report_type', 'ordered_service', 'customer', 'next_appointment',)
+    
     class Meta:
         model = SentReport
 
@@ -115,6 +119,8 @@ class ProviderRatingAdmin(admin.ModelAdmin):
 
 
 class MeasuredTestAdmin(admin.ModelAdmin):
+    list_display = ('service_test', 'value', 'ordered_service', 'service_date', 'customer',)
+    
     class Meta:
         model = MeasuredTest
 

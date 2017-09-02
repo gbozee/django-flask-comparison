@@ -10,11 +10,20 @@ from datetimewidget.widgets import DateTimeWidget
 
 #USER FORMS
 class CustomerForm(forms.ModelForm):
+    MALE = 'Male'
+    FEMALE = 'Female'
+    gender = forms.ChoiceField(choices=( (MALE, 'Male'),
+                           (FEMALE, 'Female'),),widget=forms.Select(attrs={'class':'form-control'}))
     user_pix = forms.ImageField(label='Choose Profile Image') 
+    date_birth = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     class Meta:
         model = Customer
         fields = ['user_pix', 'date_birth','phone_number', 'last_name','first_name', 'gender','text',]
-
+        widgets = {
+            'phone_number': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'last_name': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'first_name': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
+            'text': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}), }
 
 
 class MyHealthForm(forms.ModelForm):
@@ -142,8 +151,16 @@ class UserOrderForm(forms.ModelForm):
                   'order_date', ]                 
 
 class QuoteRequestForm(forms.ModelForm):
-    customer = forms.ModelChoiceField(queryset=Requests.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
-    request_type = forms.ModelChoiceField(queryset=Requests.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
+    PRESCRIPTION = 'Prescription'
+    TEST_REQUEST = 'Test Request'
+    REQUESTED_QUOTE = 'Requested Quote'
+    
+    request_type = forms.ChoiceField(choices=(
+                           (PRESCRIPTION, 'Prescription'),
+                           (TEST_REQUEST, 'Test Request'),
+                           (REQUESTED_QUOTE, 'Requested Quote'),
+                          ), widget=forms.Select(attrs={'class':'form-control'}))
+    customer = forms.ModelChoiceField(queryset=Customer.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))        
     request_date = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     
     class Meta:
@@ -192,7 +209,7 @@ class SentReportForm(forms.ModelForm):
 
 class MeasuredTestForm(forms.ModelForm):
     customer = forms.ModelChoiceField(queryset=Customer.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
-    ordered_service = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
+    ordered_service = forms.ModelChoiceField(queryset=OrderedService.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))
     service_date = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
     
     class Meta:
