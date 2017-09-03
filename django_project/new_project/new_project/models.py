@@ -130,7 +130,8 @@ class Requests(models.Model):
     name = models.CharField(max_length=200)
     duration = models.CharField(max_length=30, blank=True)
     rate = models.CharField(max_length=30, blank=True)
-   
+    service_provider = models.ForeignKey("Provider", on_delete=models.CASCADE, blank=True,null=True,)
+
     def __str__(self):
         """Return a string representation of the model."""
         return self.request_type

@@ -87,9 +87,11 @@ class OrderedServiceForm2(forms.ModelForm):
 
 
 class UserRequestForm(forms.ModelForm):
+    service_provider = forms.ModelChoiceField(queryset=Provider.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
+#provider that provides the service
     class Meta:
         model = Requests
-        fields = ['request_date','request_type', 'name', 'duration', 'rate']
+        fields = ['request_date','request_type', 'name', 'duration', 'rate', 'service_provider']
         
 
         
