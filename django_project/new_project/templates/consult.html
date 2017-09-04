@@ -3,22 +3,22 @@
           {% block content %}
           <form method="get" action= "{% url 'consult'  %}">
      {% csrf_token %}
-<div class="w3-container  w3-pale-blue w3-topbar w3-bottombar w3-padding-48 w3-border-amber w3-theme-d5">
+<div class="w3-container  w3-topbar w3-bottombar w3-padding-48 w3-border-amber w3-theme-d5">
     <div class=" w3-card-4 w3-pale-blue w3-margin w3-round-large ">
 
-<h3 class="w3-center w3-text-black"><i class="fa fa-eye w3-margin-right w3-xxlarge w3-text-teal"></i> Consultation Notes</h3>
+<h3 class="w3-center w3-text-black"><i class="fa fa-eye w3-margin-right w3-xxlarge w3-padding w3-text-teal"></i> Consultation Notes</h3>
  <div class = "w3-margin w3-padding">
-    <button class="w3-button w3-large w3-pale-blue" ><i class="fa fa-calendar"></i> Search by Date</button></p>
+    <button class="w3-button w3-large w3-pale-blue w3-padding" ><i class="fa fa-calendar"></i> Search by Date</button></p>
            {% for consult in consults %} 
  <p><b> Service Provider:</b>{{ consult.serv_provider }} </p>
-  <p><b> Service Ordered:</b>{{ consult.serv_ordered }} </p>
-        <p>   <b>Presenting Complaints:</b> {{ consult.sentreport.presenting_complaints }}              
+  <p><b> Service Ordered:</b>{{ consult.ordered_service }} </p>
+        <p>   <b>Presenting Complaints:</b> {{ consult.presenting_complaints }}              
                   
-            <b>Examination Findings:</b> {{ consult.sentreport.general_findings }}<br><br>    </p>           
+            <b>Examination Findings:</b> {{ consult.general_findings }}<br><br>    </p>           
               
-        <p>    <b>Treatment Plan:</b> {{ consult.sentreport.treatment_plan}}  
-            <b>Next Appointment:</b> {{ consult.sentreport.next_appointment}}<br><br> </p>
-            <b>Consulting Staff:</b> {{ consult.sentreport.name_staff}}<br><br> </p>
+        <p>    <b>Treatment Plan:</b> {{ consult.treatment_plan}}  
+            <b>Next Appointment:</b> {{ consult.next_appointment}}<br><br> </p>
+            <b>Consulting Staff:</b> {{ consult.name_staff}}<br><br> </p>
           {% endfor %} 
 
     <p><button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>

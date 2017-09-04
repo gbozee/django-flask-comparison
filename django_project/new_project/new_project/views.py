@@ -46,7 +46,9 @@ from .forms import MyHealthForm
 from .forms import PersonalHealthForm
 from .forms import UserRequestForm
 from .forms import ProviderProfileForm
-
+from .forms import ConsultForm
+from .forms import CartForm
+from .forms import MeasuredUserForm
 from .forms import UserReportForm
 from django.views.generic.dates import MonthArchiveView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -174,10 +176,10 @@ class RequestsView(TemplateView):
 
 class TestReportView(TemplateView):
     template_name = "test_reports.html"
-    model = OrderedService
+    model = SentReport
     def get_context_data(self, **kwargs):
         context = super(TestReportView, self).get_context_data(**kwargs)
-        context['reports'] = OrderedService.objects.all()
+        context['reports'] = SentReport.objects.all()
         return context
     
     
@@ -189,9 +191,9 @@ class TestReportView(TemplateView):
 
 class UserMeasuredView(TemplateView):
     template_name = "user_mreports.html"
-    model = MeasuredTest
     def get_context_data(self, **kwargs):
         context = super(UserMeasuredView, self).get_context_data(**kwargs)
+        form = MeasuredUserForm
         context['usereps'] = MeasuredTest.objects.all()
         return context
     
@@ -204,10 +206,11 @@ class UserMeasuredView(TemplateView):
 
 class ConsultView(TemplateView):
     template_name = "consult.html"
-    model = OrderedService
+    model = SentReport    
     def get_context_data(self, **kwargs):
         context = super(ConsultView, self).get_context_data(**kwargs)
-        context['consults'] = OrderedService.objects.all()
+        form = ConsultForm
+        context['consults'] = SentReport.objects.all()
         return context
 
     def my_views(request,id):
@@ -216,7 +219,7 @@ class ConsultView(TemplateView):
         dislike_votes = my_object.customer_rating.filter(rate=-1).count()
 
 class ConsultMonthArchiveView(MonthArchiveView):
-    queryset = SentReport.objects.all()
+    # queryset = SentReport.objects.all()
     date_field = "service_date"
     allow_future = True
 
@@ -488,6 +491,7 @@ class CartView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
+        form = CartForm
         context["servicost"] = OrderedService.objects.all()
         return context
 

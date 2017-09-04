@@ -81,7 +81,7 @@ class OrderedService(models.Model):
     preferred_time = models.CharField(max_length=200)
     promo_code = models.CharField(max_length=10)
     order_date = models.DateField(auto_now=False, auto_now_add=False, )
-    serv_provider = models.ForeignKey("Provider",on_delete=models.CASCADE, blank=True,null=True,)
+    serv_provider = models.CharField(max_length=10, blank=True, null=True)
     
 
     def __str__(self):
@@ -179,6 +179,7 @@ class SentReport(models.Model):
     next_appointment = models.DateField(auto_now=False, auto_now_add=False, blank=True )
     customer = models.ForeignKey("Customer") 
     file_upload = models.FileField(upload_to='uploads/%Y/%m/%d/', null=True, blank =True)       
+    service_prov = models.ForeignKey("Provider",on_delete=models.CASCADE, blank=True,null=True,)
 
 
     def __str__(self):
@@ -225,6 +226,7 @@ class MeasuredTest(models.Model):
     value = models.CharField(max_length=30)
     lower_range = models.CharField(max_length=30)
     upper_range = models.CharField(max_length=30)
+    name_staff = models.CharField(max_length=50, blank=True, null=True)
 
  
     def __str__(self):

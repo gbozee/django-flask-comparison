@@ -28,13 +28,16 @@
        {% for report in usereps %} 
 
 <tr>
-  <th>{{ measuredtest.service_date }}</th>
-  <th>{{ measuredtest.service_test }}</th>
-  <th>{{ measuredtest.value }}</th>
-  <th>{{ measuredtest.lower_range }}</th>
-  <th>{{ measuredtest.upper_range }}</th>
+  <th>{{ report.service_date }}</th>
+  <th>{{ report.service_test }}</th>
+  <th>{{ report.value }}</th>
+  <th>{{ report.lower_range }}</th>
+  <th>{{ report.upper_range }}</th>
+  
 </tr>
+
  {% endfor %} 
+<b>Reporting Staff:</b> {{ report.name_staff}}<br><br> </p>
 
 </table>
 <hr>

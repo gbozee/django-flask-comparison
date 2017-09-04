@@ -13,15 +13,15 @@
     <button class="w3-button w3-large w3-pale-blue" ><i class="fa fa-calendar"></i> Search by Date</button></p>
        {% for report in reports %} 
 
- <p><b> Service Provider:</b>{{ report.serv_provider }} </p>
-  <p><b> Service Ordered:</b>{{ report.serv_ordered }} </p>
-  <p><b> Report Type:</b>{{ report.sentreport.report_type}} </p>
-  <p><b> Result:</b>{{ report.sentreport.general_findings}} </p>
-  <p><b> Vaccine Batch Number:</b>{{ report.sentreport.vaccine_batchnumber}} </p>
-  <p><b> Vaccine Expiry Date:</b>{{ report.sentreport.vaccine_expirydate}} </p>
-  <p><b> Staff:</b>{{ report.sentreport.name_staff}} </p>
-  <p><b> Next Appointment:</b>{{ report.sentreport.next_appointment}} </p>
-  <p><b> Other Comments:</b>{{ report.sentreport.treatment_plan}} </p>
+ <p><b> Service Provider:</b>{{ report.service_prov }} </p>
+  <p><b> Service Ordered:</b>{{ report.ordered_service }} </p>
+  <p><b> Report Type:</b>{{ report.report_type}} </p>
+  <p><b> Result:</b>{{ report.general_findings}} </p>
+  <p><b> Vaccine Batch Number:</b>{{ report.vaccine_batchnumber}} </p>
+  <p><b> Vaccine Expiry Date:</b>{{ report.vaccine_expirydate}} </p>
+  <p><b> Staff:</b>{{ report.name_staff}} </p>
+  <p><b> Next Appointment:</b>{{ report.next_appointment}} </p>
+  <p><b> Other Comments:</b>{{ report.treatment_plan}} </p>
 
    <p><button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>
     <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> 20</button></p>
