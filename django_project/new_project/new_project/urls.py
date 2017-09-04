@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^personal_health/$', views.PersonalHealthView.as_view(), name='personal_health'), 
     url(r'^requests/$', views.RequestsView.as_view(), name='requests'),
     url(r'^test_reports/$', views.TestReportView.as_view(), name='test_reports'),
+    url(r'^user_mreports/$', views.UserMeasuredView.as_view(), name='user_mreports'),    
     url(r'^consult/$', views.ConsultView.as_view(), name='consult'),
     url(r'^about/$', views.AboutView.as_view(), name='about'),
     url(r'^cart/$', views.CartView.as_view(), name='cart'),

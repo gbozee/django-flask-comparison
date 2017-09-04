@@ -105,7 +105,9 @@ class ServiceGroupResource(resources.ModelResource):
 
 
 class ServiceGroupAdmin(ImportExportModelAdmin):
-        resource_class = ServiceGroupResource
+    list_display = ('servicename', 'Group', 'Categories',)
+    
+    resource_class = ServiceGroupResource
         
     # class Meta:
     #     model = ServiceGroup

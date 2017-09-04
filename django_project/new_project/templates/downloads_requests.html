@@ -8,7 +8,6 @@
      <div class="w3-container w3-card-4 w3-margin w3-round-large  w3-padding-48 w3-border-amber w3-theme-d4"  >
 <div class ="w3-card-4 w3-pale-blue w3-margin w3-round-large w3-padding">
 <h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Downloads,Requests</h3>
-       {% for request in requests %} 
 
 <button class="w3-button w3-large w3-pale-blue" ><i class="fa fa-calendar"></i> Search by Date</button></p>
 
@@ -23,6 +22,8 @@
 
 </tr>
 </thead>
+       {% for request in requests %} 
+
 <tr>
   <td><input type="radio" name="tbodRadio" value="0"></input></td>
   <th>{{ request.request_date }}</th>
@@ -30,20 +31,10 @@
   <th>{{ request.name }}</th>
 
 </tr>
-<tr>
- <td><input type="radio" name="tbodRadio" value="0"></input></td>
- 
-  <th>{{ request.request_date }}</th>
-  <th>{{ request.request_type }}</th>
-  <th>{{ request.name }}</th>
-</tr>
-<tr>
-    <td><input type="radio" name="tbodRadio" value="0"></input></td>
 
-   <th>{{ request.request_date }}</th>
-  <th>{{ request.request_type }}</th>
-  <th>{{ request.name }}</th>
-</tr>
+
+ {% endfor %} 
+
 </table>
 
 <hr>
@@ -66,7 +57,6 @@
   <p><button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>
     <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> 20</button></p>
 
- {% endfor %} 
 
 
 </div>

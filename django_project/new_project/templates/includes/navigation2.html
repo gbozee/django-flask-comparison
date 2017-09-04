@@ -7,8 +7,9 @@
      <img alt="@femain" class="avatar" src="https://avatars0.githubusercontent.com/u/30289369?v=4&amp;s=40" height="20" width="20">
      <img class="avatar"  src="{{ customer.user_thumbnail.url }}" />
       <a href="{% url "personal_health" %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i>PERSONAL HEALTH </a>
-      <a href="{% url "trend" %}" class="w3-bar-item w3-button"><i class="fa fa-th"></i>HEALTH TRENDS</a>
+      <a href="{% url "trend" %}" class="w3-bar-item w3-button"><i class="fa fa-area-chart"></i>HEALTH TRENDS</a>
       <a href="{% url "test_reports" %}" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i>REPORTS & VACCINES</a>
+      <a href="{% url "user_mreports" %}" class="w3-bar-item w3-button"><i class="fa fa-th"></i>MEASURED TESTS</a>      
         <a href="{% url "requests" %}" class="w3-bar-item w3-button"><i class="fa fa-bars"></i>REQUESTS</a>
          <a href="{% url "consult" %}" class="w3-bar-item w3-button"><i class="fa fa-cog"></i>CONSULTS</a>
 
@@ -31,6 +32,7 @@
   <a href="{% url "personal_health" %}" onclick="w3_close()" class="w3-bar-item w3-button">PERSONAL HEALTH</a>
   <a href="{% url "trend" %}" onclick="w3_close()" class="w3-bar-item w3-button">HEALTH TRENDS</a>
   <a href="{% url "test_reports" %}" onclick="w3_close()" class="w3-bar-item w3-button">REPORTS & VACCINES</a>
+  <a href="{% url "user_mreports" %}" onclick="w3_close()" class="w3-bar-item w3-button">MEASURED TESTS</a>  
      <a href="{% url "requests" %}" onclick="w3_close()" class="w3-bar-item w3-button">REQUESTS</a>
       <a href="{% url "consult" %}" onclick="w3_close()" class="w3-bar-item w3-button">CONSULTS</a>
 </nav>

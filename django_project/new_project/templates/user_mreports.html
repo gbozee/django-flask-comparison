@@ -1,0 +1,47 @@
+{% extends "myhealthier.html" %}
+{% load staticfiles %}
+          {% block content %}
+<!--Medical Services Reports-->
+<form method="get" action= "{% url 'user_mreports'  %}">
+     {% csrf_token %}
+
+<div class=" w3-container w3-topbar w3-bottombar w3-border-amber w3-pale-blue w3-margin w3-round-large w3-padding-48 w3-border-amber w3-theme-d5">
+   <div class= "w3-row w3-padding"> 
+    
+
+<div class="w3-container w3-card-4 w3-pale-blue w3-margin w3-padding-24 w3-round-large " >
+
+<h3 class="w3-center w3-text-black"><i class="fa fa-bars w3-margin-right w3-xxlarge w3-text-teal"></i> Measured Test Report</h3>
+<button class="w3-button w3-large w3-pale-blue" ><i class="fa fa-calendar"></i> Search by Date</button></p>
+
+
+ <table class="w3-table w3-bordered w3-border" id="labTable">
+<thead>
+<tr class="w3-orange">
+  <th>Test Date</th>
+  <th>Service</th>
+  <th>Value</th>
+  <th>Lower Range</th>
+  <th>Upper Range</th>
+</tr>
+</thead>
+       {% for report in usereps %} 
+
+<tr>
+  <th>{{ measuredtest.service_date }}</th>
+  <th>{{ measuredtest.service_test }}</th>
+  <th>{{ measuredtest.value }}</th>
+  <th>{{ measuredtest.lower_range }}</th>
+  <th>{{ measuredtest.upper_range }}</th>
+</tr>
+ {% endfor %} 
+
+</table>
+<hr>
+  <p><button class="w3-button w3-large w3-red" ><i class="fa fa-thumbs-down"></i> 7</button>
+    <button class="w3-button w3-large w3-blue" ><i class="fa fa-thumbs-up"></i> 20</button></p>
+</div>
+</div>
+</div>
+</form>
+ {% endblock content %}

@@ -187,6 +187,21 @@ class TestReportView(TemplateView):
         dislike_votes = my_object.customer_rating.filter(rate=-1).count()
 
 
+class UserMeasuredView(TemplateView):
+    template_name = "user_mreports.html"
+    model = MeasuredTest
+    def get_context_data(self, **kwargs):
+        context = super(UserMeasuredView, self).get_context_data(**kwargs)
+        context['usereps'] = MeasuredTest.objects.all()
+        return context
+    
+    
+    def my_views(request,id):
+        my_object = Customer.objects.get(id=id)
+        like_votes = my_object.customer_rating.filter(rate=1).count()
+        dislike_votes = my_object.customer_rating.filter(rate=-1).count()
+
+
 class ConsultView(TemplateView):
     template_name = "consult.html"
     model = OrderedService
