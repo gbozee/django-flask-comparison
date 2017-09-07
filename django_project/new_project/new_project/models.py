@@ -10,8 +10,6 @@ from django.dispatch import receiver
 
 class Customer(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')    
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30, blank=True)    
     phone_number = models.CharField(max_length=200)
     date_birth = models.DateField(auto_now=False, auto_now_add=False, )
     gender = models.CharField(max_length=5, choices=(("","Select Gender"),('M',"Male"),("F","Female"),),blank=True)

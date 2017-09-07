@@ -65,7 +65,7 @@ class HealthierView(TemplateView):
     def post(self, request,*args, **kwargs):
         form = CustomerForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            form.save(user=self.request.user)
             messages.info(request, " Registration Completed !!")            
         return render(request, "myhealthier", {})
         return self.render_to_response(self.get_context_data(form=form))
@@ -239,12 +239,13 @@ def login_view(request):
 
 
 class UserSignUpForm(UserCreationForm):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    email = forms.EmailField()
     # date_of_birth = forms.DateInput()
     # phone_number = forms.CharField()
     # gender = forms.CharField()
+    class Meta(UserCreationForm.Meta):
+        fields = UserCreationForm.Meta.fields + ('first_name',
+        'last_name','email')
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['username'].required = False

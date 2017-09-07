@@ -44,6 +44,14 @@ class CustomerAdmin(admin.ModelAdmin):
     class Meta:
         model = Customer
 
+    def first_name(self, obj):
+        if hasattr(obj, 'user_profile'):
+            return obj.user_profile.first_name
+
+    def last_name(self, obj):
+        if hasattr(obj, 'user_profile'):
+            return obj.user_profile.last_name
+
 
 class ProviderAdmin(admin.ModelAdmin):
     list_display = ('org_name', 'city', 'country',)

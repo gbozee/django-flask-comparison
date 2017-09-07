@@ -1,2 +1,10 @@
 django==1.11.3
 django-debug-toolbar==1.8
+django-import-export==0.5.1
+django-widget-tweaks==1.4.1
+django-datetime-widget==0.9.3
+django-imagekit==4.0.1
+django-jchart==0.4.1
+django-scheduler==0.8.5
+django-bower==5.2.0
+Pillow==4.2.1

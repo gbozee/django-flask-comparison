@@ -16,15 +16,27 @@ class CustomerForm(forms.ModelForm):
                            (FEMALE, 'Female'),),widget=forms.Select(attrs={'class':'form-control'}))
     user_pix = forms.ImageField(label='Choose Profile Image') 
     date_birth = forms.DateField(initial=datetime.date.today, widget=forms.DateInput(attrs={'class':"w3-input w3-border w3-round-large"}))
+    first_name = forms.CharField()
+    last_name = forms.CharField()
     class Meta:
         model = Customer
-        fields = ['user_pix', 'date_birth','phone_number', 'last_name','first_name', 'gender','text',]
+        fields = ['user_pix', 'date_birth','phone_number', 'gender','text',]
         widgets = {
             'phone_number': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'last_name': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'first_name': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}),
             'text': TextInput(attrs={'class': "w3-input w3-border w3-round-large"}), }
 
+    def save(self, commit=True, user=None):
+        instance = super().save(commit=False)
+        if user:
+            user.first_name = self.cleaned_data['first_name']
+            user.last_name = self.cleaned_data['last_name']
+            user.save()
+            instance.user = user
+        if commit:
+            instance.save()
+        return instance
 
 class MyHealthForm(forms.ModelForm):
     SYSTOLIC_BLOOD_PRESSURE = 'Systolic Blood Pressure'
@@ -54,10 +66,22 @@ class MyHealthForm(forms.ModelForm):
 
 
 class PersonalHealthForm(forms.ModelForm):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
     class Meta:
         model = Customer
-        fields = ['first_name', 'last_name','date_birth', 'phone_number', ]
+        fields = ['date_birth', 'phone_number', ]
 
+    def save(self,commit=True,user=None):
+        instance = super().save(commit=False)
+        if user:
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            instance.user = user
+        if commit:
+            instance.save()
+        return instance
 
 class MeasuredUserForm(forms.ModelForm):
     result = forms.ModelChoiceField(queryset=MeasuredTest.objects.all(), widget=forms.Select(attrs={'class':'form-control'}))       
